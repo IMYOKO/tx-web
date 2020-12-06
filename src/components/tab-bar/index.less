@@ -1,0 +1,87 @@
+.tab-bar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  height: 49px;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+
+  &-list {
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    li {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &-item {
+      .img-box {
+        width: 22px;
+        height: 22px;
+
+        &.home {
+          background: url('~@/assets/common/icon_tab_home_default@2x.png') center center no-repeat;
+          background-size: contain;
+        }
+
+        &.task {
+          background: url('~@/assets/common/icon_tab_task_default@2x.png') center center no-repeat;
+          background-size: contain;
+        }
+
+        &.info {
+          background: url('~@/assets/common/icon_tab_message_default@2x.png') center center no-repeat;
+          background-size: contain;
+        }
+
+        &.user {
+          background: url('~@/assets/common/icon_tab_my_default@2x.png') center center no-repeat;
+          background-size: contain;
+        }
+      }
+
+      .title {
+        color: #666;
+        font-size: 10px;
+        line-height: 14px;
+        text-align: center;
+      }
+
+      &-active {
+        .img-box {
+          &.home {
+            background: url('~@/assets/common/icon_tab_home_selected@2x.png') center center no-repeat;
+            background-size: contain;
+          }
+
+          &.task {
+            background: url('~@/assets/common/icon_tab_task_selected@2x.png') center center no-repeat;
+            background-size: contain;
+          }
+
+          &.info {
+            background: url('~@/assets/common/icon_tab_message_default@2x.png') center center no-repeat;
+            background-size: contain;
+          }
+
+          &.user {
+            background: url('~@/assets/common/icon_tab_my_selected@2x.png') center center no-repeat;
+            background-size: contain;
+          }
+        }
+
+        .title {
+          color: #FF5A2C;
+        }
+      }
+    }
+  }
+}
