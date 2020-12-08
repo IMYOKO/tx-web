@@ -7,21 +7,21 @@ const routes: IRoute[] = [
     routes: [
       {
         path: '/',
-        title: 'home',
+        title: '首页',
         exact: true,
         component: '../pages/index',
         Routes: ['src/layouts/TabBarLayout'],
       },
       {
         path: '/task',
-        title: 'task',
+        title: '任务',
         exact: true,
         component: '../pages/task',
         Routes: ['src/layouts/TabBarLayout'],
       },
       {
         path: '/info',
-        title: 'info',
+        title: '信息',
         exact: true,
         component: '../pages/info',
         Routes: ['src/layouts/TabBarLayout'],
@@ -29,10 +29,11 @@ const routes: IRoute[] = [
       { path: '/login', title: 'login', exact: true, component: '../pages/login' },
       {
         path: '/user',
-        title: 'user',
+        title: '我的',
         exact: true,
         component: '../pages/user',
-        Routes: ['src/layouts/AuthLayout'],
+        Routes: ['src/layouts/TabBarLayout'],
+        // Routes: ['src/layouts/AuthLayout'],
       },
     ],
   },
