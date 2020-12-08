@@ -1,13 +1,88 @@
 .task-list {
   padding: 10px 15px 0;
 
-  li {
+  >li {
     padding: 15px;
     background-color: #fff;
     margin-bottom: 10px;
 
-    &:last-child {
-      margin-bottom: 0;
+    .task-list-item {
+      position: relative;
+
+      .task-title {
+        color: #333;
+        font-size: 16px;
+        line-height: 1.2;
+        margin-bottom: 8px;
+      }
+
+      .task-tabs-list {
+        height: 20px;
+        display: flex;
+        margin-bottom: 12px;
+
+        >li {
+          margin-right: 8px;
+
+          span {
+            color: #77A7FF;
+            font-size: 12px;
+            line-height: 1;
+            display: inline-block;
+            height: 18px;
+            line-height: 18px;
+            padding: 0 6px;
+            border: 1px solid #77A7FF;
+          }
+        }
+      }
+
+      .avatar-wrapper {
+        display: flex;
+        align-items: center;
+
+        span {
+          color: #666;
+          font-size: 13px;
+          line-height: 1.2;
+          margin-left: 5px;
+        }
+      }
+
+      .money-wrapper {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+
+        .money {
+          color: #FF5A2C;
+          font-size: 18px;
+          line-height: 1.5;
+          font-weight: bold;
+          text-align: right;
+        }
+
+        .jinbi-wrapper {
+          display: flex;
+          justify-content: flex-end;
+          margin-bottom: 20px;
+
+          .jinbi {
+            width: 13px;
+            height: 13px;
+            background: url('~@/assets/common/icon_jinbi@2x.png') center center no-repeat;
+            background-size: contain;
+          }
+
+          .yongjin {
+            color: #666;
+            font-size: 12px;
+            line-height: 13px;
+            margin-left: 5px;
+          }
+        }
+      }
     }
   }
 }
