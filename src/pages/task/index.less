@@ -1,4 +1,4 @@
-.home-page {
+.task-page {
   padding-top: 50px;
 
   .nav-wrapper {
@@ -14,18 +14,39 @@
     align-items: center;
 
     .nav-list {
-      padding-left: 15px;
+      height: 100%;
+      padding: 0 15px;
     }
 
     .nav-list-wrapper {
-      display: flex;
-      align-items: center;
+      width: calc(100vw - 30px);
+      overflow-x: auto;
+      height: 100%;
+
+      .nav-list-body {
+        width: 480px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        &::after {
+          visibility: hidden;
+          display: block;
+          font-size: 0;
+          content: " ";
+          clear: both;
+          height: 0;
+        }
+      }
 
       .nav-list-item {
         color: #999;
         font-size: 15px;
         line-height: 20px;
-        margin: 0 6px;
+        width: 48px;
+        float: left;
+        text-align: center;
+
 
         &.active {
           color: #FF5A2C;
