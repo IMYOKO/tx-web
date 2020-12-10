@@ -1,0 +1,67 @@
+.user-nav-list {
+  padding: 0 15px;
+  background-color: #fff;
+  margin-bottom: 10px;
+
+  &-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &-box {
+      display: flex;
+      align-items: center;
+      height: 50px;
+
+      .icon-box {
+        display: block;
+        width: 22px;
+        height: 22px;
+
+        &.icon-bill {
+          background: url('~@/assets/user/icon_my_bill@2x.png') center center no-repeat;
+          background-size: contain;
+        }
+
+        &.icon-bank-card {
+          background: url('~@/assets/user/icon_pay_credit@2x.png') center center no-repeat;
+          background-size: contain;
+        }
+
+        &.icon-feedback {
+          background: url('~@/assets/user/icon_setup_feedback@2x.png') center center no-repeat;
+          background-size: contain;
+        }
+
+        &.icon-connect-us {
+          background: url('~@/assets/user/icon_my_call_service@2x.png') center center no-repeat;
+          background-size: contain;
+        }
+      }
+
+      .title {
+        font-size: 15px;
+        color: #333;
+        margin-left: 8px;
+      }
+
+      .tips {
+        font-size: 13px;
+        color: #999;
+        margin-right: 8px;
+      }
+
+      .more {
+        width: 5px;
+        height: 9px;
+        background: url('~@/assets/user/icon_my_list_more@2x.png') center center no-repeat;
+        background-size: contain;
+      }
+    }
+  }
+}
