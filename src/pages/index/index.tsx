@@ -1,64 +1,28 @@
-import TaskList, { TaskListItemType } from '@/components/task-list';
-import React from 'react';
+import TaskList from '@/components/task-list';
+import React, { useEffect } from 'react';
+import { connect } from 'dva';
+import { Dispatch } from 'redux';
+import { HomeModelState } from '@/models/home';
 import './index.less';
 
-const Home: React.FC = () => {
-  const data: TaskListItemType[] = [
-    {
-      id: 0,
-      title: '简单填码赚5元',
-      money: 4,
-      name: '刘女士',
-      avatar:
-        'https://dev-res-cn.oss-cn-shenzhen.aliyuncs.com/next-maker/cms/9174d350-35fe-11eb-912f-c9d067017d00.jpg',
-      tabs: ['初级任务'],
-    },
-    {
-      id: 1,
-      title: '简单填码赚5元',
-      money: 4,
-      name: '刘女士',
-      avatar:
-        'https://dev-res-cn.oss-cn-shenzhen.aliyuncs.com/next-maker/cms/9174d350-35fe-11eb-912f-c9d067017d00.jpg',
-      tabs: ['初级任务'],
-    },
-    {
-      id: 2,
-      title: '简单填码赚5元',
-      money: 4,
-      name: '刘女士',
-      avatar:
-        'https://dev-res-cn.oss-cn-shenzhen.aliyuncs.com/next-maker/cms/9174d350-35fe-11eb-912f-c9d067017d00.jpg',
-      tabs: ['初级任务'],
-    },
-    {
-      id: 3,
-      title: '简单填码赚5元',
-      money: 4,
-      name: '刘女士',
-      avatar:
-        'https://dev-res-cn.oss-cn-shenzhen.aliyuncs.com/next-maker/cms/9174d350-35fe-11eb-912f-c9d067017d00.jpg',
-      tabs: ['初级任务'],
-    },
-    {
-      id: 4,
-      title: '简单填码赚5元',
-      money: 4,
-      name: '刘女士',
-      avatar:
-        'https://dev-res-cn.oss-cn-shenzhen.aliyuncs.com/next-maker/cms/9174d350-35fe-11eb-912f-c9d067017d00.jpg',
-      tabs: ['初级任务'],
-    },
-    {
-      id: 5,
-      title: '简单填码赚5元',
-      money: 4,
-      name: '刘女士',
-      avatar:
-        'https://dev-res-cn.oss-cn-shenzhen.aliyuncs.com/next-maker/cms/9174d350-35fe-11eb-912f-c9d067017d00.jpg',
-      tabs: ['初级任务'],
-    },
-  ];
+interface HomeProps extends HomeModelState {
+  dispatch: Dispatch;
+}
+
+const Home: React.FC<HomeProps> = props => {
+  const { dispatch, list } = props;
+
+  useEffect(() => {
+    dispatch({
+      type: 'HOME/fetch',
+      payload: {
+        pageNo: 1,
+        pageSize: 1,
+        param: {},
+      },
+    });
+  }, []);
+
   return (
     <div className="home-page">
       <div className="nav-wrapper">
@@ -68,11 +32,18 @@ const Home: React.FC = () => {
             <div className="nav-list-item">最新</div>
           </div>
         </div>
-        <div className="search"></div>
+        <div className="search" />
       </div>
-      <TaskList data={data} />
+      <TaskList data={list} />
     </div>
   );
 };
 
-export default Home;
+const mapStateToProps = (state: any) => {
+  const {
+    HOME: { list },
+  } = state;
+  return { list };
+};
+
+export default connect(mapStateToProps)(Home);

@@ -1,7 +1,11 @@
 const DOMAIN_CONFIG = {
+  // mock
+  mock: {
+    common: '',
+  },
   // 开发
   dev: {
-    common: '',
+    common: 'http://192.168.1.52:8080',
   },
   // 测试
   test: {
@@ -14,8 +18,13 @@ const DOMAIN_CONFIG = {
 };
 
 let domain = DOMAIN_CONFIG.dev;
+console.log('ENV: ', process.env.UMI_ENV);
 
-if (process.env.UMI_ENV === 'testenv') {
+if (process.env.UMI_ENV === 'mock') {
+  domain = DOMAIN_CONFIG.mock;
+}
+
+if (process.env.UMI_ENV === 'test') {
   domain = DOMAIN_CONFIG.test;
 }
 
@@ -23,4 +32,4 @@ if (process.env.UMI_ENV === 'prod') {
   domain = DOMAIN_CONFIG.prod;
 }
 
-export const baseURL = `${domain.common}/api`;
+export const baseURL = `${domain.common}`;

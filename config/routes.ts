@@ -10,7 +10,14 @@ const routes: IRoute[] = [
         title: '首页',
         exact: true,
         component: '../pages/index',
-        Routes: ['src/layouts/TabBarLayout'],
+        Routes: ['src/layouts/TabBarLayout', 'src/layouts/AuthLayout'],
+      },
+      {
+        path: '/detail',
+        title: '详情',
+        exact: true,
+        component: '../pages/detail',
+        Routes: ['src/layouts/AuthLayout'],
       },
       {
         path: '/task',

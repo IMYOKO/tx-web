@@ -4,7 +4,7 @@ class ApiRequest {
   /**
    * axios 实例
    */
-  private axios: AxiosInstance;
+  public axios: AxiosInstance;
 
   /**
    * 构造函数
@@ -50,10 +50,9 @@ class ApiRequest {
     this.axios.interceptors.response.use(
       response => {
         const { status, data } = response;
-        const { Status, Data } = data;
-        console.log(data);
-        if (status === 200 && Status === true) {
-          return Promise.resolve(Data);
+        // console.log(data.data);
+        if (status === 200 && data.code === 0) {
+          return Promise.resolve(data.data);
         }
         return Promise.reject(data);
       },
