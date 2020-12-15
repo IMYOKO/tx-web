@@ -1,7 +1,7 @@
 import ApiRequest from './request';
 import { AxiosPromise } from 'axios';
 import { baseURL } from './config';
-import { ListType } from './type';
+import { OrderListParam, OrderDetailParam } from './type';
 
 const apiRequest = new ApiRequest();
 
@@ -25,12 +25,36 @@ apiRequest.axios.interceptors.response.use(
 );
 
 /**
- * 获取
+ * 订单列表
  */
-const orderList = (data: ListType): AxiosPromise => {
+const orderList = (data: OrderListParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/order/list`, data);
+};
+
+/**
+ * 订单详情
+ */
+const orderDetail = (data: OrderDetailParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/order/detail`, data);
+};
+
+/**
+ * 我的订单列表
+ */
+const myOrderList = (data: OrderListParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/my_order_list`, data);
+};
+
+/**
+ * 用户信息
+ */
+const userInfo = (): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/info`, {});
 };
 
 export default {
   orderList,
+  myOrderList,
+  orderDetail,
+  userInfo,
 };

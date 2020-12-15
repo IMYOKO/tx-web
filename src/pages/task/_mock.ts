@@ -14,7 +14,7 @@ for (let i = 1; i <= 20; i += 1) {
   });
 }
 
-const getOrderList = (_: any, res: any) => {
+const getMyOrderList = (_: any, res: any) => {
   const orderList = {
     dataList: orderListData,
     pageNo: 1,
@@ -26,5 +26,5 @@ const getOrderList = (_: any, res: any) => {
 };
 
 export default {
-  'POST /order/list': getOrderList,
+  'POST /user/my_order_list': getMyOrderList,
 };

@@ -1,18 +1,18 @@
-import TaskList from '@/components/task-list';
 import React, { useEffect } from 'react';
 import { connect } from 'dva';
-import { Dispatch } from 'redux';
-import { HomeModelState } from '@/models/home';
+import TaskList from '@/components/task-list';
+import { OrderListItemType } from '@/pages/index/model';
+import { PageActionBaseProps } from '@/types/common';
 import './index.less';
 
-interface HomeProps extends HomeModelState {
-  dispatch: Dispatch;
+interface HomeProps extends PageActionBaseProps {
+  list: OrderListItemType[];
 }
 
 const Home: React.FC<HomeProps> = props => {
   const { dispatch, list } = props;
 
-  useEffect(() => {
+  const fetchData = () => {
     dispatch({
       type: 'HOME/fetch',
       payload: {
@@ -21,6 +21,20 @@ const Home: React.FC<HomeProps> = props => {
         param: {},
       },
     });
+  };
+
+  const clearData = () => {
+    dispatch({
+      type: 'HOME/save',
+      payload: { list: [] },
+    });
+  };
+
+  useEffect(() => {
+    fetchData();
+    return () => {
+      clearData();
+    };
   }, []);
 
   return (
