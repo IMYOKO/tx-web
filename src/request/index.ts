@@ -52,9 +52,17 @@ const userInfo = (): AxiosPromise => {
   return apiRequest.post(`${baseURL}/user/info`, {});
 };
 
+/**
+ * 我的账单列表
+ */
+const myBillList = (): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/my_bill_list`, {});
+};
+
 export default {
   orderList,
   myOrderList,
   orderDetail,
   userInfo,
+  myBillList,
 };

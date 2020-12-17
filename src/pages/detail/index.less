@@ -1,7 +1,7 @@
 .detail-page {
-  min-height: calc(100vh - 45px);
+  min-height: calc(100vh - 57px);
   background-color: #f9f9f9;
-  padding-bottom: 45px;
+  padding-bottom: 57px;
 
   &-info {
     padding: 15px;
@@ -173,6 +173,40 @@
 
       &:active {
         background: #FF844C;
+      }
+    }
+
+    .button-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .button-item {
+        height: 45px;
+        line-height: 45px;
+        margin: 0 15px;
+        color: #fff;
+        font-weight: 500;
+        text-align: center;
+        font-size: 18px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        background: linear-gradient(180deg, #FF844C 0%, #FF5A2C 100%);
+        border-radius: 45px;
+      }
+
+      .left-wrapper {
+        color: #FF844C;
+        width: 110px;
+        background: #fff;
+        border: 1px solid #FF844C;
+      }
+
+      .right-wrapper {
+        flex: 1;
+
+        &:active {
+          background: #FF844C;
+        }
       }
     }
   }

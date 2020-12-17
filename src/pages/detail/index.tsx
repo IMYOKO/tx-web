@@ -97,7 +97,11 @@ const Detail: React.FC<DetailProps> = props => {
       </div>
 
       <div className="button-wrapper">
-        <div className="button-item">接单</div>
+        {/* <div className="button-item">接单</div> */}
+        <div className="button-box">
+          <div className="button-item left-wrapper">接单</div>
+          <div className="button-item right-wrapper">接单</div>
+        </div>
       </div>
     </div>
   );
