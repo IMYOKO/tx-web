@@ -33,7 +33,8 @@ const routes: IRoute[] = [
         component: '../pages/info',
         Routes: ['src/layouts/TabBarLayout'],
       },
-      { path: '/login', title: 'login', exact: true, component: '../pages/login' },
+      { path: '/login', title: '登录', exact: true, component: '../pages/login' },
+      { path: '/register', title: '注册', exact: true, component: '../pages/register' },
       {
         path: '/user',
         title: '我的',

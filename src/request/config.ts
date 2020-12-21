@@ -5,7 +5,7 @@ const DOMAIN_CONFIG = {
   },
   // 开发
   dev: {
-    common: 'http://192.168.1.52:8080',
+    common: 'http://81.71.31.103:8080',
   },
   // 测试
   test: {

@@ -2,23 +2,20 @@ import React, { FunctionComponent } from 'react';
 import { Redirect } from 'umi';
 import { connect } from 'dva';
 import { CommonModelState } from '@/models/common';
-import { LOGIN_STATUS } from '@/types/enum';
 
 const AuthLayout: React.FC<CommonModelState> = props => {
-  const { isLogin, children } = props;
-  if (isLogin === LOGIN_STATUS.login) {
+  const { token, children } = props;
+  if (token) {
     return <>{children}</>;
-  } else if (isLogin === LOGIN_STATUS.logout) {
-    return <Redirect to="/login" />;
   } else {
-    return null;
+    return <Redirect to="/login" />;
   }
 };
 
 const mapStateToProps = (state: any) => {
   const { COMMON } = state;
-  const { isLogin } = COMMON;
-  return { isLogin };
+  const { token } = COMMON;
+  return { token };
 };
 
 export default connect(mapStateToProps)(AuthLayout);
