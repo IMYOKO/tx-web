@@ -11,9 +11,11 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "antd": "^3.19.5",
+    "@types/lodash-es": "^4.17.4",
+    "antd-mobile": "^2.3.4",
     "axios": "^0.21.0",
     "dva": "^2.6.0-beta.6",
+    "lodash-es": "^4.17.20",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },

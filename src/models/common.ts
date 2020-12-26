@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import API from '@/request';
+import { Toast } from 'antd-mobile';
 
 export interface CaptchaDataType {
   captchaIdentity: string;
@@ -63,9 +64,12 @@ const Common: ModelType = {
           },
         });
         localStorage.setItem('token', token);
-        window.location.replace('/');
+        Toast.info('登录成功', 1, () => {
+          window.location.replace('/');
+        });
       } catch (err) {
         console.log(err);
+        Toast.info('登录失败');
       }
     },
     *register({ payload }, { call, put }) {
@@ -79,9 +83,12 @@ const Common: ModelType = {
           },
         });
         localStorage.setItem('token', token);
-        window.location.replace('/');
+        Toast.info('注册成功', 1, () => {
+          window.location.replace('/');
+        });
       } catch (err) {
         console.log(err);
+        Toast.info('注册失败');
       }
     },
   },

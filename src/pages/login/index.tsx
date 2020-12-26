@@ -1,8 +1,11 @@
 import { PageActionBaseProps } from '@/types/common';
-import { connect } from 'dva';
+import { connect, useHistory } from 'dva';
 import React, { useEffect, useRef } from 'react';
 import { VERIFICATION_CODE_TYPE } from '@/request/emun';
 import { CaptchaDataType } from '@/models/common';
+import { Toast } from 'antd-mobile';
+import { isEmpty } from 'lodash-es';
+import { isPhone, isPassword } from '@/utils/index';
 import './index.less';
 
 interface LoginPageProps extends PageActionBaseProps {
@@ -14,8 +17,11 @@ const Login: React.FC<LoginPageProps> = props => {
     dispatch,
     captchaData: { captchaIdentity, image },
   } = props;
+  const history = useHistory();
 
+  const phoneRef = useRef<any>(null);
   const codeRef = useRef<any>(null);
+  const passwordRef = useRef<any>(null);
 
   const fetchCaptcha = () => {
     dispatch({
@@ -43,10 +49,32 @@ const Login: React.FC<LoginPageProps> = props => {
   }, []);
 
   const login = () => {
+    const phone = phoneRef.current.value;
+    const password = passwordRef.current.value;
     const code = codeRef.current.value;
+    if (isEmpty(phone)) {
+      Toast.info('手机号码不能为空');
+      return;
+    }
+    if (isEmpty(code)) {
+      Toast.info('验证码不能为空');
+      return;
+    }
+    if (isEmpty(password)) {
+      Toast.info('密码不能为空');
+      return;
+    }
+    if (!isPhone(phone)) {
+      Toast.info('请输入正确的手机号码');
+      return;
+    }
+    if (password.length < 6 || password.length > 18 || !isPassword(password)) {
+      Toast.info('密码长度为6-18位数字字母下划线');
+      return;
+    }
     const payload = {
-      phone: '13049492162',
-      password: '123456',
+      phone,
+      password,
       code,
       captchaIdentity,
     };
@@ -57,20 +85,71 @@ const Login: React.FC<LoginPageProps> = props => {
     });
   };
 
+  const goRegister = () => {
+    history.push('/register');
+  };
+
   return (
     <div className="login">
-      <div>
-        <input type="text" name="" placeholder="手机号" />
+      <div className="from-wrapper">
+        <div className="from-item">
+          <div className="from-label">手机号码</div>
+          <div className="from-content">
+            <input
+              type="text"
+              name="phone"
+              maxLength={11}
+              ref={phoneRef}
+              autoComplete="off"
+              placeholder="请输入手机号码"
+            />
+          </div>
+        </div>
+        <div className="from-item from-item-code">
+          <div className="from-label">验证码</div>
+          <div className="from-content">
+            <input
+              type="text"
+              name="code"
+              className="code-text"
+              maxLength={10}
+              ref={codeRef}
+              autoComplete="off"
+              placeholder="请输入验证码"
+            />
+            <div className="code-img">
+              {image && <img src={image} onClick={fetchCaptcha} alt="" />}
+            </div>
+          </div>
+        </div>
+        <div className="from-item">
+          <div className="from-label">密码</div>
+          <div className="from-content">
+            <input
+              type="password"
+              name="password"
+              maxLength={18}
+              ref={passwordRef}
+              autoComplete="off"
+              placeholder="请输入密码"
+            />
+          </div>
+        </div>
+        <div className="from-item no-boder-bottom">
+          <div className="text-wrapper">
+            <span>忘记密码</span>
+          </div>
+        </div>
+        <div className="from-item">
+          <div className="button-wrapper">
+            <button className="button" onClick={login}>
+              登录
+            </button>
+          </div>
+        </div>
       </div>
-      <div>
-        <input type="text" name="" placeholder="验证码" ref={codeRef} />
-        {image && <img src={image} onClick={fetchCaptcha} alt="" />}
-      </div>
-      <div>
-        <input type="password" name="" placeholder="密码" />
-      </div>
-      <div>
-        <button onClick={login}>登录</button>
+      <div className="login-footer-wrapper">
+        <span onClick={goRegister}>立即注册</span>
       </div>
     </div>
   );

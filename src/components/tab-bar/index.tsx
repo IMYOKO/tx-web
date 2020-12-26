@@ -33,7 +33,7 @@ const TabBarList: React.FC<TabBarListProps> = ({ data }) => {
   );
 };
 
-const TabBar: React.FC = props => {
+const TabBar: React.FC = () => {
   const history = useHistory();
   const tabBarListProps: TabBarListProps = {
     data: [
@@ -47,18 +47,10 @@ const TabBar: React.FC = props => {
       },
       {
         key: 'task',
-        title: '任务',
+        title: '稿件',
         pathName: '/task',
         handClick: () => {
           history.replace('/task');
-        },
-      },
-      {
-        key: 'info',
-        title: '消息',
-        pathName: '/info',
-        handClick: () => {
-          history.replace('/info');
         },
       },
       {

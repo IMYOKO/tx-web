@@ -7,9 +7,7 @@ const UserInfo: React.FC<Partial<UserInfoType>> = props => {
   return (
     <div className="user-info">
       <div className="avatar-wrapper">
-        <div className="avatar-box">
-          <img src={avatarUrl} alt="" />
-        </div>
+        <div className="avatar-box">{avatarUrl && <img src={avatarUrl} alt="" />}</div>
       </div>
       <div className="user-info-wrapper">
         <div className="user-name">{nickName}</div>
