@@ -26,3 +26,38 @@ export interface LoginParam {
 export interface CaptchaParam {
   verificationCodeType: VERIFICATION_CODE_TYPE;
 }
+
+export interface SubOrderCatchParam {
+  orderId: number;
+}
+
+export interface SubOrderListParam extends OrderListParam {}
+
+export interface SubOrderDetailParam {
+  subOrderId: number;
+}
+
+export interface SubOrderSubmitParam {
+  subOrderId: number;
+  submitContent: string;
+  submitFileList: string[];
+}
+
+export interface SubOrderAuditParam {
+  subOrderId: number;
+  amount: number;
+  remark: string;
+  status: string;
+}
+
+export interface OrderCreateParam {
+  title: string;
+  commissionAmount: number;
+  count: number;
+  principalAmount: number;
+  description: string;
+  descriptionFileList: any[];
+  tagList: string[];
+  taskClaim: string;
+  taskClaimFileList: any[];
+}

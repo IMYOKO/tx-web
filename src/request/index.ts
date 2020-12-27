@@ -1,7 +1,19 @@
 import ApiRequest from './request';
 import { AxiosPromise } from 'axios';
 import { baseURL } from './config';
-import { OrderListParam, OrderDetailParam, RegisterParam, LoginParam, CaptchaParam } from './type';
+import {
+  OrderListParam,
+  OrderDetailParam,
+  RegisterParam,
+  LoginParam,
+  CaptchaParam,
+  SubOrderCatchParam,
+  SubOrderListParam,
+  SubOrderDetailParam,
+  SubOrderSubmitParam,
+  SubOrderAuditParam,
+  OrderCreateParam,
+} from './type';
 
 const apiRequest = new ApiRequest();
 
@@ -25,6 +37,13 @@ apiRequest.axios.interceptors.response.use(
 );
 
 /**
+ * 新增订单
+ */
+const orderCreate = (data: OrderCreateParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/order/create`, data);
+};
+
+/**
  * 订单列表
  */
 const orderList = (data: OrderListParam): AxiosPromise => {
@@ -36,6 +55,13 @@ const orderList = (data: OrderListParam): AxiosPromise => {
  */
 const orderDetail = (data: OrderDetailParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/order/detail`, data);
+};
+
+/**
+ * 获取标签
+ */
+const orderTagList = (): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/order/tag-list`);
 };
 
 /**
@@ -80,13 +106,55 @@ const captcha = (data: CaptchaParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/captcha`, data);
 };
 
+/**
+ * 抢单
+ */
+const subOrderCatch = (data: SubOrderCatchParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/sub-order/catch`, data);
+};
+
+/**
+ * 子订单列表
+ */
+const subOrderList = (data: SubOrderListParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/sub-order/list`, data);
+};
+
+/**
+ * 子订单详情
+ */
+const subOrderDetail = (data: SubOrderDetailParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/sub-order/detail`, data);
+};
+
+/**
+ * 子订单提交
+ */
+const subOrderSubmit = (data: SubOrderSubmitParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/sub-order/submit`, data);
+};
+
+/**
+ * 子订单审核
+ */
+const subOrderAudit = (data: SubOrderAuditParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/sub-order/audit`, data);
+};
+
 export default {
+  orderCreate,
   orderList,
   myOrderList,
   orderDetail,
+  orderTagList,
   userInfo,
   myBillList,
   register,
   login,
   captcha,
+  subOrderCatch,
+  subOrderList,
+  subOrderDetail,
+  subOrderSubmit,
+  subOrderAudit,
 };

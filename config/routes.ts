@@ -35,6 +35,13 @@ const routes: IRoute[] = [
         component: '../pages/user',
         Routes: ['src/layouts/TabBarLayout', 'src/layouts/AuthLayout'],
       },
+      {
+        path: '/add-order',
+        title: '发布稿件',
+        exact: true,
+        component: '../pages/add-order',
+        Routes: ['src/layouts/AuthLayout'],
+      },
     ],
   },
 ];

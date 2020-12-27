@@ -66,7 +66,7 @@ class ApiRequest {
     return this.axios.get(url, { params: { ...params } });
   }
 
-  post(url: string, data: Record<string, any>): AxiosPromise {
+  post(url: string, data?: Record<string, any>): AxiosPromise {
     return this.axios.post(url, data);
   }
 
