@@ -32,6 +32,8 @@ input:focus {
   outline: none;
 }
 
+textarea,
 input {
   border: none;
+  padding: 0;
 }
