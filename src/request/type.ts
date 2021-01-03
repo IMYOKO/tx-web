@@ -61,3 +61,11 @@ export interface OrderCreateParam {
   taskClaim: string;
   taskClaimFileList: any[];
 }
+
+export interface FeedbackParam {
+  content: string;
+}
+
+export interface SwitchRoleParam {
+  roleCode: string;
+}

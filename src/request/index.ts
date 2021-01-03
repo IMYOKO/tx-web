@@ -13,6 +13,8 @@ import {
   SubOrderSubmitParam,
   SubOrderAuditParam,
   OrderCreateParam,
+  FeedbackParam,
+  SwitchRoleParam,
 } from './type';
 
 const apiRequest = new ApiRequest();
@@ -79,6 +81,13 @@ const userInfo = (): AxiosPromise => {
 };
 
 /**
+ * 意见反馈
+ */
+const feedback = (data: FeedbackParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/feedback`, data);
+};
+
+/**
  * 我的账单列表
  */
 const myBillList = (): AxiosPromise => {
@@ -141,6 +150,13 @@ const subOrderAudit = (data: SubOrderAuditParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/sub-order/audit`, data);
 };
 
+/**
+ * 角色切换
+ */
+const switchRole = (data: SwitchRoleParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/switch-role`, data);
+};
+
 export default {
   orderCreate,
   orderList,
@@ -148,6 +164,7 @@ export default {
   orderDetail,
   orderTagList,
   userInfo,
+  feedback,
   myBillList,
   register,
   login,
@@ -157,4 +174,5 @@ export default {
   subOrderDetail,
   subOrderSubmit,
   subOrderAudit,
+  switchRole,
 };

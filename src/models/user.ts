@@ -1,6 +1,7 @@
 import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import API from '@/request';
+import { Toast } from 'antd-mobile';
 
 export interface UserInfoType {
   userId: number;
@@ -23,6 +24,7 @@ export interface ModelType {
   };
   effects: {
     fetch: Effect;
+    switchRole: Effect;
   };
 }
 
@@ -51,6 +53,15 @@ const Model: ModelType = {
         });
       } catch (err) {
         console.log(err);
+      }
+    },
+    *switchRole({ payload, successCallback }, { call }) {
+      try {
+        yield call(API.userInfo, payload);
+        successCallback && successCallback();
+      } catch (err) {
+        console.log(err);
+        Toast.info('切换失败');
       }
     },
   },

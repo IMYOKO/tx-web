@@ -146,6 +146,14 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
               </div>
             </div>
           </div>
+          <div className="add-order-form-list">
+            <div className="order-gaojian-wrapper">
+              <div className="title">稿件要求</div>
+              <div className="discrption-wrapper">
+                <textarea name="" id="" rows={6} placeholder="请输入稿件要求"></textarea>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

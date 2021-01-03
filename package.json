@@ -4,9 +4,10 @@
     "start": "UMI_ENV=dev umi dev",
     "start:mock": "UMI_ENV=mock umi dev",
     "build:dev": "UMI_ENV=dev umi build",
-    "build:test": "UMI_ENV=test umi build",
+    "build:test": "UMI_ENV=_test umi build",
     "build": "UMI_ENV=prod umi build",
     "test": "umi test",
+    "test:coverage": "umi test --coverage",
     "lint": "eslint {src,mock,tests}/**/*.{ts,tsx} --fix",
     "precommit": "lint-staged"
   },

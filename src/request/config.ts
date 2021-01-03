@@ -24,7 +24,7 @@ if (process.env.UMI_ENV === 'mock') {
   domain = DOMAIN_CONFIG.mock;
 }
 
-if (process.env.UMI_ENV === 'test') {
+if (process.env.UMI_ENV === '_test') {
   domain = DOMAIN_CONFIG.test;
 }
 

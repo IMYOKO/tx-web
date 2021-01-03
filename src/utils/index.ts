@@ -9,3 +9,9 @@ export const isPassword = (password: string): boolean => {
   const reg = /^([a-zA-Z]|\d)\w{5,17}$/;
   return reg.test(password);
 };
+
+// 判断交易密码 6位数字
+export const isTradePassword = (password: string): boolean => {
+  const reg = /^\d{6}$/;
+  return reg.test(password);
+};

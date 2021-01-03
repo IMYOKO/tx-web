@@ -1,0 +1,80 @@
+.my-bill-page {
+
+  .my-balance-wrapper {
+    margin: 10px 15px;
+    padding: 25px 10px;
+    background-color: #fff;
+    text-align: center;
+    border-radius: 12px;
+
+    .title {
+      font-size: 15px;
+      line-height: 1.2;
+      color: #666;
+    }
+
+    .balance {
+      color: #333;
+      font-size: 30px;
+      line-height: 1.2;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .btn-withdraw-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .btn-withdraw {
+        color: #fff;
+        width: 80px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 15px;
+        background: linear-gradient(180deg, #529AFC 0%, #377BFA 100%);
+      }
+    }
+  }
+
+  .my-bill-wrapper {
+    .my-bill-seach {
+      margin: 0 15px 10px;
+    }
+
+    .my-bill-list-wrapper {
+      background-color: #fff;
+
+      >li {
+        padding: 10px 15px;
+        border-bottom: 1px solid #ddd;
+
+        &:last-child {
+          border-bottom: 1px solid #fff;
+        }
+
+        .my-bill-item {
+
+          &-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &.time {
+              font-size: 13px;
+              line-height: 1.5;
+              color: #999;
+              margin-bottom: 10px;
+            }
+
+            &.money {
+              font-size: 15px;
+              line-height: 1.5;
+              color: #333;
+            }
+          }
+        }
+      }
+    }
+  }
+}

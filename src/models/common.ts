@@ -19,6 +19,7 @@ export interface ModelType {
     fetchCaptcha: Effect;
     login: Effect;
     register: Effect;
+    feedback: Effect;
   };
   reducers: {
     save: Reducer<CommonModelState>;
@@ -89,6 +90,15 @@ const Common: ModelType = {
       } catch (err) {
         console.log(err);
         Toast.info('注册失败');
+      }
+    },
+    *feedback({ payload, success }, { call }) {
+      try {
+        yield call(API.feedback, payload);
+        success && success();
+      } catch (e) {
+        console.log(e);
+        Toast.info('提交失败');
       }
     },
   },
