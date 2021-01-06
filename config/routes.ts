@@ -84,13 +84,13 @@ const routes: IRoute[] = [
         component: '../pages/reset-password',
         Routes: ['src/layouts/AuthLayout'],
       },
-      {
-        path: '/reset-trade-password',
-        title: '重置交易密码',
-        exact: true,
-        component: '../pages/reset-trade-password',
-        Routes: ['src/layouts/AuthLayout'],
-      },
+      // {
+      //   path: '/reset-trade-password',
+      //   title: '重置交易密码',
+      //   exact: true,
+      //   component: '../pages/reset-trade-password',
+      //   Routes: ['src/layouts/AuthLayout'],
+      // },
     ],
   },
 ];
