@@ -41,4 +41,5 @@ input {
 .app {
   padding-top: 45px;
   background-color: #f9f9f9;
+  min-height: calc(100vh - 45px);
 }

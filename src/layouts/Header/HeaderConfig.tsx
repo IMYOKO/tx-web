@@ -22,6 +22,9 @@ const backignoreMap: HeaderConfigType[] = [
     path: '/',
   },
   {
+    path: '/404',
+  },
+  {
     path: '/task',
   },
   {

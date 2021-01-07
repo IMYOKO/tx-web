@@ -91,6 +91,11 @@ const routes: IRoute[] = [
       //   component: '../pages/reset-trade-password',
       //   Routes: ['src/layouts/AuthLayout'],
       // },
+      {
+        path: '/404',
+        title: '404',
+        component: '../pages/404',
+      },
     ],
   },
 ];
