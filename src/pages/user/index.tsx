@@ -8,6 +8,7 @@ import { connect, useHistory } from 'dva';
 import RoleModal, { RoleModalProps } from './RoleModal';
 import { Toast } from 'antd-mobile';
 import './index.less';
+import { ROLE_STATUS } from '@/types/enum';
 
 interface UserPrpos extends PageActionBaseProps {
   userInfo: Partial<UserInfoType>;
@@ -15,6 +16,7 @@ interface UserPrpos extends PageActionBaseProps {
 
 const User: React.FC<UserPrpos> = props => {
   const { userInfo, dispatch } = props;
+  const { roleCode } = userInfo;
   const [visible, setVisible] = useState<boolean>(false);
   const history = useHistory();
 
@@ -40,6 +42,17 @@ const User: React.FC<UserPrpos> = props => {
 
   const goPage = (path: string) => {
     history.push(path);
+  };
+
+  const renderRole = () => {
+    let role = '';
+    if (roleCode === ROLE_STATUS.orders) {
+      role = '接单者';
+    }
+    if (roleCode === ROLE_STATUS.dispatcher) {
+      role = '派单者';
+    }
+    return role;
   };
 
   const navList: NavListItem[][] = [
@@ -77,7 +90,7 @@ const User: React.FC<UserPrpos> = props => {
       {
         iconClass: 'icon-role',
         title: '角色切换',
-        tips: '接单者',
+        tips: renderRole(),
         handleClick: () => {
           showModal();
         },
@@ -104,25 +117,38 @@ const User: React.FC<UserPrpos> = props => {
     setVisible(true);
   };
 
-  const switchRole = (role: string) => {
+  const switchRole = () => {
+    let role = '';
+    if (roleCode === ROLE_STATUS.orders) {
+      role = ROLE_STATUS.dispatcher;
+    }
+    if (roleCode === ROLE_STATUS.dispatcher) {
+      role = ROLE_STATUS.orders;
+    }
+    if (!role) {
+      Toast.info('角色获取失败');
+      return;
+    }
     dispatch({
       type: 'USER/switchRole',
       payload: {
-        role,
+        roleCode: role,
       },
       successCallback: () => {
         Toast.info('切换成功', 1, () => {
           hideModal();
         });
       },
+      errCallback: hideModal,
     });
   };
 
   const roleModalProps: RoleModalProps = {
     visible,
+    roleCode,
     hide: hideModal,
     onOk: () => {
-      hideModal();
+      switchRole();
     },
   };
 

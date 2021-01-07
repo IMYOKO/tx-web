@@ -1,4 +1,11 @@
 import { Dispatch } from 'redux';
+import { CommonModelState } from '@/models/common';
+import { UserPageModelState } from '@/models/user';
+
+export interface RootState {
+  USER: UserPageModelState;
+  COMMON: CommonModelState;
+}
 export interface Pagination {
   pageNo: number;
   pageSize: number;

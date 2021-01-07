@@ -15,6 +15,7 @@ import {
   OrderCreateParam,
   FeedbackParam,
   SwitchRoleParam,
+  ComplementInfoParam,
 } from './type';
 
 const apiRequest = new ApiRequest();
@@ -77,7 +78,14 @@ const myOrderList = (data: OrderListParam): AxiosPromise => {
  * 用户信息
  */
 const userInfo = (): AxiosPromise => {
-  return apiRequest.post(`${baseURL}/user/info`, {});
+  return apiRequest.post(`${baseURL}/user/info`);
+};
+
+/**
+ * 完善用户信息
+ */
+const complementInfo = (data: Partial<ComplementInfoParam>): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/complementInfo`, data);
 };
 
 /**
@@ -91,7 +99,7 @@ const feedback = (data: FeedbackParam): AxiosPromise => {
  * 我的账单列表
  */
 const myBillList = (): AxiosPromise => {
-  return apiRequest.post(`${baseURL}/user/my_bill_list`, {});
+  return apiRequest.post(`${baseURL}/user/my_bill_list`);
 };
 
 /**
@@ -154,7 +162,7 @@ const subOrderAudit = (data: SubOrderAuditParam): AxiosPromise => {
  * 角色切换
  */
 const switchRole = (data: SwitchRoleParam): AxiosPromise => {
-  return apiRequest.post(`${baseURL}/user/switch-role`, data);
+  return apiRequest.post(`${baseURL}/user/switch_role`, data);
 };
 
 export default {
@@ -164,6 +172,7 @@ export default {
   orderDetail,
   orderTagList,
   userInfo,
+  complementInfo,
   feedback,
   myBillList,
   register,

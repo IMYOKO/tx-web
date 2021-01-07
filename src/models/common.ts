@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { Effect } from 'dva';
+import { Effect, Subscription } from 'dva';
 import API from '@/request';
 import { Toast } from 'antd-mobile';
 
@@ -24,12 +24,17 @@ export interface ModelType {
   reducers: {
     save: Reducer<CommonModelState>;
   };
+  subscriptions: {
+    setup: Subscription;
+  };
 }
+
+const token = localStorage.getItem('token') || '';
 
 const Common: ModelType = {
   namespace: 'COMMON',
   state: {
-    token: localStorage.getItem('token') || '',
+    token,
     captchaData: {},
   },
   reducers: {
@@ -100,6 +105,16 @@ const Common: ModelType = {
         console.log(e);
         Toast.info('提交失败');
       }
+    },
+  },
+  subscriptions: {
+    setup({ dispatch }) {
+      if (!token) {
+        return;
+      }
+      dispatch({
+        type: 'USER/fetch',
+      });
     },
   },
 };

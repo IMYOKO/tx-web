@@ -2,6 +2,7 @@ import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import API from '@/request';
 import { Toast } from 'antd-mobile';
+import { PUBLIC_STATUS, ROLE_STATUS, VERIFY_STATUS } from '@/types/enum';
 
 export interface UserInfoType {
   userId: number;
@@ -10,6 +11,9 @@ export interface UserInfoType {
   balance: number;
   hasCommissionAmount: number;
   todayIncome: number;
+  publicStatus: PUBLIC_STATUS;
+  verifyStatus: VERIFY_STATUS;
+  roleCode: ROLE_STATUS;
 }
 
 export interface UserPageModelState {
@@ -25,6 +29,7 @@ export interface ModelType {
   effects: {
     fetch: Effect;
     switchRole: Effect;
+    complementInfo: Effect;
   };
 }
 
@@ -42,9 +47,9 @@ const Model: ModelType = {
     },
   },
   effects: {
-    *fetch({ payload }, { call, put }) {
+    *fetch(_, { call, put }) {
       try {
-        const userInfo = yield call(API.userInfo, payload);
+        const userInfo = yield call(API.userInfo);
         yield put({
           type: 'save',
           payload: {
@@ -55,13 +60,24 @@ const Model: ModelType = {
         console.log(err);
       }
     },
-    *switchRole({ payload, successCallback }, { call }) {
+    *switchRole({ payload, successCallback, errCallback }, { call, put }) {
       try {
-        yield call(API.userInfo, payload);
+        yield call(API.switchRole, payload);
+        yield put({ type: 'fetch' });
         successCallback && successCallback();
       } catch (err) {
         console.log(err);
         Toast.info('切换失败');
+        errCallback && errCallback();
+      }
+    },
+    *complementInfo({ payload, successCallback }, { call, put }) {
+      try {
+        yield call(API.complementInfo, payload);
+        successCallback && successCallback();
+      } catch (err) {
+        console.log(err);
+        Toast.info('修改失败');
       }
     },
   },

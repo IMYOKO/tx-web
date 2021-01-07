@@ -69,3 +69,13 @@ export interface FeedbackParam {
 export interface SwitchRoleParam {
   roleCode: string;
 }
+
+export interface ComplementInfoParam {
+  nickName: string;
+  avatar: AvatarType;
+}
+
+export interface AvatarType {
+  base64String: string;
+  suffix: string;
+}

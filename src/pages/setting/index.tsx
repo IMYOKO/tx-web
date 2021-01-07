@@ -51,6 +51,9 @@ const Setting: React.FC<SettingPrpos> = props => {
       {
         title: '昵称',
         tips: nickName,
+        handleClick: () => {
+          history.push('/rename');
+        },
       },
       {
         title: '手机号码',
@@ -58,12 +61,12 @@ const Setting: React.FC<SettingPrpos> = props => {
       },
     ],
     [
-      {
-        title: '重置交易密码',
-        handleClick: () => {
-          history.push('/reset-trade-password');
-        },
-      },
+      // {
+      //   title: '重置交易密码',
+      //   handleClick: () => {
+      //     history.push('/reset-trade-password');
+      //   },
+      // },
       {
         title: '重置登录密码',
         handleClick: () => {
