@@ -42,8 +42,8 @@ const Avatar = () => {
       <div className="avatar-page-wrapper">
         <div className="avatar-page-box">
           <input type="file" onChange={fileChange} accept="image/*" />
-          {avatar && <img className="avatar" src={avatar.base64String} alt="" />}
-          {avatarUrl && <img className="old-avatar" src={avatarUrl} alt="" />}
+          {!isEmpty(avatar) && <img className="avatar" src={avatar.base64String} alt="" />}
+          {avatarUrl && isEmpty(avatar) && <img className="old-avatar" src={avatarUrl} alt="" />}
         </div>
       </div>
       <div className="button-wrapper">

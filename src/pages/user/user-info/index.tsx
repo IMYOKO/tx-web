@@ -9,7 +9,13 @@ export interface UserInfoProps {
 }
 
 const UserInfo: React.FC<UserInfoProps> = ({ userInfo, handleClick }) => {
-  const { avatarUrl = '', nickName = '' } = userInfo;
+  const { avatarUrl = '', nickName } = userInfo;
+  const renderNickName = () => {
+    if (nickName !== undefined && !nickName) {
+      return <span>请设置昵称</span>;
+    }
+    return nickName;
+  };
   return (
     <div className="user-info">
       <div className="avatar-wrapper" onClick={handleClick}>
@@ -18,7 +24,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ userInfo, handleClick }) => {
         </div>
       </div>
       <div className="user-info-wrapper" onClick={handleClick}>
-        <div className="user-name">{nickName || '请设置昵称'}</div>
+        <div className="user-name">{renderNickName()}</div>
         <div className="user-info-box">
           <span>个人资料</span>
         </div>

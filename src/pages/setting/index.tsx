@@ -61,6 +61,7 @@ const Setting: React.FC<SettingPrpos> = props => {
       {
         title: '手机号码',
         tips: '13049492162',
+        hideMoreIcon: true,
       },
     ],
     [

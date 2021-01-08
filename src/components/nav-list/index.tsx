@@ -6,6 +6,7 @@ export interface NavListItem {
   tips?: string | React.ReactNode;
   iconClass?: string;
   handleClick?: () => void;
+  hideMoreIcon?: boolean;
 }
 
 export interface NavListProps {
@@ -23,7 +24,7 @@ const NavList: React.FC<NavListProps> = ({ navList }) => {
     <>
       {navList.map((nav, index) => (
         <div className="user-nav-list" key={index}>
-          {nav.map(({ title, tips, iconClass, handleClick }, eq) => (
+          {nav.map(({ title, tips, iconClass, hideMoreIcon, handleClick }, eq) => (
             <div
               className="user-nav-list-item"
               key={`${title}-${index}-${eq}`}
@@ -35,7 +36,7 @@ const NavList: React.FC<NavListProps> = ({ navList }) => {
               </div>
               <div className="user-nav-list-item-box">
                 {renderTips(tips)}
-                <div className="more"></div>
+                {!hideMoreIcon && <div className="more"></div>}
               </div>
             </div>
           ))}

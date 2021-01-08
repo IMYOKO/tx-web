@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Redirect } from 'umi';
 import { connect } from 'dva';
 import { CommonModelState } from '@/models/common';
+import { RootState } from '@/types/common';
 
 const AuthLayout: React.FC<CommonModelState> = props => {
   const { token, children } = props;
@@ -12,7 +13,7 @@ const AuthLayout: React.FC<CommonModelState> = props => {
   }
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   const { COMMON } = state;
   const { token } = COMMON;
   return { token };
