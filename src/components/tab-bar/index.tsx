@@ -66,7 +66,9 @@ const TabBar: React.FC = () => {
 
   return (
     <div className="tab-bar">
-      <TabBarList {...tabBarListProps} />
+      <div className="tab-bar-wrapper">
+        <TabBarList {...tabBarListProps} />
+      </div>
     </div>
   );
 };

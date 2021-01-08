@@ -1,6 +1,6 @@
 import React from 'react';
 import TabBar from '@/components/tab-bar';
-import './TabBarLayout.less';
+import './index.less';
 
 const TabBarLayout: React.FC = props => {
   return (

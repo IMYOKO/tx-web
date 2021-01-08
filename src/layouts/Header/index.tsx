@@ -27,7 +27,11 @@ const Header: React.FC = props => {
     );
   };
 
-  return <div className="Header">{renderContent(pathname, HeaderConfig)}</div>;
+  return (
+    <div className="Header">
+      <div className="Header-wrapper">{renderContent(pathname, HeaderConfig)}</div>
+    </div>
+  );
 };
 
 const mapStateToProps = (state: any) => state;

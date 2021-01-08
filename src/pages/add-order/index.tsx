@@ -81,12 +81,6 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
 
   return (
     <div className="add-order-page">
-      <div className="add-order-title">
-        <span>发布稿件</span>
-        <div className="button" onClick={submit}>
-          发布
-        </div>
-      </div>
       <div className="add-order-page-content">
         <div className="add-order-form">
           <div className="add-order-form-list">
@@ -143,6 +137,14 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
               <div className="title">稿件描述</div>
               <div className="discrption-wrapper">
                 <textarea name="" id="" rows={6} placeholder="请输入稿件描述"></textarea>
+              </div>
+            </div>
+          </div>
+          <div className="add-order-form-list">
+            <div className="order-gaojian-wrapper">
+              <div className="title">稿件要求</div>
+              <div className="discrption-wrapper">
+                <textarea name="" id="" rows={6} placeholder="请输入稿件要求"></textarea>
               </div>
             </div>
           </div>
