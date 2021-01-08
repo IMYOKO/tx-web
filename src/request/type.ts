@@ -1,3 +1,4 @@
+import { FileDataType } from '@/types/common';
 import { VERIFICATION_CODE_TYPE } from './emun';
 
 export interface OrderListParam {
@@ -56,10 +57,10 @@ export interface OrderCreateParam {
   count: number;
   principalAmount: number;
   description: string;
-  descriptionFileList: any[];
+  descriptionFileList: FileDataType[];
   tagList: string[];
   taskClaim: string;
-  taskClaimFileList: any[];
+  taskClaimFileList: FileDataType[];
 }
 
 export interface FeedbackParam {

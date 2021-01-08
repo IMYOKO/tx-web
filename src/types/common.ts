@@ -17,7 +17,7 @@ export interface PageActionBaseProps {
   dispatch: Dispatch;
 }
 
-export interface AvatarDataType {
+export interface FileDataType {
   base64String: string;
   suffix: string;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AvatarDataType } from '@/types/common';
+import { FileDataType } from '@/types/common';
 import UseUserInfo from '@/hooks/useUserInfo';
 import { useDispatch, useHistory } from 'dva';
 import { isEmpty } from 'lodash-es';
@@ -12,7 +12,7 @@ const Avatar = () => {
   const history = useHistory();
   const { userInfo } = UseUserInfo();
   const { avatarUrl = '' } = userInfo;
-  const [avatar, setAvatar] = useState<Partial<AvatarDataType>>({});
+  const [avatar, setAvatar] = useState<Partial<FileDataType>>({});
 
   const fileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -41,7 +41,7 @@ const Avatar = () => {
     <div className="avatar-page">
       <div className="avatar-page-wrapper">
         <div className="avatar-page-box">
-          <input type="file" onChange={fileChange} accept="image/*" />
+          <input type="file" key={new Date().getTime()} onChange={fileChange} accept="image/*" />
           {!isEmpty(avatar) && <img className="avatar" src={avatar.base64String} alt="" />}
           {avatarUrl && isEmpty(avatar) && <img className="old-avatar" src={avatarUrl} alt="" />}
         </div>

@@ -1,25 +1,88 @@
 import TagListModal from '@/components/tag-list';
-import { PageActionBaseProps } from '@/types/common';
+import { FileDataType, PageActionBaseProps } from '@/types/common';
 import { connect } from 'dva';
 import React, { useState, useEffect } from 'react';
 import { isEmpty } from 'lodash-es';
+import Headers from '@/components/headers';
+import ImagePicker from '@/components/image-picker';
 import './index.less';
 
 interface AddOrderPageProps extends PageActionBaseProps {
   tagList: string[];
 }
 
+interface AddOrderFormType {
+  title: string;
+  description: string;
+  taskClaim: string;
+}
+
+interface AmountDataType {
+  commissionAmount: number | string;
+  count: number | string;
+  principalAmount: number | string;
+}
+
+const DefaultFormData: AddOrderFormType = {
+  title: '',
+  description: '',
+  taskClaim: '',
+};
+
+const DefaultAmountData: AmountDataType = {
+  commissionAmount: '',
+  count: '',
+  principalAmount: '',
+};
+
 const AddOrder: React.FC<AddOrderPageProps> = props => {
   const { dispatch, tagList } = props;
   const [visible, setVisible] = useState<boolean>(false);
   const [activeTagList, setActiveTagList] = useState<string[]>([]);
+  const [addOrderForm, setAddOrderForm] = useState<AddOrderFormType>(DefaultFormData);
+  const [amountData, setAmountData] = useState<AmountDataType>(DefaultAmountData);
+  const [totalCommissionAmount, setTotalCommissionAmount] = useState<number>(0);
+  const [descriptionFileList, setDescriptionFileList] = useState<FileDataType[]>([]);
+  const [taskClaimFileList, setTaskClaimFileList] = useState<FileDataType[]>([]);
 
+  // 计算总佣金
+  useEffect(() => {
+    const count = Number(amountData.count);
+    const commissionAmount = Number(amountData.commissionAmount);
+    setTotalCommissionAmount(count * commissionAmount);
+  }, [amountData.count, amountData.commissionAmount]);
+
+  const updateAddOrderForm = (data: Partial<AddOrderFormType>) => {
+    if (!isEmpty(data)) {
+      setAddOrderForm({ ...addOrderForm, ...data });
+    }
+  };
+
+  const updateAmountData = (data: Partial<AmountDataType>) => {
+    if (!isEmpty(data)) {
+      setAmountData({ ...amountData, ...data });
+    }
+  };
+
+  // 提交表单
   const submit = () => {
+    const count = Number(amountData.count);
+    const principalAmount = Number(amountData.principalAmount);
+    const commissionAmount = Number(amountData.commissionAmount);
+    const payload = {
+      ...addOrderForm,
+      count,
+      principalAmount,
+      commissionAmount,
+      tagList: activeTagList,
+      descriptionFileList,
+      taskClaimFileList,
+    };
+    console.log({ payload });
+    // return;
     dispatch({
       type: 'ADD_ORDER/create',
-      payload: {
-        title: 'ssss',
-      },
+      payload,
     });
   };
 
@@ -53,6 +116,53 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
     setVisible(false);
   };
 
+  // 修改标题
+  const titleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateAddOrderForm({ title: e.target.value });
+  };
+
+  // 修改任务数量
+  const countChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateAmountData({ count: e.target.value });
+  };
+
+  const countKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    let count = (e.target as any).value;
+    count = count.replace(/\D/g, '');
+    updateAmountData({ count });
+  };
+
+  // 修改本金
+  const principalAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateAmountData({ principalAmount: e.target.value });
+  };
+
+  // 修改佣金
+  const commissionAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateAmountData({ commissionAmount: e.target.value });
+  };
+
+  // 任务描述
+  const addDescriptionFiles = (result: FileDataType) => {
+    setDescriptionFileList([...descriptionFileList, result]);
+  };
+
+  const removeDescriptionFile = (index: number) => {
+    const fileList = descriptionFileList.filter((_, i) => i !== index);
+    setDescriptionFileList(fileList);
+  };
+
+  // 任务要求
+  const addTaskClaimFiles = (result: FileDataType) => {
+    setTaskClaimFileList([...taskClaimFileList, result]);
+  };
+
+  const removeTaskClaimFile = (index: number) => {
+    const fileList = taskClaimFileList.filter((_, i) => i !== index);
+    setTaskClaimFileList(fileList);
+  };
+
+  // 标签弹窗props
   const tagListModalProps = {
     visible,
     tagList: ['标签1', '标签2', '标签3', '标签4', '标签5', '标签6'],
@@ -81,6 +191,11 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
 
   return (
     <div className="add-order-page">
+      <Headers>
+        <div className="tx-btn submit-btn" onClick={submit}>
+          发布
+        </div>
+      </Headers>
       <div className="add-order-page-content">
         <div className="add-order-form">
           <div className="add-order-form-list">
@@ -88,35 +203,60 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
               <div className="add-order-form-item-wrapper">
                 <div className="label">标题</div>
                 <div className="content">
-                  <input type="text" placeholder="请输入标题" autoComplete="off" />
+                  <input
+                    value={addOrderForm.title}
+                    type="text"
+                    placeholder="请输入标题"
+                    maxLength={32}
+                    onChange={titleChange}
+                    autoComplete="off"
+                  />
                 </div>
               </div>
               <div className="add-order-form-item-wrapper">
                 <div className="label">佣金</div>
                 <div className="content">
-                  <input type="number" placeholder="请输入佣金" autoComplete="off" />
+                  <input
+                    type="number"
+                    value={amountData.commissionAmount}
+                    placeholder="请输入佣金"
+                    onChange={commissionAmountChange}
+                    autoComplete="off"
+                  />
                   <span>元</span>
                 </div>
               </div>
               <div className="add-order-form-item-wrapper">
                 <div className="label">本金</div>
                 <div className="content">
-                  <input type="number" placeholder="请输入本金" autoComplete="off" />
+                  <input
+                    type="number"
+                    value={amountData.principalAmount}
+                    placeholder="请输入本金"
+                    onChange={principalAmountChange}
+                    autoComplete="off"
+                  />
                   <span>元</span>
                 </div>
               </div>
               <div className="add-order-form-item-wrapper">
                 <div className="label">所需任务</div>
                 <div className="content">
-                  <input type="number" placeholder="请输入任务个数" autoComplete="off" />
+                  <input
+                    type="test"
+                    value={amountData.count}
+                    placeholder="请输入任务个数"
+                    onKeyUp={countKeyUp}
+                    onChange={countChange}
+                    autoComplete="off"
+                  />
                   <span>个</span>
                 </div>
               </div>
               <div className="add-order-form-item-wrapper">
                 <div className="label">总佣金</div>
                 <div className="content">
-                  <input type="number" placeholder="请输入总佣金" autoComplete="off" />
-                  <span>元</span>
+                  <div className="sigle">{totalCommissionAmount} 元</div>
                 </div>
               </div>
               <div
@@ -132,28 +272,34 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
               </div>
             </div>
           </div>
+          {/* 稿件描述 */}
           <div className="add-order-form-list">
             <div className="order-gaojian-wrapper">
               <div className="title">稿件描述</div>
               <div className="discrption-wrapper">
                 <textarea name="" id="" rows={6} placeholder="请输入稿件描述"></textarea>
               </div>
+              <ImagePicker
+                key="descriptionFileList"
+                fileList={descriptionFileList}
+                addFiles={addDescriptionFiles}
+                removeFile={removeDescriptionFile}
+              />
             </div>
           </div>
+          {/* 稿件要求 */}
           <div className="add-order-form-list">
             <div className="order-gaojian-wrapper">
               <div className="title">稿件要求</div>
               <div className="discrption-wrapper">
                 <textarea name="" id="" rows={6} placeholder="请输入稿件要求"></textarea>
               </div>
-            </div>
-          </div>
-          <div className="add-order-form-list">
-            <div className="order-gaojian-wrapper">
-              <div className="title">稿件要求</div>
-              <div className="discrption-wrapper">
-                <textarea name="" id="" rows={6} placeholder="请输入稿件要求"></textarea>
-              </div>
+              <ImagePicker
+                key="taskClaimFileList"
+                fileList={taskClaimFileList}
+                addFiles={addTaskClaimFiles}
+                removeFile={removeTaskClaimFile}
+              />
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { AvatarDataType } from '@/types/common';
+import { FileDataType } from '@/types/common';
 
 // 判断手机号
 export const isPhone = (phone: string): boolean => {
@@ -19,7 +19,7 @@ export const isTradePassword = (password: string): boolean => {
 };
 
 // file转base64
-export const fileByBase64 = (file: File, callback: (result: AvatarDataType) => void) => {
+export const fileByBase64 = (file: File, callback: (result: FileDataType) => void) => {
   const reader = new FileReader();
   reader.readAsDataURL(file);
   reader.onload = e => {
