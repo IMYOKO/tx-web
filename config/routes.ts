@@ -91,6 +91,13 @@ const routes: IRoute[] = [
         component: '../pages/rename',
         Routes: ['src/layouts/AuthLayout'],
       },
+      {
+        path: '/avatar',
+        title: '修改头像',
+        exact: true,
+        component: '../pages/avatar',
+        Routes: ['src/layouts/AuthLayout'],
+      },
       // {
       //   path: '/reset-trade-password',
       //   title: '重置交易密码',

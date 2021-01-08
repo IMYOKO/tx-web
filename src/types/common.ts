@@ -16,3 +16,8 @@ export interface Pagination {
 export interface PageActionBaseProps {
   dispatch: Dispatch;
 }
+
+export interface AvatarDataType {
+  base64String: string;
+  suffix: string;
+}

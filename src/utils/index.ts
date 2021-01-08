@@ -1,3 +1,5 @@
+import { AvatarDataType } from '@/types/common';
+
 // 判断手机号
 export const isPhone = (phone: string): boolean => {
   const reg = /^([1][3,4,5,6,7,8,9])\d{9}$/;
@@ -14,4 +16,17 @@ export const isPassword = (password: string): boolean => {
 export const isTradePassword = (password: string): boolean => {
   const reg = /^\d{6}$/;
   return reg.test(password);
+};
+
+// file转base64
+export const fileByBase64 = (file: File, callback: (result: AvatarDataType) => void) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = e => {
+    const base64String = (e.target?.result || '') as string;
+    const suffix = file.name.split('.').pop();
+    if (base64String && suffix) {
+      callback({ base64String, suffix });
+    }
+  };
 };

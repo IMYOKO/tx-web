@@ -47,6 +47,9 @@ const Setting: React.FC<SettingPrpos> = props => {
             <img src={avatarUrl || defaultAvatarUrl} alt="" />
           </div>
         ),
+        handleClick: () => {
+          history.push('/avatar');
+        },
       },
       {
         title: '昵称',
