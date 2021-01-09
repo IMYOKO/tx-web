@@ -2,7 +2,7 @@ import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import API from '@/request';
 import { Toast } from 'antd-mobile';
-import { PUBLIC_STATUS, ROLE_STATUS, VERIFY_STATUS } from '@/types/enum';
+import { LOGIN_STATUS, PUBLIC_STATUS, ROLE_STATUS, VERIFY_STATUS } from '@/types/enum';
 
 export interface UserInfoType {
   userId: number;
@@ -16,15 +16,15 @@ export interface UserInfoType {
   roleCode: ROLE_STATUS;
 }
 
-export interface UserPageModelState {
+export interface UserModelState {
   userInfo: Partial<UserInfoType>;
 }
 
 export interface ModelType {
   namespace: 'USER';
-  state: UserPageModelState;
+  state: UserModelState;
   reducers: {
-    save: Reducer<UserPageModelState>;
+    save: Reducer<UserModelState>;
   };
   effects: {
     fetch: Effect;
@@ -56,14 +56,31 @@ const Model: ModelType = {
             userInfo,
           },
         });
+        yield put({
+          type: 'COMMON/save',
+          payload: {
+            loginStatus: LOGIN_STATUS.yes,
+          },
+        });
       } catch (err) {
+        console.log(err);
         if (err.code === 999) {
           localStorage.removeItem('token');
-          Toast.info('登录失效', 1, () => {
-            window.location.replace('/login');
+          Toast.info('登录失效, 请重新登录', 1, () => {
+            const pathname = window.location.pathname;
+            if (pathname !== '/login') {
+              window.location.replace('/login');
+            }
           });
+        } else {
+          yield put({
+            type: 'COMMON/save',
+            payload: {
+              loginStatus: LOGIN_STATUS.no,
+            },
+          });
+          Toast.info('获取用户信息失败，请重新登录');
         }
-        console.log(err);
       }
     },
     *switchRole({ payload, successCallback, errCallback }, { call, put }) {

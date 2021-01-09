@@ -6,7 +6,7 @@ export enum PUBLIC_STATUS {
 
 // 角色状态
 export enum ROLE_STATUS {
-  orders = '1',
+  taker = '1',
   dispatcher = '2',
 }
 
@@ -14,4 +14,11 @@ export enum ROLE_STATUS {
 export enum VERIFY_STATUS {
   no = '0',
   yes = '1',
+}
+
+// 登录状态
+export enum LOGIN_STATUS {
+  unknown = -1,
+  no = 0,
+  yes = 1,
 }

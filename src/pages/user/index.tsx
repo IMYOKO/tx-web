@@ -6,7 +6,7 @@ import { PageActionBaseProps } from '@/types/common';
 import { UserInfoType } from '@/models/user';
 import { connect, useHistory } from 'dva';
 import RoleModal, { RoleModalProps } from './RoleModal';
-import { Toast } from 'antd-mobile';
+import { ActivityIndicator, Toast } from 'antd-mobile';
 import './index.less';
 import { ROLE_STATUS } from '@/types/enum';
 
@@ -15,7 +15,7 @@ interface UserPrpos extends PageActionBaseProps {
 }
 
 const User: React.FC<UserPrpos> = props => {
-  const { userInfo, dispatch } = props;
+  const { userInfo, dispatch, loading = false } = props;
   const { roleCode } = userInfo;
   const [visible, setVisible] = useState<boolean>(false);
   const history = useHistory();
@@ -36,7 +36,7 @@ const User: React.FC<UserPrpos> = props => {
 
   const renderRole = () => {
     let role = '';
-    if (roleCode === ROLE_STATUS.orders) {
+    if (roleCode === ROLE_STATUS.taker) {
       role = '接单者';
     }
     if (roleCode === ROLE_STATUS.dispatcher) {
@@ -112,11 +112,11 @@ const User: React.FC<UserPrpos> = props => {
 
   const switchRole = () => {
     let role = '';
-    if (roleCode === ROLE_STATUS.orders) {
+    if (roleCode === ROLE_STATUS.taker) {
       role = ROLE_STATUS.dispatcher;
     }
     if (roleCode === ROLE_STATUS.dispatcher) {
-      role = ROLE_STATUS.orders;
+      role = ROLE_STATUS.taker;
     }
     if (!role) {
       Toast.info('角色获取失败');
@@ -147,6 +147,7 @@ const User: React.FC<UserPrpos> = props => {
 
   return (
     <div className="user-page">
+      <ActivityIndicator toast size="large" text="正在切换..." animating={loading} />
       <UserInfo {...userInfoProps} />
       <Wealth {...userInfo} />
       <NavList {...navListProps} />
@@ -158,8 +159,9 @@ const User: React.FC<UserPrpos> = props => {
 const mapStateToProps = (state: any) => {
   const {
     USER: { userInfo },
+    loading,
   } = state;
-  return { userInfo };
+  return { userInfo, loading: loading.effects['USER/switchRole'] };
 };
 
 export default connect(mapStateToProps)(User);

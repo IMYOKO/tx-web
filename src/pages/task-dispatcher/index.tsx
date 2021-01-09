@@ -39,12 +39,12 @@ const Task: React.FC<TaskPageProps> = props => {
     });
   };
 
-  useEffect(() => {
-    fetchData();
-    return () => {
-      clearData();
-    };
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  //   return () => {
+  //     clearData();
+  //   };
+  // }, []);
 
   const goAddOrder = () => {
     history.push('/add-order');

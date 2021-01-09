@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FileDataType, PageActionBaseProps, RootState } from '@/types/common';
 import { connect, useDispatch, useHistory } from 'dva';
 import { isEmpty } from 'lodash-es';
-import { Toast } from 'antd-mobile';
+import { ActivityIndicator, Toast } from 'antd-mobile';
 import { fileByBase64 } from '@/utils';
 import defaultAvatarUrl from '@/assets/images/user/my_profile_face@2x.png';
 import { UserInfoType } from '@/models/user';
@@ -12,7 +12,7 @@ interface AvatarPagePrpos extends PageActionBaseProps {
   userInfo: Partial<UserInfoType>;
 }
 
-const Avatar: React.FC<AvatarPagePrpos> = ({ userInfo }) => {
+const Avatar: React.FC<AvatarPagePrpos> = ({ userInfo, loading = false }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { avatarUrl = '' } = userInfo;
@@ -50,6 +50,7 @@ const Avatar: React.FC<AvatarPagePrpos> = ({ userInfo }) => {
 
   return (
     <div className="avatar-page">
+      <ActivityIndicator toast size="large" text="正在修改..." animating={loading} />
       <div className="avatar-page-wrapper">
         <div className="avatar-page-box">
           <input type="file" key={new Date().getTime()} onChange={fileChange} accept="image/*" />
@@ -68,8 +69,9 @@ const Avatar: React.FC<AvatarPagePrpos> = ({ userInfo }) => {
 const mapStateToProps = (state: RootState) => {
   const {
     USER: { userInfo },
+    loading,
   } = state;
-  return { userInfo };
+  return { userInfo, loading: loading.effects['USER/complementInfo'] };
 };
 
 export default connect(mapStateToProps)(Avatar);

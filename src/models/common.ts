@@ -2,6 +2,7 @@ import { Reducer } from 'redux';
 import { Effect, Subscription } from 'dva';
 import API from '@/request';
 import { Toast } from 'antd-mobile';
+import { LOGIN_STATUS } from '@/types/enum';
 
 export interface CaptchaDataType {
   captchaIdentity: string;
@@ -9,6 +10,7 @@ export interface CaptchaDataType {
 }
 export interface CommonModelState {
   token: string;
+  loginStatus: LOGIN_STATUS;
   publicQrCode: string;
   captchaData: Partial<CaptchaDataType>;
 }
@@ -39,6 +41,7 @@ const Common: ModelType = {
     token,
     captchaData: {},
     publicQrCode: '',
+    loginStatus: LOGIN_STATUS.unknown,
   },
   reducers: {
     save(state, { payload }) {
@@ -64,40 +67,59 @@ const Common: ModelType = {
     },
     *login({ payload }, { call, put }) {
       try {
-        const { token } = yield call(API.login, payload);
+        const res = yield call(API.login, payload);
+        const { token, userVO } = res;
         console.log('登录成功', token);
         yield put({
           type: 'save',
           payload: {
             token,
+            loginStatus: LOGIN_STATUS.yes,
+          },
+        });
+        yield put({
+          type: 'USER/save',
+          payload: {
+            userInfo: userVO,
           },
         });
         localStorage.setItem('token', token);
-        Toast.info('登录成功', 1, () => {
-          window.location.replace('/');
-        });
+        return Promise.resolve(res);
       } catch (err) {
         console.log(err);
-        Toast.info('登录失败');
+        yield put({
+          type: 'save',
+          payload: {
+            token,
+            loginStatus: LOGIN_STATUS.no,
+          },
+        });
+        return Promise.reject(err);
       }
     },
     *register({ payload }, { call, put }) {
       try {
-        const { token } = yield call(API.register, payload);
+        const res = yield call(API.register, payload);
+        const { token, userVO } = res;
         console.log('注册成功', token);
         yield put({
           type: 'save',
           payload: {
             token,
+            loginStatus: LOGIN_STATUS.yes,
+          },
+        });
+        yield put({
+          type: 'USER/save',
+          payload: {
+            userInfo: userVO,
           },
         });
         localStorage.setItem('token', token);
-        Toast.info('注册成功', 1, () => {
-          window.location.replace('/');
-        });
+        return Promise.resolve(res);
       } catch (err) {
         console.log(err);
-        Toast.info('注册失败');
+        return Promise.reject(err);
       }
     },
     *feedback({ payload, success }, { call }) {
@@ -125,12 +147,11 @@ const Common: ModelType = {
   },
   subscriptions: {
     setup({ dispatch }) {
-      if (!token) {
-        return;
+      if (token) {
+        dispatch({
+          type: 'USER/fetch',
+        });
       }
-      dispatch({
-        type: 'USER/fetch',
-      });
     },
   },
 };

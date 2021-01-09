@@ -1,5 +1,7 @@
 import React from 'react';
 import { useHistory, useLocation } from 'dva';
+import { LOGIN_STATUS, ROLE_STATUS } from '@/types/enum';
+import { UserInfoType } from '@/models/user';
 import './index.less';
 
 interface TabBarListItem {
@@ -33,8 +35,31 @@ const TabBarList: React.FC<TabBarListProps> = ({ data }) => {
   );
 };
 
-const TabBar: React.FC = () => {
+interface TabBarProps {
+  userInfo: Partial<UserInfoType>;
+}
+
+const TabBar: React.FC<TabBarProps> = props => {
+  const { userInfo } = props;
   const history = useHistory();
+  const taskItem =
+    userInfo.roleCode === ROLE_STATUS.dispatcher
+      ? {
+          key: 'task',
+          title: '派单稿件',
+          pathName: '/task-dispatcher',
+          handClick: () => {
+            history.replace('/task-dispatcher');
+          },
+        }
+      : {
+          key: 'task',
+          title: '接单稿件',
+          pathName: '/task-taker',
+          handClick: () => {
+            history.replace('/task-taker');
+          },
+        };
   const tabBarListProps: TabBarListProps = {
     data: [
       {
@@ -45,14 +70,7 @@ const TabBar: React.FC = () => {
           history.replace('/');
         },
       },
-      {
-        key: 'task',
-        title: '稿件',
-        pathName: '/task',
-        handClick: () => {
-          history.replace('/task');
-        },
-      },
+      taskItem,
       {
         key: 'user',
         title: '我的',

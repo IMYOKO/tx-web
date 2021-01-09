@@ -6,6 +6,7 @@ import { CaptchaDataType } from '@/models/common';
 import { Toast } from 'antd-mobile';
 import { isEmpty } from 'lodash-es';
 import { isPhone, isPassword } from '@/utils/index';
+import { LOGIN_STATUS } from '@/types/enum';
 import './index.less';
 
 interface LoginPageProps extends PageActionBaseProps {
@@ -48,7 +49,7 @@ const Login: React.FC<LoginPageProps> = props => {
     };
   }, []);
 
-  const login = () => {
+  const login = async () => {
     const phone = phoneRef.current.value;
     const password = passwordRef.current.value;
     const code = codeRef.current.value;
@@ -79,10 +80,17 @@ const Login: React.FC<LoginPageProps> = props => {
       captchaIdentity,
     };
     console.log({ payload });
-    dispatch({
-      type: 'COMMON/login',
-      payload,
-    });
+    try {
+      await dispatch({
+        type: 'COMMON/login',
+        payload,
+      });
+      Toast.info('登录成功', 1, () => {
+        history.replace('/');
+      });
+    } catch (error) {
+      Toast.info('登录失败');
+    }
   };
 
   const goRegister = () => {
@@ -98,6 +106,7 @@ const Login: React.FC<LoginPageProps> = props => {
             <input
               type="text"
               name="phone"
+              defaultValue={13049492162}
               maxLength={11}
               ref={phoneRef}
               autoComplete="off"
@@ -129,6 +138,7 @@ const Login: React.FC<LoginPageProps> = props => {
               type="password"
               name="password"
               maxLength={18}
+              defaultValue={123456}
               ref={passwordRef}
               autoComplete="off"
               placeholder="请输入密码"

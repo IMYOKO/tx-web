@@ -1,4 +1,5 @@
 import { IRoute } from 'umi-types';
+import { ROLE_STATUS } from '@/types/enum';
 
 const routes: IRoute[] = [
   {
@@ -10,7 +11,7 @@ const routes: IRoute[] = [
         title: '首页',
         exact: true,
         component: '../pages/index',
-        Routes: ['src/layouts/TabBar', 'src/layouts/AuthLayout'],
+        Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar'],
       },
       {
         path: '/detail',
@@ -27,17 +28,27 @@ const routes: IRoute[] = [
         Routes: ['src/layouts/AuthLayout'],
       },
       {
-        path: '/task',
+        path: '/task-taker',
         title: '稿件',
         exact: true,
-        component: '../pages/task',
-        Routes: ['src/layouts/TabBar', 'src/layouts/AuthLayout'],
+        component: '../pages/task-taker',
+        roleStatus: ROLE_STATUS.taker,
+        Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar', 'src/layouts/RoleLayout'],
+      },
+      {
+        path: '/task-dispatcher',
+        title: '稿件',
+        exact: true,
+        component: '../pages/task-dispatcher',
+        roleStatus: ROLE_STATUS.dispatcher,
+        Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar', 'src/layouts/RoleLayout'],
       },
       {
         path: '/login',
         title: '登录',
         exact: true,
         component: '../pages/login',
+        Routes: ['src/layouts/AuthLayout'],
       },
       { path: '/register', title: '注册', exact: true, component: '../pages/register' },
       {
@@ -45,14 +56,15 @@ const routes: IRoute[] = [
         title: '我的',
         exact: true,
         component: '../pages/user',
-        Routes: ['src/layouts/TabBar', 'src/layouts/AuthLayout'],
+        Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar'],
       },
       {
         path: '/add-order',
         title: '发布稿件',
         exact: true,
+        roleStatus: ROLE_STATUS.dispatcher,
         component: '../pages/add-order',
-        // Routes: ['src/layouts/AuthLayout'],
+        Routes: ['src/layouts/AuthLayout', 'src/layouts/RoleLayout'],
       },
       {
         path: '/my-bill',

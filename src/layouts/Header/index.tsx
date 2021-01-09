@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, useHistory, useLocation } from 'dva';
-import HeaderConfig, { HeaderConfigType } from './HeaderConfig';
+import HeaderConfig, { HeaderConfigType } from './Header.config';
 import './index.less';
 
 const Header: React.FC = props => {

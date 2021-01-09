@@ -52,7 +52,7 @@ const Register: React.FC<RegisterPageProps> = props => {
     };
   }, []);
 
-  const register = () => {
+  const register = async () => {
     const phone = phoneRef.current.value;
     const code = codeRef.current.value;
     const password = passwordRef.current.value;
@@ -97,10 +97,17 @@ const Register: React.FC<RegisterPageProps> = props => {
       captchaIdentity,
     };
     console.log({ payload });
-    dispatch({
-      type: 'COMMON/register',
-      payload,
-    });
+    try {
+      await dispatch({
+        type: 'COMMON/register',
+        payload,
+      });
+      Toast.info('注册成功', 1, () => {
+        history.replace('/');
+      });
+    } catch (error) {
+      Toast.info('注册失败');
+    }
   };
 
   const gologin = () => {
