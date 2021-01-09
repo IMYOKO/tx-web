@@ -1,38 +1,37 @@
 import React from 'react';
-import { connect, useHistory, useLocation } from 'dva';
-import HeaderConfig, { HeaderConfigType } from './Header.config';
+import { useHistory, useLocation } from 'dva';
+import { IRoute } from 'umi-types';
 import './index.less';
 
-const Header: React.FC = props => {
-  const location = useLocation();
+const Header: React.FC<IRoute> = props => {
+  const {
+    route: { routes = [] },
+  } = props;
+
   const history = useHistory();
-  const { pathname } = location;
+  const { pathname } = useLocation();
+
+  const route: Partial<IRoute> = routes.find((r: IRoute) => r.path === pathname) || {};
+  const { title, hideBackIcon } = route;
+
   const back = () => {
     history.goBack();
-  };
-  const renderContent = (pathname: string, HeaderConfig: HeaderConfigType[]) => {
-    const item: HeaderConfigType = HeaderConfig.find(item => item.path === pathname) || {};
-    const { title, historyBack, rightWrapper } = item;
-
-    return (
-      <div className="Header-content">
-        <div className="action-wrapper">
-          <div className="left-wrapper">
-            {historyBack && <div className="back" onClick={back}></div>}
-          </div>
-          <div className="right-wrapper">{rightWrapper}</div>
-        </div>
-        <div className="title">{title}</div>
-      </div>
-    );
   };
 
   return (
     <div className="Header">
-      <div className="Header-wrapper">{renderContent(pathname, HeaderConfig)}</div>
+      <div className="Header-wrapper">
+        <div className="Header-content">
+          <div className="action-wrapper">
+            <div className="left-wrapper">
+              {!hideBackIcon && <div className="back" onClick={back}></div>}
+            </div>
+          </div>
+          <div className="title">{title}</div>
+        </div>
+      </div>
     </div>
   );
 };
 
-const mapStateToProps = (state: any) => state;
-export default connect(mapStateToProps)(Header);
+export default Header;

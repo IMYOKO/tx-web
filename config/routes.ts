@@ -10,6 +10,7 @@ const routes: IRoute[] = [
         path: '/',
         title: '首页',
         exact: true,
+        hideBackIcon: true,
         component: '../pages/index',
         Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar'],
       },
@@ -33,6 +34,7 @@ const routes: IRoute[] = [
         exact: true,
         component: '../pages/task-taker',
         roleStatus: ROLE_STATUS.taker,
+        hideBackIcon: true,
         Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar', 'src/layouts/RoleLayout'],
       },
       {
@@ -41,6 +43,7 @@ const routes: IRoute[] = [
         exact: true,
         component: '../pages/task-dispatcher',
         roleStatus: ROLE_STATUS.dispatcher,
+        hideBackIcon: true,
         Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar', 'src/layouts/RoleLayout'],
       },
       {
@@ -48,14 +51,22 @@ const routes: IRoute[] = [
         title: '登录',
         exact: true,
         component: '../pages/login',
+        hideBackIcon: true,
         Routes: ['src/layouts/AuthLayout'],
       },
-      { path: '/register', title: '注册', exact: true, component: '../pages/register' },
+      {
+        path: '/register',
+        title: '注册',
+        exact: true,
+        hideBackIcon: true,
+        component: '../pages/register',
+      },
       {
         path: '/user',
         title: '我的',
         exact: true,
         component: '../pages/user',
+        hideBackIcon: true,
         Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar'],
       },
       {
@@ -153,6 +164,7 @@ const routes: IRoute[] = [
       {
         path: '/404',
         title: '404',
+        hideBackIcon: true,
         component: '../pages/404',
       },
     ],

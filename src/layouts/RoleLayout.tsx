@@ -16,6 +16,7 @@ const RoleLayout: React.FC<RoleLayoutProps> = props => {
   const {
     loginStatus,
     children,
+    route,
     route: { roleStatus },
     userInfo: { roleCode },
   } = props;

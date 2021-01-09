@@ -4,7 +4,7 @@ import Header from './Header/index';
 const BasicLayout: React.FC = props => {
   return (
     <div className="app">
-      <Header />
+      <Header {...props} />
       {props.children}
     </div>
   );
