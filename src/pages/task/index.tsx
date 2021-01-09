@@ -44,15 +44,6 @@ const Task: React.FC<TaskPageProps> = props => {
           <div className="nav-list-wrapper">
             <div className="nav-list-body">
               <div className="nav-list-item active">全部</div>
-              <div className="nav-list-item">最新</div>
-              <div className="nav-list-item">最新</div>
-              <div className="nav-list-item">最新</div>
-              <div className="nav-list-item">最新</div>
-              <div className="nav-list-item">最新</div>
-              <div className="nav-list-item">最新</div>
-              <div className="nav-list-item">最新</div>
-              <div className="nav-list-item">最新</div>
-              <div className="nav-list-item">最新</div>
             </div>
           </div>
         </div>

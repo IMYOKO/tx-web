@@ -121,6 +121,16 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
     updateAddOrderForm({ title: e.target.value });
   };
 
+  // 修改任务描述
+  const descriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    updateAddOrderForm({ description: e.target.value });
+  };
+
+  // 修改任务要求
+  const taskClaimChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    updateAddOrderForm({ taskClaim: e.target.value });
+  };
+
   // 修改任务数量
   const countChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateAmountData({ count: e.target.value });
@@ -142,7 +152,7 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
     updateAmountData({ commissionAmount: e.target.value });
   };
 
-  // 任务描述
+  // 任务描述图片
   const addDescriptionFiles = (result: FileDataType) => {
     setDescriptionFileList([...descriptionFileList, result]);
   };
@@ -152,7 +162,7 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
     setDescriptionFileList(fileList);
   };
 
-  // 任务要求
+  // 任务要求图片
   const addTaskClaimFiles = (result: FileDataType) => {
     setTaskClaimFileList([...taskClaimFileList, result]);
   };
@@ -277,7 +287,14 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
             <div className="order-gaojian-wrapper">
               <div className="title">稿件描述</div>
               <div className="discrption-wrapper">
-                <textarea name="" id="" rows={6} placeholder="请输入稿件描述"></textarea>
+                <textarea
+                  name=""
+                  id=""
+                  rows={6}
+                  value={addOrderForm.description}
+                  onChange={descriptionChange}
+                  placeholder="请输入稿件描述"
+                ></textarea>
               </div>
               <ImagePicker
                 key="descriptionFileList"
@@ -292,7 +309,14 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
             <div className="order-gaojian-wrapper">
               <div className="title">稿件要求</div>
               <div className="discrption-wrapper">
-                <textarea name="" id="" rows={6} placeholder="请输入稿件要求"></textarea>
+                <textarea
+                  name=""
+                  id=""
+                  rows={6}
+                  value={addOrderForm.taskClaim}
+                  onChange={taskClaimChange}
+                  placeholder="请输入稿件要求"
+                ></textarea>
               </div>
               <ImagePicker
                 key="taskClaimFileList"

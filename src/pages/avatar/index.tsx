@@ -5,6 +5,7 @@ import { useDispatch, useHistory } from 'dva';
 import { isEmpty } from 'lodash-es';
 import { Toast } from 'antd-mobile';
 import { fileByBase64 } from '@/utils';
+import defaultAvatarUrl from '@/assets/images/user/my_profile_face@2x.png';
 import './index.less';
 
 const Avatar = () => {
@@ -37,13 +38,19 @@ const Avatar = () => {
     });
   };
 
+  const renderAvatarImg = () => {
+    if (isEmpty(avatar)) {
+      return <img className="old-avatar" src={avatarUrl || defaultAvatarUrl} alt="" />;
+    }
+    return <img className="avatar" src={avatar.base64String} alt="" />;
+  };
+
   return (
     <div className="avatar-page">
       <div className="avatar-page-wrapper">
         <div className="avatar-page-box">
           <input type="file" key={new Date().getTime()} onChange={fileChange} accept="image/*" />
-          {!isEmpty(avatar) && <img className="avatar" src={avatar.base64String} alt="" />}
-          {avatarUrl && isEmpty(avatar) && <img className="old-avatar" src={avatarUrl} alt="" />}
+          {renderAvatarImg()}
         </div>
       </div>
       <div className="button-wrapper">

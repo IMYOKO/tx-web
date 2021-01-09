@@ -4,6 +4,7 @@ body,
   height: 100%;
   max-width: 540px;
   margin: 0 auto;
+  background-color: #f3f3f3;
 }
 
 body {
@@ -42,6 +43,5 @@ input {
 
 .app {
   padding-top: 45px;
-  background-color: #f9f9f9;
   min-height: calc(100vh - 45px);
 }

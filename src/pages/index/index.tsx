@@ -43,7 +43,6 @@ const Home: React.FC<HomeProps> = props => {
         <div className="nav-list">
           <div className="nav-list-wrapper">
             <div className="nav-list-item active">全部</div>
-            <div className="nav-list-item">最新</div>
           </div>
         </div>
         <div className="search" />
