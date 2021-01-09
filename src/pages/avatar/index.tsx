@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { FileDataType } from '@/types/common';
-import UseUserInfo from '@/hooks/useUserInfo';
-import { useDispatch, useHistory } from 'dva';
+import { FileDataType, PageActionBaseProps, RootState } from '@/types/common';
+import { connect, useDispatch, useHistory } from 'dva';
 import { isEmpty } from 'lodash-es';
 import { Toast } from 'antd-mobile';
 import { fileByBase64 } from '@/utils';
 import defaultAvatarUrl from '@/assets/images/user/my_profile_face@2x.png';
+import { UserInfoType } from '@/models/user';
 import './index.less';
 
-const Avatar = () => {
+interface AvatarPagePrpos extends PageActionBaseProps {
+  userInfo: Partial<UserInfoType>;
+}
+
+const Avatar: React.FC<AvatarPagePrpos> = ({ userInfo }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { userInfo } = UseUserInfo();
   const { avatarUrl = '' } = userInfo;
   const [avatar, setAvatar] = useState<Partial<FileDataType>>({});
 
@@ -62,4 +65,11 @@ const Avatar = () => {
   );
 };
 
-export default Avatar;
+const mapStateToProps = (state: RootState) => {
+  const {
+    USER: { userInfo },
+  } = state;
+  return { userInfo };
+};
+
+export default connect(mapStateToProps)(Avatar);

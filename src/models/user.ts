@@ -57,6 +57,12 @@ const Model: ModelType = {
           },
         });
       } catch (err) {
+        if (err.code === 999) {
+          localStorage.removeItem('token');
+          Toast.info('登录失效', 1, () => {
+            window.location.replace('/login');
+          });
+        }
         console.log(err);
       }
     },

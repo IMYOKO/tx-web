@@ -9,6 +9,7 @@ export interface CaptchaDataType {
 }
 export interface CommonModelState {
   token: string;
+  publicQrCode: string;
   captchaData: Partial<CaptchaDataType>;
 }
 
@@ -20,6 +21,7 @@ export interface ModelType {
     login: Effect;
     register: Effect;
     feedback: Effect;
+    publicQrCode: Effect;
   };
   reducers: {
     save: Reducer<CommonModelState>;
@@ -36,6 +38,7 @@ const Common: ModelType = {
   state: {
     token,
     captchaData: {},
+    publicQrCode: '',
   },
   reducers: {
     save(state, { payload }) {
@@ -104,6 +107,19 @@ const Common: ModelType = {
       } catch (e) {
         console.log(e);
         Toast.info('提交失败');
+      }
+    },
+    *publicQrCode(_, { call, put }) {
+      try {
+        const publicQrCode = yield call(API.publicQrCode);
+        yield put({
+          type: 'save',
+          payload: {
+            publicQrCode,
+          },
+        });
+      } catch (e) {
+        console.log(e);
       }
     },
   },

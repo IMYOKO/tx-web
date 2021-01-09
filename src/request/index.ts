@@ -165,6 +165,13 @@ const switchRole = (data: SwitchRoleParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/user/switch_role`, data);
 };
 
+/**
+ * 获取公众号二维码
+ */
+const publicQrCode = (): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/public-qr-code`);
+};
+
 export default {
   orderCreate,
   orderList,
@@ -184,4 +191,5 @@ export default {
   subOrderSubmit,
   subOrderAudit,
   switchRole,
+  publicQrCode,
 };

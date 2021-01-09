@@ -40,6 +40,13 @@ const Detail: React.FC<DetailProps> = props => {
     return () => {};
   }, [id]);
 
+  const catchOrder = () => {
+    dispatch({
+      type: 'ORDER_DETAIL/save',
+      payload: { orderId: id },
+    });
+  };
+
   return (
     <div className="detail-page">
       <div className="detail-page-info">
@@ -97,11 +104,13 @@ const Detail: React.FC<DetailProps> = props => {
       </div>
 
       <div className="button-wrapper">
-        {/* <div className="button-item">接单</div> */}
-        <div className="button-box">
+        <div className="button-item" onClick={catchOrder}>
+          接单
+        </div>
+        {/* <div className="button-box">
           <div className="button-item left-wrapper">接单</div>
           <div className="button-item right-wrapper">接单</div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

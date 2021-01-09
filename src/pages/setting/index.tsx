@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import NavList, { NavListItem, NavListProps } from '@/components/nav-list';
 import LogoutModal, { LogoutModalProps } from './LogoutModal';
 import { connect, useHistory } from 'dva';
 import { Toast } from 'antd-mobile';
 import { UserInfoType } from '@/models/user';
-import { PageActionBaseProps } from '@/types/common';
+import { PageActionBaseProps, RootState } from '@/types/common';
 import defaultAvatarUrl from '@/assets/images/user/my_profile_face@2x.png';
 import './index.less';
 
@@ -13,30 +13,10 @@ interface SettingPrpos extends PageActionBaseProps {
 }
 
 const Setting: React.FC<SettingPrpos> = props => {
-  const { userInfo, dispatch } = props;
+  const { userInfo } = props;
   const { nickName = '', avatarUrl = '' } = userInfo;
   const [visible, setVisible] = useState<boolean>(false);
   const history = useHistory();
-
-  const fetchData = () => {
-    dispatch({
-      type: 'USER/fetch',
-    });
-  };
-
-  const clearData = () => {
-    dispatch({
-      type: 'USER/save',
-      payload: { userInfo: {} },
-    });
-  };
-
-  useEffect(() => {
-    fetchData();
-    return () => {
-      clearData();
-    };
-  }, []);
 
   const navList: NavListItem[][] = [
     [
@@ -117,7 +97,7 @@ const Setting: React.FC<SettingPrpos> = props => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   const {
     USER: { userInfo },
   } = state;

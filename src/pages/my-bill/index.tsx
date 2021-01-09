@@ -1,40 +1,48 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect, useHistory } from 'dva';
 import { PageActionBaseProps } from '@/types/common';
 import { UserInfoType } from '@/models/user';
+import { PUBLIC_STATUS } from '@/types/enum';
 import './index.less';
+import FollowModal, { FollowModalProps } from './FollowModal';
 
 interface MyBillPrpos extends PageActionBaseProps {
   userInfo: Partial<UserInfoType>;
 }
 
 const MyBill: React.FC<MyBillPrpos> = props => {
-  const { userInfo, dispatch } = props;
-  const { balance = 0 } = userInfo;
+  const [visible, setVisible] = useState<boolean>(false);
+  const { userInfo } = props;
+  const { balance = 0, publicStatus } = userInfo;
   const history = useHistory();
 
-  const fetchData = () => {
-    dispatch({
-      type: 'USER/fetch',
-    });
+  const showFollowModal = () => {
+    setVisible(true);
   };
 
-  const clearData = () => {
-    dispatch({
-      type: 'USER/save',
-      payload: { userInfo: {} },
-    });
+  const hideFollowModal = () => {
+    setVisible(false);
   };
-
-  useEffect(() => {
-    fetchData();
-    return () => {
-      clearData();
-    };
-  }, []);
 
   const goWithdraw = () => {
-    history.push('/withdraw');
+    if (publicStatus === PUBLIC_STATUS.yes) {
+      history.push('/withdraw');
+    } else {
+      showFollowModal();
+    }
+  };
+
+  const goFollowUs = () => {
+    history.push('/follow-us');
+  };
+
+  const followModalProps: FollowModalProps = {
+    visible,
+    hide: hideFollowModal,
+    onOk: () => {
+      hideFollowModal();
+      goFollowUs();
+    },
   };
 
   return (
@@ -94,6 +102,8 @@ const MyBill: React.FC<MyBillPrpos> = props => {
         </ul>
       </div>
       {/* 账单列表 end */}
+
+      <FollowModal {...followModalProps} />
     </div>
   );
 };

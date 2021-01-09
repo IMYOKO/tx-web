@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import UseUserInfo from '@/hooks/useUserInfo';
-import { useDispatch, useHistory } from 'dva';
+import { connect, useDispatch, useHistory } from 'dva';
 import { isEmpty } from 'lodash-es';
 import { Toast } from 'antd-mobile';
+import { PageActionBaseProps, RootState } from '@/types/common';
+import { UserInfoType } from '@/models/user';
 import './index.less';
 
-const Rename: React.FC = () => {
+interface RenamePagePrpos extends PageActionBaseProps {
+  userInfo: Partial<UserInfoType>;
+}
+
+const Rename: React.FC<RenamePagePrpos> = ({ userInfo }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { userInfo } = UseUserInfo();
   const [nickName, setNickName] = useState<string>('');
 
   useEffect(() => {
@@ -67,4 +71,11 @@ const Rename: React.FC = () => {
   );
 };
 
-export default Rename;
+const mapStateToProps = (state: RootState) => {
+  const {
+    USER: { userInfo },
+  } = state;
+  return { userInfo };
+};
+
+export default connect(mapStateToProps)(Rename);

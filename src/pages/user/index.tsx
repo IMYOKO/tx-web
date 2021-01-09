@@ -26,18 +26,8 @@ const User: React.FC<UserPrpos> = props => {
     });
   };
 
-  const clearData = () => {
-    dispatch({
-      type: 'USER/save',
-      payload: { userInfo: {} },
-    });
-  };
-
   useEffect(() => {
     fetchData();
-    return () => {
-      clearData();
-    };
   }, []);
 
   const goPage = (path: string) => {
@@ -68,6 +58,9 @@ const User: React.FC<UserPrpos> = props => {
       {
         iconClass: 'icon-bank-card',
         title: '我的银行卡',
+        handleClick: () => {
+          goPage('/banks');
+        },
       },
     ],
     [

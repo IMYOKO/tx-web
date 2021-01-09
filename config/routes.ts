@@ -20,13 +20,25 @@ const routes: IRoute[] = [
         Routes: ['src/layouts/AuthLayout'],
       },
       {
+        path: '/submit-task',
+        title: '提交任务',
+        exact: true,
+        component: '../pages/submit-task',
+        Routes: ['src/layouts/AuthLayout'],
+      },
+      {
         path: '/task',
         title: '稿件',
         exact: true,
         component: '../pages/task',
         Routes: ['src/layouts/TabBar', 'src/layouts/AuthLayout'],
       },
-      { path: '/login', title: '登录', exact: true, component: '../pages/login' },
+      {
+        path: '/login',
+        title: '登录',
+        exact: true,
+        component: '../pages/login',
+      },
       { path: '/register', title: '注册', exact: true, component: '../pages/register' },
       {
         path: '/user',
@@ -78,6 +90,13 @@ const routes: IRoute[] = [
         Routes: ['src/layouts/AuthLayout'],
       },
       {
+        path: '/follow-us',
+        title: '关注公众号',
+        exact: true,
+        component: '../pages/follow',
+        Routes: ['src/layouts/AuthLayout'],
+      },
+      {
         path: '/reset-password',
         title: '重置登录密码',
         exact: true,
@@ -96,6 +115,20 @@ const routes: IRoute[] = [
         title: '修改头像',
         exact: true,
         component: '../pages/avatar',
+        Routes: ['src/layouts/AuthLayout'],
+      },
+      {
+        path: '/banks',
+        title: '我的银行卡',
+        exact: true,
+        component: '../pages/banks',
+        Routes: ['src/layouts/AuthLayout'],
+      },
+      {
+        path: '/add-bank',
+        title: '添加银行卡',
+        exact: true,
+        component: '../pages/add-bank',
         Routes: ['src/layouts/AuthLayout'],
       },
       // {
