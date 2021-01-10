@@ -1,4 +1,4 @@
-import { OrderListItemType } from '@/pages/index/model';
+import { OrderListItemType } from '@/pages/Home/index/model';
 import { useHistory } from 'dva';
 import React from 'react';
 import './index.less';

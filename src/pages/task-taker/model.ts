@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import API from '@/request';
-import { OrderListItemType } from '@/pages/index/model';
+import { OrderListItemType } from '@/pages/Home/index/model';
 import { Pagination } from '@/types/common';
 
 export interface TaskPageModelState {

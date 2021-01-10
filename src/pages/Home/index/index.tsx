@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import TaskList from '@/components/task-list';
-import { OrderListItemType } from '@/pages/index/model';
+import { OrderListItemType } from '@/pages/Home/index/model';
 import { PageActionBaseProps } from '@/types/common';
 import './index.less';
 
