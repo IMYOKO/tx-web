@@ -1,5 +1,4 @@
 import { IRoute } from 'umi-types';
-import { ROLE_STATUS } from '@/types/enum';
 
 const routes: IRoute[] = [
   {
@@ -33,7 +32,7 @@ const routes: IRoute[] = [
         title: '稿件',
         exact: true,
         component: '../pages/task-taker',
-        roleStatus: ROLE_STATUS.taker,
+        roleStatus: '1',
         hideBackIcon: true,
         Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar', 'src/layouts/RoleLayout'],
       },
@@ -42,7 +41,7 @@ const routes: IRoute[] = [
         title: '稿件',
         exact: true,
         component: '../pages/task-dispatcher',
-        roleStatus: ROLE_STATUS.dispatcher,
+        roleStatus: '2',
         hideBackIcon: true,
         Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar', 'src/layouts/RoleLayout'],
       },
@@ -73,7 +72,7 @@ const routes: IRoute[] = [
         path: '/add-order',
         title: '发布稿件',
         exact: true,
-        roleStatus: ROLE_STATUS.dispatcher,
+        roleStatus: '2',
         component: '../pages/add-order',
         Routes: ['src/layouts/AuthLayout', 'src/layouts/RoleLayout'],
       },
