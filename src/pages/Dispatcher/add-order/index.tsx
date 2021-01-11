@@ -81,20 +81,20 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
     console.log({ payload });
     // return;
     dispatch({
-      type: 'ADD_ORDER/create',
+      type: 'DISPATCHER/create',
       payload,
     });
   };
 
   const fetchTagList = () => {
     dispatch({
-      type: 'ADD_ORDER/tagList',
+      type: 'DISPATCHER/tagList',
     });
   };
 
   const clearTagList = () => {
     dispatch({
-      type: 'ADD_ORDER/save',
+      type: 'DISPATCHER/save',
       payload: {
         tagList: [],
       },
@@ -175,10 +175,9 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
   // 标签弹窗props
   const tagListModalProps = {
     visible,
-    tagList: ['标签1', '标签2', '标签3', '标签4', '标签5', '标签6'],
+    tagList,
     activeTagList,
     onOK: (tagList: string[]) => {
-      console.log({ tagList });
       setActiveTagList(tagList);
     },
     hideModal,
@@ -337,7 +336,7 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
 
 const mapStateToProps = (state: any) => {
   const {
-    ADD_ORDER: { tagList },
+    DISPATCHER: { tagList },
   } = state;
   return { tagList };
 };

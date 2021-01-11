@@ -68,13 +68,6 @@ const orderTagList = (): AxiosPromise => {
 };
 
 /**
- * 我的订单列表
- */
-const myOrderList = (data: OrderListParam): AxiosPromise => {
-  return apiRequest.post(`${baseURL}/user/my_order_list`, data);
-};
-
-/**
  * 用户信息
  */
 const userInfo = (): AxiosPromise => {
@@ -171,6 +164,15 @@ const switchRole = (data: SwitchRoleParam): AxiosPromise => {
 const publicQrCode = (): AxiosPromise => {
   return apiRequest.post(`${baseURL}/public-qr-code`);
 };
+
+/********************** 派单者 start ************************/
+/**
+ * 我的订单列表
+ */
+const myOrderList = (data: OrderListParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/my-order-list`, data);
+};
+/********************** 派单者 end ************************/
 
 export default {
   orderCreate,

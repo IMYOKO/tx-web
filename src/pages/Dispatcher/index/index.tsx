@@ -2,18 +2,18 @@ import React, { useEffect } from 'react';
 import { connect, useHistory } from 'dva';
 import TaskList from '@/components/task-list';
 import { OrderListItemType } from '@/pages/Home/index/model';
-import { PageActionBaseProps } from '@/types/common';
+import { PageActionBaseProps, RootState } from '@/types/common';
 import Headers from '@/components/headers';
 import { UserInfoType } from '@/models/user';
 import './index.less';
 import { ROLE_STATUS } from '@/types/enum';
 
-interface TaskPageProps extends PageActionBaseProps {
+interface DISPATCHERPageProps extends PageActionBaseProps {
   list: OrderListItemType[];
   userInfo: Partial<UserInfoType>;
 }
 
-const Task: React.FC<TaskPageProps> = props => {
+const Dispatcher: React.FC<DISPATCHERPageProps> = props => {
   const {
     dispatch,
     list,
@@ -23,7 +23,7 @@ const Task: React.FC<TaskPageProps> = props => {
 
   const fetchData = () => {
     dispatch({
-      type: 'TASK/fetch',
+      type: 'DISPATCHER/fetch',
       payload: {
         pageNo: 1,
         pageSize: 1,
@@ -34,17 +34,17 @@ const Task: React.FC<TaskPageProps> = props => {
 
   const clearData = () => {
     dispatch({
-      type: 'TASK/save',
+      type: 'DISPATCHER/save',
       payload: { list: [] },
     });
   };
 
-  // useEffect(() => {
-  //   fetchData();
-  //   return () => {
-  //     clearData();
-  //   };
-  // }, []);
+  useEffect(() => {
+    fetchData();
+    return () => {
+      clearData();
+    };
+  }, []);
 
   const goAddOrder = () => {
     history.push('/add-order');
@@ -72,12 +72,12 @@ const Task: React.FC<TaskPageProps> = props => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   const {
-    TASK: { list },
+    DISPATCHER: { list },
     USER: { userInfo },
   } = state;
   return { list, userInfo };
 };
 
-export default connect(mapStateToProps)(Task);
+export default connect(mapStateToProps)(Dispatcher);

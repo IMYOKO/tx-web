@@ -83,15 +83,15 @@ const Model: ModelType = {
         }
       }
     },
-    *switchRole({ payload, successCallback, errCallback }, { call, put }) {
+    *switchRole({ payload }, { call, put }) {
       try {
         yield call(API.switchRole, payload);
         yield put({ type: 'fetch' });
-        successCallback && successCallback();
+        return Promise.resolve();
       } catch (err) {
         console.log(err);
         Toast.info('切换失败');
-        errCallback && errCallback();
+        return Promise.reject(err);
       }
     },
     *complementInfo({ payload, successCallback }, { call, put }) {

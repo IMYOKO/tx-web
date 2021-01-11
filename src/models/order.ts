@@ -22,25 +22,23 @@ export interface DetailItemType {
   taskClaimUrlList: string[];
 }
 
-export interface DetailModelState {
+export interface OrderModelState {
   item: Partial<DetailItemType>;
 }
 
 export interface ModelType {
-  namespace: 'ORDER_DETAIL';
-  state: DetailModelState;
+  namespace: 'ORDER';
+  state: OrderModelState;
   reducers: {
-    save: Reducer<DetailModelState>;
+    save: Reducer<OrderModelState>;
   };
   effects: {
     fetch: Effect;
-    catchOrder: Effect;
-    cancelOrder: Effect;
   };
 }
 
 const Model: ModelType = {
-  namespace: 'ORDER_DETAIL',
+  namespace: 'ORDER',
   state: {
     item: {},
   },
@@ -64,24 +62,6 @@ const Model: ModelType = {
         });
       } catch (err) {
         console.log(err);
-      }
-    },
-    *catchOrder({ payload }, { call, put }) {
-      try {
-        yield call(API.subOrderCatch, payload);
-        Toast.info('操作成功');
-      } catch (err) {
-        console.log(err);
-        Toast.info('操作失败');
-      }
-    },
-    *cancelOrder({ payload }, { call, put }) {
-      try {
-        yield call(API.subOrderCatch, payload);
-        Toast.info('操作成功');
-      } catch (err) {
-        console.log(err);
-        Toast.info('操作失败');
       }
     },
   },

@@ -110,7 +110,7 @@ const User: React.FC<UserPrpos> = props => {
     setVisible(true);
   };
 
-  const switchRole = () => {
+  const switchRole = async () => {
     let role = '';
     if (roleCode === ROLE_STATUS.taker) {
       role = ROLE_STATUS.dispatcher;
@@ -122,18 +122,18 @@ const User: React.FC<UserPrpos> = props => {
       Toast.info('角色获取失败');
       return;
     }
-    dispatch({
-      type: 'USER/switchRole',
-      payload: {
-        roleCode: role,
-      },
-      successCallback: () => {
-        Toast.info('切换成功', 1, () => {
-          hideModal();
-        });
-      },
-      errCallback: hideModal,
-    });
+    try {
+      await dispatch({
+        type: 'USER/switchRole',
+        payload: {
+          roleCode: role,
+        },
+      });
+      hideModal();
+      Toast.info('切换成功');
+    } catch (error) {
+      hideModal();
+    }
   };
 
   const roleModalProps: RoleModalProps = {

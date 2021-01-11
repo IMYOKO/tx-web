@@ -1,31 +1,41 @@
-import { PageActionBaseProps } from '@/types/common';
+import { PageActionBaseProps, RootState } from '@/types/common';
 import { connect } from 'dva';
-import React, { useEffect } from 'react';
-import { DetailItemType } from './model';
+import React, { useEffect, useState } from 'react';
+import { UserInfoType } from '@/models/user';
+import { DetailItemType } from '@/models/order';
 import './index.less';
+import { ROLE_STATUS } from '@/types/enum';
+import { Toast } from 'antd-mobile';
+import RoleModal, { RoleModalProps } from './RoleModal';
 
 interface DetailProps extends PageActionBaseProps {
   item: Partial<DetailItemType>;
+  userInfo: Partial<UserInfoType>;
 }
 
 const Detail: React.FC<DetailProps> = props => {
-  const { item, dispatch } = props;
+  const {
+    item,
+    userInfo: { roleCode },
+    dispatch,
+  } = props;
   const { hash = '' } = location;
   const search = hash.split('?').pop();
   const searchParams = new URLSearchParams(search);
   const id = searchParams.get('id');
+  const [visible, setVisible] = useState<boolean>(false);
   console.log({ item });
 
   const fetchData = (id: string) => {
     dispatch({
-      type: 'ORDER_DETAIL/fetch',
+      type: 'ORDER/fetch',
       payload: { id: Number(id) },
     });
   };
 
   const clearData = () => {
     dispatch({
-      type: 'ORDER_DETAIL/save',
+      type: 'ORDER/save',
       payload: { item: {} },
     });
   };
@@ -40,11 +50,57 @@ const Detail: React.FC<DetailProps> = props => {
     return () => {};
   }, [id]);
 
-  const catchOrder = () => {
-    dispatch({
-      type: 'ORDER_DETAIL/save',
-      payload: { orderId: id },
-    });
+  const catchOrder = async () => {
+    if (!id) {
+      Toast.info('暂无此订单');
+      return;
+    }
+    if (roleCode === undefined) {
+      Toast.info('用户信息未知，请刷新页面');
+      return;
+    }
+    if (roleCode !== ROLE_STATUS.taker) {
+      showModal();
+      return;
+    }
+    try {
+      const res = await dispatch({
+        type: 'TAKER/catchOrder',
+        payload: { orderId: id },
+      });
+      console.log(res);
+    } catch (error) {}
+  };
+
+  const hideModal = () => {
+    setVisible(false);
+  };
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const switchRole = async () => {
+    try {
+      await dispatch({
+        type: 'USER/switchRole',
+        payload: {
+          roleCode: ROLE_STATUS.taker,
+        },
+      });
+      hideModal();
+      Toast.info('切换成功');
+    } catch (error) {
+      hideModal();
+    }
+  };
+
+  const roleModalProps: RoleModalProps = {
+    visible,
+    hide: hideModal,
+    onOk: () => {
+      switchRole();
+    },
   };
 
   return (
@@ -112,15 +168,17 @@ const Detail: React.FC<DetailProps> = props => {
           <div className="button-item right-wrapper">接单</div>
         </div> */}
       </div>
+      <RoleModal {...roleModalProps} />
     </div>
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   const {
-    ORDER_DETAIL: { item },
+    ORDER: { item },
+    USER: { userInfo },
   } = state;
-  return { item };
+  return { item, userInfo };
 };
 
 export default connect(mapStateToProps)(Detail);

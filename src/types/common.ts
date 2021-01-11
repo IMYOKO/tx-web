@@ -1,6 +1,9 @@
 import { Dispatch } from 'redux';
 import { CommonModelState } from '@/models/common';
 import { UserModelState } from '@/models/user';
+import { DispatcherModelState } from '@/models/dispatcher';
+import { OrderModelState } from '@/models/order';
+import { TakerModelState } from '@/models/taker';
 
 interface ModelsLoadingType {
   global: boolean;
@@ -11,6 +14,9 @@ interface ModelsLoadingType {
 export interface RootState {
   USER: UserModelState;
   COMMON: CommonModelState;
+  ORDER: OrderModelState;
+  TAKER: TakerModelState;
+  DISPATCHER: DispatcherModelState;
   loading: ModelsLoadingType;
 }
 export interface Pagination {
