@@ -17,7 +17,7 @@ const routes: IRoute[] = [
         path: '/detail',
         title: '详情',
         exact: true,
-        component: '../pages/detail',
+        component: '../pages/Home/detail',
         Routes: ['src/layouts/AuthLayout'],
       },
       /********************** 接单者order ************************/
