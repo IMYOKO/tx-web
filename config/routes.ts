@@ -20,31 +20,43 @@ const routes: IRoute[] = [
         component: '../pages/detail',
         Routes: ['src/layouts/AuthLayout'],
       },
-      {
-        path: '/submit-task',
-        title: '提交任务',
-        exact: true,
-        component: '../pages/submit-task',
-        Routes: ['src/layouts/AuthLayout'],
-      },
+      /********************** 接单者order ************************/
       {
         path: '/task-taker',
         title: '稿件',
         exact: true,
-        component: '../pages/task-taker',
         roleStatus: '1',
         hideBackIcon: true,
+        component: '../pages/Taker/index',
         Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar', 'src/layouts/RoleLayout'],
       },
+      {
+        path: '/submit-task',
+        title: '提交任务',
+        exact: true,
+        roleStatus: '1',
+        component: '../pages/Taker/submit-task',
+        Routes: ['src/layouts/AuthLayout', 'src/layouts/RoleLayout'],
+      },
+      /********************** 派单者order ************************/
       {
         path: '/task-dispatcher',
         title: '稿件',
         exact: true,
-        component: '../pages/task-dispatcher',
         roleStatus: '2',
         hideBackIcon: true,
+        component: '../pages/Dispatcher/index',
         Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar', 'src/layouts/RoleLayout'],
       },
+      {
+        path: '/add-order',
+        title: '发布稿件',
+        exact: true,
+        roleStatus: '2',
+        component: '../pages/Dispatcher/add-order',
+        Routes: ['src/layouts/AuthLayout', 'src/layouts/RoleLayout'],
+      },
+      /********************** 登录 ************************/
       {
         path: '/login',
         title: '登录',
@@ -53,6 +65,7 @@ const routes: IRoute[] = [
         hideBackIcon: true,
         Routes: ['src/layouts/AuthLayout'],
       },
+      /********************** 注册 ************************/
       {
         path: '/register',
         title: '注册',
@@ -60,6 +73,7 @@ const routes: IRoute[] = [
         hideBackIcon: true,
         component: '../pages/register',
       },
+      /********************** 用户 ************************/
       {
         path: '/user',
         title: '我的',
@@ -67,14 +81,6 @@ const routes: IRoute[] = [
         component: '../pages/Users/user',
         hideBackIcon: true,
         Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar'],
-      },
-      {
-        path: '/add-order',
-        title: '发布稿件',
-        exact: true,
-        roleStatus: '2',
-        component: '../pages/add-order',
-        Routes: ['src/layouts/AuthLayout', 'src/layouts/RoleLayout'],
       },
       {
         path: '/my-bill',
