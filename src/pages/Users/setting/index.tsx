@@ -6,6 +6,7 @@ import { Toast } from 'antd-mobile';
 import { UserInfoType } from '@/models/user';
 import { PageActionBaseProps, RootState } from '@/types/common';
 import defaultAvatarUrl from '@/assets/images/user/my_profile_face@2x.png';
+import { LOGIN_STATUS } from '@/types/enum';
 import './index.less';
 
 interface SettingPrpos extends PageActionBaseProps {
@@ -13,7 +14,7 @@ interface SettingPrpos extends PageActionBaseProps {
 }
 
 const Setting: React.FC<SettingPrpos> = props => {
-  const { userInfo } = props;
+  const { userInfo, dispatch } = props;
   const { nickName = '', avatarUrl = '' } = userInfo;
   const [visible, setVisible] = useState<boolean>(false);
   const history = useHistory();
@@ -74,7 +75,20 @@ const Setting: React.FC<SettingPrpos> = props => {
 
   const logout = () => {
     localStorage.removeItem('token');
-    Toast.info('退出登录成功', 1, () => {
+    Toast.info('退出登录成功', 0.6, () => {
+      dispatch({
+        type: 'USER/save',
+        payload: {
+          userInfo: {},
+        },
+      });
+      dispatch({
+        type: 'COMMON/save',
+        payload: {
+          token: '',
+          loginStatus: LOGIN_STATUS.unknown,
+        },
+      });
       hideLogoutModal();
       history.replace('/login');
     });

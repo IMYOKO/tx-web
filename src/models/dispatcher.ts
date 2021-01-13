@@ -77,7 +77,7 @@ const Model: ModelType = {
       try {
         console.log({ payload });
         yield call(API.orderCreate, payload);
-        Toast.info('发布成功', 1, () => {
+        Toast.info('发布成功', 0.6, () => {
           successCallback && successCallback();
         });
       } catch (err) {

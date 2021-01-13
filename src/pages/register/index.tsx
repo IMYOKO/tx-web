@@ -102,9 +102,8 @@ const Register: React.FC<RegisterPageProps> = props => {
         type: 'COMMON/register',
         payload,
       });
-      Toast.info('注册成功', 1, () => {
-        history.replace('/');
-      });
+      Toast.info('注册成功');
+      history.replace('/');
     } catch (error) {
       Toast.info('注册失败');
     }

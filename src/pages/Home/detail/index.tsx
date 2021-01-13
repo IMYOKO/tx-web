@@ -7,6 +7,7 @@ import './index.less';
 import { ROLE_STATUS } from '@/types/enum';
 import { Toast } from 'antd-mobile';
 import RoleModal, { RoleModalProps } from './RoleModal';
+import useQuery from '@/hooks/useQuery';
 
 interface DetailProps extends PageActionBaseProps {
   item: Partial<DetailItemType>;
@@ -19,17 +20,14 @@ const Detail: React.FC<DetailProps> = props => {
     userInfo: { roleCode },
     dispatch,
   } = props;
-  const { hash = '' } = location;
-  const search = hash.split('?').pop();
-  const searchParams = new URLSearchParams(search);
-  const id = searchParams.get('id');
+  const { id } = useQuery();
   const [visible, setVisible] = useState<boolean>(false);
-  console.log({ item });
+  console.log({ item, id });
 
   const fetchData = (id: string) => {
     dispatch({
       type: 'ORDER/fetch',
-      payload: { id: Number(id) },
+      payload: { orderId: Number(id) },
     });
   };
 
@@ -66,7 +64,7 @@ const Detail: React.FC<DetailProps> = props => {
     try {
       const res = await dispatch({
         type: 'TAKER/catchOrder',
-        payload: { orderId: id },
+        payload: { orderId: Number(id) },
       });
       console.log(res);
     } catch (error) {}

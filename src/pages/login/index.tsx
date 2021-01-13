@@ -85,9 +85,8 @@ const Login: React.FC<LoginPageProps> = props => {
         type: 'COMMON/login',
         payload,
       });
-      Toast.info('登录成功', 1, () => {
-        history.replace('/');
-      });
+      Toast.info('登录成功');
+      history.replace('/');
     } catch (error) {
       Toast.info('登录失败');
     }
@@ -106,7 +105,7 @@ const Login: React.FC<LoginPageProps> = props => {
             <input
               type="text"
               name="phone"
-              defaultValue={13049492162}
+              defaultValue={18822883212}
               maxLength={11}
               ref={phoneRef}
               autoComplete="off"

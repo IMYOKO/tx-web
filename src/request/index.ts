@@ -174,6 +174,15 @@ const myOrderList = (data: OrderListParam): AxiosPromise => {
 };
 /********************** 派单者 end ************************/
 
+/********************** 接单者 start ************************/
+/**
+ * 我的订单列表
+ */
+const myOrderListByTaker = (data: OrderListParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/my-suborder-list`, data);
+};
+/********************** 接单者 end ************************/
+
 export default {
   orderCreate,
   orderList,
@@ -194,4 +203,5 @@ export default {
   subOrderAudit,
   switchRole,
   publicQrCode,
+  myOrderListByTaker,
 };

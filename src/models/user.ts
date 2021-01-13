@@ -66,7 +66,7 @@ const Model: ModelType = {
         console.log(err);
         if (err.code === 999) {
           localStorage.removeItem('token');
-          Toast.info('登录失效, 请重新登录', 1, () => {
+          Toast.info('登录失效, 请重新登录', 0.6, () => {
             const pathname = window.location.pathname;
             if (pathname !== '/login') {
               window.location.replace('/login');

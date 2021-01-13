@@ -2,11 +2,9 @@ import React, { useEffect } from 'react';
 import { connect, useHistory } from 'dva';
 import TaskList from '@/components/task-list';
 import { OrderListItemType } from '@/pages/Home/index/model';
-import { PageActionBaseProps } from '@/types/common';
-import Headers from '@/components/headers';
+import { PageActionBaseProps, RootState } from '@/types/common';
 import { UserInfoType } from '@/models/user';
 import './index.less';
-import { ROLE_STATUS } from '@/types/enum';
 
 interface TaskPageProps extends PageActionBaseProps {
   list: OrderListItemType[];
@@ -23,10 +21,10 @@ const Task: React.FC<TaskPageProps> = props => {
 
   const fetchData = () => {
     dispatch({
-      type: 'TASK/fetch',
+      type: 'TAKER/list',
       payload: {
         pageNo: 1,
-        pageSize: 1,
+        pageSize: 10,
         param: {},
       },
     });
@@ -34,29 +32,20 @@ const Task: React.FC<TaskPageProps> = props => {
 
   const clearData = () => {
     dispatch({
-      type: 'TASK/save',
+      type: 'TAKER/save',
       payload: { list: [] },
     });
   };
 
-  // useEffect(() => {
-  //   fetchData();
-  //   return () => {
-  //     clearData();
-  //   };
-  // }, []);
-
-  const goAddOrder = () => {
-    history.push('/add-order');
-  };
+  useEffect(() => {
+    fetchData();
+    return () => {
+      clearData();
+    };
+  }, []);
 
   return (
     <div className="task-page">
-      {roleCode === ROLE_STATUS.dispatcher && (
-        <Headers>
-          <div className="add-order-btn" onClick={goAddOrder}></div>
-        </Headers>
-      )}
       <div className="nav-wrapper">
         <div className="nav-list">
           <div className="nav-list-wrapper">
@@ -72,9 +61,9 @@ const Task: React.FC<TaskPageProps> = props => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   const {
-    TASK: { list },
+    TAKER: { list },
     USER: { userInfo },
   } = state;
   return { list, userInfo };

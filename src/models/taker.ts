@@ -2,6 +2,7 @@ import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import API from '@/request';
 import { Toast } from 'antd-mobile';
+import { Pagination } from '@/types/common';
 
 export interface DetailItemType {
   id: number;
@@ -24,16 +25,18 @@ export interface DetailItemType {
 
 export interface TakerModelState {
   item: Partial<DetailItemType>;
+  list: any[];
+  pagination: Pagination;
 }
 
 export interface ModelType {
   namespace: 'TAKER';
-  state: {};
+  state: TakerModelState;
   reducers: {
     save: Reducer<TakerModelState>;
   };
   effects: {
-    fetch: Effect;
+    list: Effect;
     catchOrder: Effect;
   };
 }
@@ -42,6 +45,13 @@ const Model: ModelType = {
   namespace: 'TAKER',
   state: {
     item: {},
+    list: [],
+    pagination: {
+      pageNo: 0,
+      pageSize: 0,
+      totalCount: 0,
+      totalPage: 0,
+    },
   },
   reducers: {
     save(state, { payload }) {
@@ -52,13 +62,15 @@ const Model: ModelType = {
     },
   },
   effects: {
-    *fetch({ payload }, { call, put }) {
+    *list({ payload }, { call, put }) {
       try {
-        const item = yield call(API.orderDetail, payload);
+        const res = yield call(API.myOrderListByTaker, payload);
+        const { dataList: list, ...pagination } = res;
         yield put({
           type: 'save',
           payload: {
-            item,
+            list,
+            pagination,
           },
         });
       } catch (err) {

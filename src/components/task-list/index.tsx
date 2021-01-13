@@ -1,5 +1,6 @@
 import { OrderListItemType } from '@/pages/Home/index/model';
 import { useHistory } from 'dva';
+import { isEmpty } from 'lodash-es';
 import React from 'react';
 import './index.less';
 export interface TaskListProps {
@@ -48,6 +49,9 @@ const TaskListItem: React.FC<OrderListItemType> = ({
 };
 
 const TaskList: React.FC<TaskListProps> = ({ data }) => {
+  if (isEmpty(data)) {
+    return <div className="is-empty-data">暂无数据</div>;
+  }
   return (
     <ul className="task-list">
       {data.map((item: OrderListItemType, index: number) => (

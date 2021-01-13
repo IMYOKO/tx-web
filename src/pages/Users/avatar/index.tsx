@@ -34,7 +34,7 @@ const Avatar: React.FC<AvatarPagePrpos> = ({ userInfo, loading = false }) => {
       type: 'USER/complementInfo',
       payload: { avatar },
       successCallback: () => {
-        Toast.info('修改成功', 1, () => {
+        Toast.info('修改成功', 0.6, () => {
           history.replace('/user');
         });
       },

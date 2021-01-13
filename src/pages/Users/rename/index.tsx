@@ -37,7 +37,7 @@ const Rename: React.FC<RenamePagePrpos> = ({ userInfo }) => {
       type: 'USER/complementInfo',
       payload,
       successCallback: () => {
-        Toast.info('修改成功', 1, () => {
+        Toast.info('修改成功', 0.6, () => {
           history.replace('/user');
         });
       },

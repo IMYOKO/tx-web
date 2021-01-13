@@ -17,8 +17,7 @@ const Home: React.FC<HomeProps> = props => {
       type: 'HOME/fetch',
       payload: {
         pageNo: 1,
-        pageSize: 1,
-        param: {},
+        pageSize: 10,
       },
     });
   };

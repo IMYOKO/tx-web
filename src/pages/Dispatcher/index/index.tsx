@@ -26,7 +26,7 @@ const Dispatcher: React.FC<DISPATCHERPageProps> = props => {
       type: 'DISPATCHER/fetch',
       payload: {
         pageNo: 1,
-        pageSize: 1,
+        pageSize: 10,
         param: {},
       },
     });
