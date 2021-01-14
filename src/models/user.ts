@@ -10,6 +10,8 @@ export interface UserInfoType {
   avatarUrl: string;
   balance: number;
   hasCommissionAmount: number;
+  todayFinishOrderCount: number;
+  totalFinishOrderCount: number;
   todayIncome: number;
   publicStatus: PUBLIC_STATUS;
   verifyStatus: VERIFY_STATUS;
@@ -53,7 +55,7 @@ const Model: ModelType = {
         yield put({
           type: 'save',
           payload: {
-            userInfo,
+            userInfo: { nickName: '', ...userInfo },
           },
         });
         yield put({

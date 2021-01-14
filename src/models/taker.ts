@@ -4,28 +4,22 @@ import API from '@/request';
 import { Toast } from 'antd-mobile';
 import { Pagination } from '@/types/common';
 
-export interface DetailItemType {
+export interface TakerOrderItemType {
   id: number;
+  orderId: number;
   commissionAmount: number;
   avatarUrl: string;
   nickName: string;
-  tagList: string[];
   title: string;
-  count: number;
   createTime: number;
-  description: string;
-  descriptionUrlList: string[];
-  principalAmount: number;
-  remainingCount: number;
+  realAmount: number;
   status: string;
   statusText: string;
-  taskClaim: string;
-  taskClaimUrlList: string[];
 }
 
 export interface TakerModelState {
-  item: Partial<DetailItemType>;
-  list: any[];
+  item: Partial<TakerOrderItemType>;
+  list: TakerOrderItemType[];
   pagination: Pagination;
 }
 

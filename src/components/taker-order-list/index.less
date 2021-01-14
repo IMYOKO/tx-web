@@ -1,0 +1,80 @@
+.task-order-list {
+  .task-order-list-wrapper {
+    padding: 10px 15px 0;
+
+    >li {
+      padding: 15px;
+      background-color: #fff;
+      margin-bottom: 10px;
+
+      .task-order-list-item {
+        .list-item {
+          display: flex;
+          justify-content: space-between;
+
+          &.top-item {
+            margin-bottom: 16px;
+          }
+
+          .left {
+
+            &.title {
+              color: #333;
+              font-size: 16px;
+              line-height: 1.2;
+              font-weight: bold;
+            }
+          }
+
+          .right {
+
+            &.status {
+              color: #999;
+              font-size: 13px;
+              line-height: 1.2;
+            }
+          }
+
+          &.bottom-item {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.2;
+
+            .name {
+              display: flex;
+              align-items: center;
+
+              img {
+                margin-right: 4px;
+              }
+            }
+
+            .right {
+
+              &.money {
+                display: flex;
+                align-items: center;
+
+                .jinbi {
+                  display: block;
+                  width: 13px;
+                  height: 13px;
+                  background: url('~@/assets/images/common/icon_jinbi@2x.png') center center no-repeat;
+                  background-size: contain;
+                }
+
+                .text {
+                  margin: 0 4px;
+                }
+
+                .money-num {
+                  color: #333;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

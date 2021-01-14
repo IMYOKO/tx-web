@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect, useHistory } from 'dva';
-import TaskList from '@/components/task-list';
-import { OrderListItemType } from '@/pages/Home/index/model';
 import { PageActionBaseProps, RootState } from '@/types/common';
 import { UserInfoType } from '@/models/user';
+import { TakerOrderItemType } from '@/models/taker';
+import TakerOrderList from '@/components/taker-order-list';
 import './index.less';
 
 interface TaskPageProps extends PageActionBaseProps {
-  list: OrderListItemType[];
+  list: TakerOrderItemType[];
   userInfo: Partial<UserInfoType>;
 }
 
@@ -18,6 +18,7 @@ const Task: React.FC<TaskPageProps> = props => {
     userInfo: { roleCode },
   } = props;
   const history = useHistory();
+  console.log(list);
 
   const fetchData = () => {
     dispatch({
@@ -25,7 +26,6 @@ const Task: React.FC<TaskPageProps> = props => {
       payload: {
         pageNo: 1,
         pageSize: 10,
-        param: {},
       },
     });
   };
@@ -56,7 +56,7 @@ const Task: React.FC<TaskPageProps> = props => {
         </div>
         <div className="search"></div>
       </div>
-      <TaskList data={list} />
+      <TakerOrderList list={list} />
     </div>
   );
 };

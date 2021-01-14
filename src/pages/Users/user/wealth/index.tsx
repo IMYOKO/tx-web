@@ -9,7 +9,14 @@ interface RoleData {
 }
 
 const Wealth: React.FC<Partial<UserInfoType>> = props => {
-  const { balance = 0, hasCommissionAmount = 0, todayIncome = 0, roleCode } = props;
+  const {
+    balance = 0,
+    hasCommissionAmount = 0,
+    todayIncome = 0,
+    roleCode,
+    todayFinishOrderCount = 0,
+    totalFinishOrderCount = 0,
+  } = props;
   const renderContent = (takerData: RoleData, dispatcherData: RoleData) => {
     if (!roleCode) {
       return null;
@@ -40,13 +47,13 @@ const Wealth: React.FC<Partial<UserInfoType>> = props => {
       <div className="wealth-item">
         {renderContent(
           { title: '今日收入', num: todayIncome },
-          { title: '今日完稿', num: todayIncome },
+          { title: '今日完稿', num: todayFinishOrderCount },
         )}
       </div>
       <div className="wealth-item">
         {renderContent(
           { title: '已赚佣金', num: hasCommissionAmount },
-          { title: '累计完稿', num: todayIncome },
+          { title: '累计完稿', num: totalFinishOrderCount },
         )}
       </div>
     </div>
