@@ -1,12 +1,22 @@
 import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import API from '@/request';
-import { OrderListItemType } from '@/pages/Home/index/model';
 import { Pagination } from '@/types/common';
 import { Toast } from 'antd-mobile';
 
+export interface DispatcherOrderItemType {
+  id: number;
+  commissionAmount: number;
+  avatarUrl: string;
+  nickName: string;
+  title: string;
+  tagList: string[];
+  status: string;
+  statusText: string;
+}
+
 export interface DispatcherModelState {
-  list: OrderListItemType[];
+  list: DispatcherOrderItemType[];
   pagination: Pagination;
   tagList: string[];
 }

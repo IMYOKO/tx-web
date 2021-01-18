@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { connect, useHistory } from 'dva';
-import TaskList from '@/components/task-list';
-import { OrderListItemType } from '@/pages/Home/index/model';
 import { PageActionBaseProps, RootState } from '@/types/common';
 import Headers from '@/components/headers';
 import { UserInfoType } from '@/models/user';
 import './index.less';
 import { ROLE_STATUS } from '@/types/enum';
+import DispatcherOrderList from '@/components/dispatcher-order-list';
+import { DispatcherOrderItemType } from '@/models/dispatcher';
 
 interface DISPATCHERPageProps extends PageActionBaseProps {
-  list: OrderListItemType[];
+  list: DispatcherOrderItemType[];
   userInfo: Partial<UserInfoType>;
 }
 
@@ -66,7 +66,8 @@ const Dispatcher: React.FC<DISPATCHERPageProps> = props => {
         </div>
         <div className="search"></div>
       </div>
-      <TaskList data={list} />
+      {/* <TaskList data={list} /> */}
+      <DispatcherOrderList list={list} />
     </div>
   );
 };

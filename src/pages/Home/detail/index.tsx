@@ -8,6 +8,7 @@ import { ROLE_STATUS } from '@/types/enum';
 import { Toast } from 'antd-mobile';
 import RoleModal, { RoleModalProps } from './RoleModal';
 import useQuery from '@/hooks/useQuery';
+import OrderDetail, { OrderDetailProps } from '@/components/order-detail';
 
 interface DetailProps extends PageActionBaseProps {
   item: Partial<DetailItemType>;
@@ -22,7 +23,6 @@ const Detail: React.FC<DetailProps> = props => {
   } = props;
   const { id } = useQuery();
   const [visible, setVisible] = useState<boolean>(false);
-  console.log({ item, id });
 
   const fetchData = (id: string) => {
     dispatch({
@@ -101,61 +101,13 @@ const Detail: React.FC<DetailProps> = props => {
     },
   };
 
+  const orderDetailProps: Partial<OrderDetailProps> = {
+    ...item,
+  };
+
   return (
     <div className="detail-page">
-      <div className="detail-page-info">
-        <div className="title-wrapper">
-          <div className="title-box">
-            <h2>关注转发 - 店铺关注</h2>
-            <p>创建时间：2020-11-28 21:53</p>
-          </div>
-          <div className="task-status">进行中</div>
-        </div>
-        <div className="my-yj-wrapper">
-          <div className="my-yj-item">
-            <div className="my-yj-item-top">佣金(元)</div>
-            <div className="my-yj-item-bottom">5.02</div>
-          </div>
-          <div className="my-yj-item">
-            <div className="my-yj-item-top">还需稿件</div>
-            <div className="my-yj-item-bottom">5</div>
-          </div>
-          <div className="my-yj-item">
-            <div className="my-yj-item-top">
-              总稿件<span>10</span>
-            </div>
-            <div className="my-yj-item-bottom bj">本金 100元</div>
-          </div>
-        </div>
-        <div className="user-info-wrapper">
-          <div className="avatar-wrapper">
-            <div className="avatar">
-              <img
-                src="https://dev-res-cn.oss-cn-shenzhen.aliyuncs.com/next-maker/cms/9174d350-35fe-11eb-912f-c9d067017d00.jpg"
-                alt=""
-              />
-            </div>
-            <div className="name">YOKO</div>
-          </div>
-          <div className="tag-wrapper">
-            <div className="tag-item">
-              <span>dsdsd</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="detail-task-wrapper">
-        <div className="detail-task-title">任务描述</div>
-        <div className="detail-task-decription">
-          任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述
-        </div>
-      </div>
-      <div className="detail-task-wrapper">
-        <div className="detail-task-title">任务描述</div>
-        <div className="detail-task-decription">
-          任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述任务描述
-        </div>
-      </div>
+      <OrderDetail {...orderDetailProps} />
 
       <div className="button-wrapper">
         <div className="button-item" onClick={catchOrder}>
