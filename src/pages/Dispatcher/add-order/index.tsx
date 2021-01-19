@@ -45,7 +45,7 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
   const [descriptionFileList, setDescriptionFileList] = useState<FileDataType[]>([]);
   const [taskClaimFileList, setTaskClaimFileList] = useState<FileDataType[]>([]);
 
-  // 计算总佣金
+  // 计算总赏金
   useEffect(() => {
     const count = Number(amountData.count);
     const commissionAmount = Number(amountData.commissionAmount);
@@ -147,7 +147,7 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
     updateAmountData({ principalAmount: e.target.value });
   };
 
-  // 修改佣金
+  // 修改赏金
   const commissionAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateAmountData({ commissionAmount: e.target.value });
   };
@@ -223,12 +223,12 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
                 </div>
               </div>
               <div className="add-order-form-item-wrapper">
-                <div className="label">佣金</div>
+                <div className="label">赏金</div>
                 <div className="content">
                   <input
                     type="number"
                     value={amountData.commissionAmount}
-                    placeholder="请输入佣金"
+                    placeholder="请输入赏金"
                     onChange={commissionAmountChange}
                     autoComplete="off"
                   />
@@ -263,7 +263,7 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
                 </div>
               </div>
               <div className="add-order-form-item-wrapper">
-                <div className="label">总佣金</div>
+                <div className="label">总赏金</div>
                 <div className="content">
                   <div className="sigle">{totalCommissionAmount} 元</div>
                 </div>

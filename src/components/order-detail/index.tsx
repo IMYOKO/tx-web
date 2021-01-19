@@ -47,7 +47,7 @@ const OrderDetail: React.FC<Partial<OrderDetailProps>> = props => {
         </div>
         <div className="my-yj-wrapper">
           <div className="my-yj-item">
-            <div className="my-yj-item-top">佣金(元)</div>
+            <div className="my-yj-item-top">赏金(元)</div>
             <div className="my-yj-item-bottom">{commissionAmount}</div>
           </div>
           <div className="my-yj-item">

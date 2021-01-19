@@ -29,7 +29,7 @@ const DispatcherOrderList: React.FC<DispatcherOrderListProps> = props => {
                 </div>
                 <div className="right money">
                   <span className="jinbi"></span>
-                  <span className="text">佣金</span>
+                  <span className="text">赏金</span>
                   <span className="money-num">+{item.commissionAmount}</span>
                 </div>
               </div>

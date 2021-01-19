@@ -165,23 +165,23 @@ const publicQrCode = (): AxiosPromise => {
   return apiRequest.post(`${baseURL}/public-qr-code`);
 };
 
-/********************** 派单者 start ************************/
+/********************** NPC start ************************/
 /**
  * 我的订单列表
  */
 const myOrderList = (data: OrderListParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/user/my-order-list`, data);
 };
-/********************** 派单者 end ************************/
+/********************** NPC end ************************/
 
-/********************** 接单者 start ************************/
+/********************** 玩家 start ************************/
 /**
  * 我的订单列表
  */
 const myOrderListByTaker = (data: OrderListParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/user/my-suborder-list`, data);
 };
-/********************** 接单者 end ************************/
+/********************** 玩家 end ************************/
 
 export default {
   orderCreate,

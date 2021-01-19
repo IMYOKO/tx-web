@@ -66,7 +66,6 @@ const Dispatcher: React.FC<DISPATCHERPageProps> = props => {
         </div>
         <div className="search"></div>
       </div>
-      {/* <TaskList data={list} /> */}
       <DispatcherOrderList list={list} />
     </div>
   );

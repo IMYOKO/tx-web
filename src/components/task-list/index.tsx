@@ -40,7 +40,7 @@ const TaskListItem: React.FC<OrderListItemType> = ({
       <div className="money-wrapper">
         <div className="jinbi-wrapper">
           <div className="jinbi"></div>
-          <div className="yongjin">佣金</div>
+          <div className="yongjin">赏金</div>
         </div>
         <div className="money">+{commissionAmount}</div>
       </div>

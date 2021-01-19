@@ -20,7 +20,7 @@ const routes: IRoute[] = [
         component: '../pages/Home/detail',
         Routes: ['src/layouts/AuthLayout'],
       },
-      /********************** 接单者order ************************/
+      /********************** 玩家order ************************/
       {
         path: '/task-taker',
         title: '稿件',
@@ -38,7 +38,7 @@ const routes: IRoute[] = [
         component: '../pages/Taker/submit-task',
         Routes: ['src/layouts/AuthLayout', 'src/layouts/RoleLayout'],
       },
-      /********************** 派单者order ************************/
+      /********************** NPCorder ************************/
       {
         path: '/task-dispatcher',
         title: '稿件',

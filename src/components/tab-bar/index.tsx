@@ -46,7 +46,7 @@ const TabBar: React.FC<TabBarProps> = props => {
     userInfo.roleCode === ROLE_STATUS.dispatcher
       ? {
           key: 'task',
-          title: '派单稿件',
+          title: 'NPC任务',
           pathName: '/task-dispatcher',
           handClick: () => {
             history.replace('/task-dispatcher');
@@ -54,7 +54,7 @@ const TabBar: React.FC<TabBarProps> = props => {
         }
       : {
           key: 'task',
-          title: '接单稿件',
+          title: '玩家任务',
           pathName: '/task-taker',
           handClick: () => {
             history.replace('/task-taker');

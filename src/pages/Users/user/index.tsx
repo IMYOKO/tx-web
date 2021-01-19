@@ -37,10 +37,10 @@ const User: React.FC<UserPrpos> = props => {
   const renderRole = () => {
     let role = '';
     if (roleCode === ROLE_STATUS.taker) {
-      role = '接单者';
+      role = '玩家';
     }
     if (roleCode === ROLE_STATUS.dispatcher) {
-      role = '派单者';
+      role = 'NPC';
     }
     return role;
   };

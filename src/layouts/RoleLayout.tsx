@@ -24,10 +24,10 @@ const RoleLayout: React.FC<RoleLayoutProps> = props => {
   useEffect(() => {
     if (loginStatus === LOGIN_STATUS.yes && roleCode !== roleStatus) {
       if (roleCode === ROLE_STATUS.taker) {
-        Toast.info('当前角色为接单者');
+        Toast.info('当前角色为玩家');
       }
       if (roleCode === ROLE_STATUS.dispatcher) {
-        Toast.info('当前角色为派单者');
+        Toast.info('当前角色为NPC');
       }
     }
   }, [loginStatus, roleStatus, roleCode, children]);

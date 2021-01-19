@@ -23,7 +23,7 @@ const RoleModal: React.FC<RoleModalProps> = props => {
   return (
     <Modal visible={visible} transparent maskClosable={false} title="提示" footer={footer}>
       <span>
-        请先切换成 <b style={{ color: '#FF5A2C' }}>接单者</b> ？
+        请先切换成 <b style={{ color: '#FF5A2C' }}>玩家</b> ？
         <br />
         切换成功后再点击接单
       </span>

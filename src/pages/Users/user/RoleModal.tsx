@@ -24,10 +24,10 @@ const RoleModal: React.FC<RoleModalProps> = props => {
   const renderRole = () => {
     let role = '';
     if (roleCode === ROLE_STATUS.taker) {
-      role = '派单者';
+      role = 'NPC';
     }
     if (roleCode === ROLE_STATUS.dispatcher) {
-      role = '接单者';
+      role = '玩家';
     }
     return role;
   };
