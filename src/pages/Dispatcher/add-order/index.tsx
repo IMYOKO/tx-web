@@ -20,7 +20,6 @@ interface AddOrderFormType {
 interface AmountDataType {
   commissionAmount: number | string;
   count: number | string;
-  principalAmount: number | string;
 }
 
 const DefaultFormData: AddOrderFormType = {
@@ -32,7 +31,6 @@ const DefaultFormData: AddOrderFormType = {
 const DefaultAmountData: AmountDataType = {
   commissionAmount: '',
   count: '',
-  principalAmount: '',
 };
 
 const AddOrder: React.FC<AddOrderPageProps> = props => {
@@ -67,12 +65,10 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
   // 提交表单
   const submit = () => {
     const count = Number(amountData.count);
-    const principalAmount = Number(amountData.principalAmount);
     const commissionAmount = Number(amountData.commissionAmount);
     const payload = {
       ...addOrderForm,
       count,
-      principalAmount,
       commissionAmount,
       tagList: activeTagList,
       descriptionFileList,
@@ -140,11 +136,6 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
     let count = (e.target as any).value;
     count = count.replace(/\D/g, '');
     updateAmountData({ count });
-  };
-
-  // 修改本金
-  const principalAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateAmountData({ principalAmount: e.target.value });
   };
 
   // 修改赏金
@@ -230,19 +221,6 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
                     value={amountData.commissionAmount}
                     placeholder="请输入赏金"
                     onChange={commissionAmountChange}
-                    autoComplete="off"
-                  />
-                  <span>元</span>
-                </div>
-              </div>
-              <div className="add-order-form-item-wrapper">
-                <div className="label">本金</div>
-                <div className="content">
-                  <input
-                    type="number"
-                    value={amountData.principalAmount}
-                    placeholder="请输入本金"
-                    onChange={principalAmountChange}
                     autoComplete="off"
                   />
                   <span>元</span>

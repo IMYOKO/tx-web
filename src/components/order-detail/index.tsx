@@ -55,10 +55,8 @@ const OrderDetail: React.FC<Partial<OrderDetailProps>> = props => {
             <div className="my-yj-item-bottom">{remainingCount}</div>
           </div>
           <div className="my-yj-item">
-            <div className="my-yj-item-top">
-              总稿件<span>{count}</span>
-            </div>
-            <div className="my-yj-item-bottom bj">本金 100元</div>
+            <div className="my-yj-item-top">总稿件</div>
+            <div className="my-yj-item-bottom">{count}</div>
           </div>
         </div>
         <div className="user-info-wrapper">

@@ -4,21 +4,40 @@ import Headers from '@/components/headers';
 import ImagePicker from '@/components/image-picker';
 import useQuery from '@/hooks/useQuery';
 import { FileDataType } from '@/types/common';
+import { isEmpty } from 'lodash-es';
 import './index.less';
+import { Toast } from 'antd-mobile';
 
 const SubmitTask: React.FC = () => {
   const dispatch = useDispatch();
   const [fileList, setFileList] = useState<FileDataType[]>([]);
-  const { id, sd, b } = useQuery();
-  console.log(id, sd, b);
+  const [submitContent, setSubmitContent] = useState<string>('');
+  const { id } = useQuery();
 
-  const submit = () => {
+  const submit = async () => {
+    if (!id) {
+      Toast.info('订单不存在');
+      return;
+    }
+    if (isEmpty(submitContent)) {
+      Toast.info('请先输入内容');
+      return;
+    }
     const payload = {
-      subOrderId: 0,
-      submitContent: '',
-      submitFileList: [],
+      subOrderId: Number(id),
+      submitContent,
+      submitFileList: fileList,
     };
     console.log({ payload });
+    try {
+      await dispatch({
+        type: 'TAKER/submit',
+        payload,
+      });
+      Toast.info('提交成功');
+    } catch (error) {
+      Toast.info('提交失败');
+    }
   };
 
   const addFiles = (result: FileDataType) => {
@@ -30,25 +49,28 @@ const SubmitTask: React.FC = () => {
     setFileList(newfileList);
   };
 
+  const submitContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setSubmitContent(e.target.value);
+  };
+
   return (
     <div className="submit-task-page">
       <Headers>
         <div className="tx-btn submit-btn" onClick={submit}>
-          发布
+          提交
         </div>
       </Headers>
       <div className="add-order-form">
         <div className="add-order-form-list">
           <div className="order-gaojian-wrapper">
-            <div className="title">任务要求</div>
+            <div className="title"></div>
             <div className="discrption-wrapper">
               <textarea
                 name=""
                 id=""
                 rows={6}
-                // value={addOrderForm.taskClaim}
-                // onChange={taskClaimChange}
-                placeholder="请输入任务要求"
+                onChange={submitContentChange}
+                placeholder="想说点什么吗"
               ></textarea>
             </div>
             <ImagePicker

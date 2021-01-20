@@ -8,17 +8,11 @@ import './index.less';
 
 interface TaskPageProps extends PageActionBaseProps {
   list: TakerOrderItemType[];
-  userInfo: Partial<UserInfoType>;
 }
 
 const Task: React.FC<TaskPageProps> = props => {
-  const {
-    dispatch,
-    list,
-    userInfo: { roleCode },
-  } = props;
+  const { dispatch, list } = props;
   const history = useHistory();
-  console.log(list);
 
   const fetchData = () => {
     dispatch({
@@ -44,6 +38,10 @@ const Task: React.FC<TaskPageProps> = props => {
     };
   }, []);
 
+  const goTakerDetail = (subOrderId: number, orderId: number) => {
+    history.push(`task-taker-detail?subOrderId=${subOrderId}&orderId=${orderId}`);
+  };
+
   return (
     <div className="task-page">
       <div className="nav-wrapper">
@@ -56,7 +54,7 @@ const Task: React.FC<TaskPageProps> = props => {
         </div>
         <div className="search"></div>
       </div>
-      <TakerOrderList list={list} />
+      <TakerOrderList list={list} handleClick={goTakerDetail} />
     </div>
   );
 };
@@ -64,9 +62,8 @@ const Task: React.FC<TaskPageProps> = props => {
 const mapStateToProps = (state: RootState) => {
   const {
     TAKER: { list },
-    USER: { userInfo },
   } = state;
-  return { list, userInfo };
+  return { list };
 };
 
 export default connect(mapStateToProps)(Task);

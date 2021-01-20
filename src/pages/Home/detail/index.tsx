@@ -9,6 +9,7 @@ import { Toast } from 'antd-mobile';
 import RoleModal, { RoleModalProps } from './RoleModal';
 import useQuery from '@/hooks/useQuery';
 import OrderDetail, { OrderDetailProps } from '@/components/order-detail';
+import useOrderDetail from '@/hooks/useOrderDetail';
 
 interface DetailProps extends PageActionBaseProps {
   item: Partial<DetailItemType>;
@@ -24,29 +25,30 @@ const Detail: React.FC<DetailProps> = props => {
   const { id } = useQuery();
   const [visible, setVisible] = useState<boolean>(false);
 
-  const fetchData = (id: string) => {
-    dispatch({
-      type: 'ORDER/fetch',
-      payload: { orderId: Number(id) },
-    });
-  };
+  useOrderDetail(id);
+  // const fetchData = (id: string) => {
+  //   dispatch({
+  //     type: 'ORDER/fetch',
+  //     payload: { orderId: Number(id) },
+  //   });
+  // };
 
-  const clearData = () => {
-    dispatch({
-      type: 'ORDER/save',
-      payload: { item: {} },
-    });
-  };
+  // const clearData = () => {
+  //   dispatch({
+  //     type: 'ORDER/save',
+  //     payload: { item: {} },
+  //   });
+  // };
 
-  useEffect(() => {
-    if (id) {
-      fetchData(id);
-      return () => {
-        clearData();
-      };
-    }
-    return () => {};
-  }, [id]);
+  // useEffect(() => {
+  //   if (id) {
+  //     fetchData(id);
+  //     return () => {
+  //       clearData();
+  //     };
+  //   }
+  //   return () => {};
+  // }, [id]);
 
   const catchOrder = async () => {
     if (!id) {
@@ -109,14 +111,12 @@ const Detail: React.FC<DetailProps> = props => {
     <div className="detail-page">
       <OrderDetail {...orderDetailProps} />
 
-      <div className="button-wrapper">
-        <div className="button-item" onClick={catchOrder}>
-          接单
+      <div className="bottom-button-wrapper">
+        <div className="bottom-button-content">
+          <div className="button-item" onClick={catchOrder}>
+            接单
+          </div>
         </div>
-        {/* <div className="button-box">
-          <div className="button-item left-wrapper">接单</div>
-          <div className="button-item right-wrapper">接单</div>
-        </div> */}
       </div>
       <RoleModal {...roleModalProps} />
     </div>

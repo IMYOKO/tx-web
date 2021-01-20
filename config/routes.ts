@@ -23,11 +23,19 @@ const routes: IRoute[] = [
       /********************** 玩家order ************************/
       {
         path: '/task-taker',
-        title: '稿件',
+        title: '玩家任务',
         exact: true,
         roleStatus: '1',
         hideBackIcon: true,
         component: '../pages/Taker/index',
+        Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar', 'src/layouts/RoleLayout'],
+      },
+      {
+        path: '/task-taker-detail',
+        title: '玩家任务详情',
+        exact: true,
+        roleStatus: '1',
+        component: '../pages/Taker/detail',
         Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar', 'src/layouts/RoleLayout'],
       },
       {
@@ -38,10 +46,10 @@ const routes: IRoute[] = [
         component: '../pages/Taker/submit-task',
         Routes: ['src/layouts/AuthLayout', 'src/layouts/RoleLayout'],
       },
-      /********************** NPCorder ************************/
+      /********************** NPC order ************************/
       {
         path: '/task-dispatcher',
-        title: '稿件',
+        title: 'NPC任务',
         exact: true,
         roleStatus: '2',
         hideBackIcon: true,
@@ -50,7 +58,7 @@ const routes: IRoute[] = [
       },
       {
         path: '/add-order',
-        title: '发布稿件',
+        title: '发布任务',
         exact: true,
         roleStatus: '2',
         component: '../pages/Dispatcher/add-order',

@@ -60,8 +60,9 @@ const Model: ModelType = {
             item,
           },
         });
+        return Promise.resolve(item);
       } catch (err) {
-        console.log(err);
+        return Promise.reject(err);
       }
     },
   },
