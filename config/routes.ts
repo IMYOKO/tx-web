@@ -36,7 +36,15 @@ const routes: IRoute[] = [
         exact: true,
         roleStatus: '1',
         component: '../pages/Taker/detail',
-        Routes: ['src/layouts/AuthLayout', 'src/layouts/TabBar', 'src/layouts/RoleLayout'],
+        Routes: ['src/layouts/AuthLayout', 'src/layouts/RoleLayout'],
+      },
+      {
+        path: '/task-taker-sub-detail',
+        title: '玩家任务详情',
+        exact: true,
+        roleStatus: '1',
+        component: '../pages/Taker/sub-detail',
+        Routes: ['src/layouts/AuthLayout', 'src/layouts/RoleLayout'],
       },
       {
         path: '/submit-task',

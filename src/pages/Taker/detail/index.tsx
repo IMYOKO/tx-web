@@ -18,11 +18,18 @@ const TakerTaskDetail: React.FC = () => {
 
   const data = useTakerOrderDetail({ orderId, subOrderId });
 
-  const goSumbit = () => {
+  const goSubmit = () => {
     if (!orderId || !subOrderId) {
       return;
     }
-    history.push(`submit-task??subOrderId=${subOrderId}&orderId=${orderId}`);
+    history.push(`submit-task?subOrderId=${subOrderId}&orderId=${orderId}`);
+  };
+
+  const goSubDetail = () => {
+    if (!orderId || !subOrderId) {
+      return;
+    }
+    history.push(`task-taker-sub-detail?subOrderId=${subOrderId}`);
   };
 
   const orderDetailProps: Partial<OrderDetailProps> = {
@@ -39,7 +46,7 @@ const TakerTaskDetail: React.FC = () => {
         <ButtonWrapper>
           <div className="button-box">
             <div className="button-item left-wrapper">取消</div>
-            <div className="button-item right-wrapper" onClick={goSumbit}>
+            <div className="button-item right-wrapper" onClick={goSubmit}>
               提交
             </div>
           </div>
@@ -49,7 +56,7 @@ const TakerTaskDetail: React.FC = () => {
     if (status === '2') {
       return (
         <ButtonWrapper>
-          <div className="button-item" onClick={() => {}}>
+          <div className="button-item" onClick={goSubDetail}>
             我的任务详情
           </div>
         </ButtonWrapper>

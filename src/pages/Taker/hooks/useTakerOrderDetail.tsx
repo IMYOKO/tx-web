@@ -1,6 +1,6 @@
 import useOrderDetail from '@/hooks/useOrderDetail';
 import { DetailItemType } from '@/models/order';
-import { useDispatch, useLocation } from 'dva';
+import { useLocation } from 'dva';
 import { isEmpty } from 'lodash-es';
 import { useState, useEffect } from 'react';
 import useSubOrderDetail from './useSubOrderDetail';
@@ -35,7 +35,6 @@ const useTakerOrderDetail = ({
       return () => {
         setItemData({});
       };
-      // }
     }
   }, [orderDetail, subOrderDetail, pathname, orderId, subOrderId]);
 
