@@ -17,24 +17,7 @@ export interface TakerOrderItemType {
   statusText: string;
 }
 
-export interface TakerOrderDetailType {
-  id: number;
-  orderId: number;
-  commissionAmount: number;
-  avatarUrl: string;
-  nickName: string;
-  title: string;
-  createTime: number;
-  realAmount: number;
-  status: string;
-  statusText: string;
-  submitContent: string;
-  submitTime: number;
-  submitUrlList: string[];
-}
-
 export interface TakerModelState {
-  item: Partial<TakerOrderDetailType>;
   list: TakerOrderItemType[];
   pagination: Pagination;
 }
@@ -47,7 +30,6 @@ export interface ModelType {
   };
   effects: {
     list: Effect;
-    item: Effect;
     submit: Effect;
     catchOrder: Effect;
   };
@@ -56,7 +38,6 @@ export interface ModelType {
 const Model: ModelType = {
   namespace: 'TAKER',
   state: {
-    item: {},
     list: [],
     pagination: {
       pageNo: 0,
@@ -87,19 +68,6 @@ const Model: ModelType = {
         });
       } catch (err) {
         console.log(err);
-      }
-    },
-    *item({ payload }, { call, put }) {
-      try {
-        const item = yield call(API.subOrderDetail, payload);
-        yield put({
-          type: 'save',
-          payload: { item },
-        });
-        return Promise.resolve(item);
-      } catch (err) {
-        console.log(err);
-        return Promise.reject(err);
       }
     },
     *submit({ payload }, { call, put }) {

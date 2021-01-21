@@ -3,7 +3,7 @@ import { DetailItemType } from '@/models/order';
 import { useLocation } from 'dva';
 import { isEmpty } from 'lodash-es';
 import { useState, useEffect } from 'react';
-import useSubOrderDetail from './useSubOrderDetail';
+import useSubOrderDetail from '@/hooks/useSubOrderDetail';
 
 interface UseTakerOrderDetailProps {
   orderId: number | string;
@@ -22,19 +22,25 @@ const useTakerOrderDetail = ({
 
   useEffect(() => {
     if (subOrderId && orderId && !isEmpty(orderDetail) && !isEmpty(subOrderDetail)) {
-      const { createTime, commissionAmount, status, statusText } = subOrderDetail;
-      const item = {
-        ...orderDetail,
-        createTime,
-        commissionAmount,
-        status,
-        statusText,
-      };
-      setItemData(item);
+      if (
+        subOrderDetail.orderId === orderDetail.id &&
+        orderId === subOrderDetail.orderId?.toString()
+      ) {
+        const { createTime, commissionAmount, status, statusText } = subOrderDetail;
 
-      return () => {
-        setItemData({});
-      };
+        const item = {
+          ...orderDetail,
+          createTime,
+          commissionAmount,
+          status,
+          statusText,
+        };
+        setItemData(item);
+
+        return () => {
+          setItemData({});
+        };
+      }
     }
   }, [orderDetail, subOrderDetail, pathname, orderId, subOrderId]);
 

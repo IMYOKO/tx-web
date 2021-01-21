@@ -2,9 +2,9 @@ import OrderDetail, { OrderDetailProps } from '@/components/order-detail';
 import useQuery from '@/hooks/useQuery';
 import { useHistory } from 'dva';
 import React from 'react';
-import useTakerOrderDetail from '../hooks/useTakerOrderDetail';
+import useTakerOrderDetail from '@/hooks/useTakerOrderDetail';
 
-const ButtonWrapper: React.FC = ({ children }) => {
+export const ButtonWrapper: React.FC = ({ children }) => {
   return (
     <div className="bottom-button-wrapper">
       <div className="bottom-button-content">{children}</div>
@@ -17,6 +17,7 @@ const TakerTaskDetail: React.FC = () => {
   const { orderId = '', subOrderId = '' } = useQuery();
 
   const data = useTakerOrderDetail({ orderId, subOrderId });
+  console.log({ data });
 
   const goSubmit = () => {
     if (!orderId || !subOrderId) {

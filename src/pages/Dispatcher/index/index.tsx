@@ -49,6 +49,10 @@ const Dispatcher: React.FC<DISPATCHERPageProps> = props => {
     history.push('/add-order');
   };
 
+  const goTakerDetail = (id: number) => {
+    history.push(`task-npc-detail?id=${id}`);
+  };
+
   return (
     <div className="task-page">
       {roleCode === ROLE_STATUS.dispatcher && (
@@ -66,7 +70,7 @@ const Dispatcher: React.FC<DISPATCHERPageProps> = props => {
         </div>
         <div className="search"></div>
       </div>
-      <DispatcherOrderList list={list} />
+      <DispatcherOrderList list={list} handleClick={goTakerDetail} />
     </div>
   );
 };

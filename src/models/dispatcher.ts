@@ -15,15 +15,29 @@ export interface DispatcherOrderItemType {
   statusText: string;
 }
 
+export interface DispatcherOrderSubItemType {
+  avatarUrl: string;
+  commissionAmount: number;
+  createTime: number;
+  id: number;
+  nickName: string;
+  orderId: number;
+  realAmount: number;
+  status: string;
+  statusText: string;
+  title: string;
+}
+
 export interface DispatcherModelState {
   list: DispatcherOrderItemType[];
+  subList: DispatcherOrderSubItemType[];
   pagination: Pagination;
   tagList: string[];
 }
 
 export interface ModelType {
   namespace: 'DISPATCHER';
-  state: {};
+  state: DispatcherModelState;
   reducers: {
     save: Reducer<DispatcherModelState>;
   };
@@ -31,6 +45,7 @@ export interface ModelType {
     fetch: Effect;
     create: Effect;
     tagList: Effect;
+    subList: Effect;
   };
 }
 
@@ -38,6 +53,7 @@ const Model: ModelType = {
   namespace: 'DISPATCHER',
   state: {
     list: [],
+    subList: [],
     pagination: {
       pageNo: 0,
       pageSize: 0,
@@ -77,6 +93,21 @@ const Model: ModelType = {
           type: 'save',
           payload: {
             tagList,
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    *subList({ payload }, { call, put }) {
+      try {
+        const res = yield call(API.myOrderSubList, payload);
+        const { dataList: subList, ...pagination } = res;
+        yield put({
+          type: 'save',
+          payload: {
+            subList,
+            pagination,
           },
         });
       } catch (err) {

@@ -6,6 +6,9 @@ export interface OrderListParam {
   pageSize: number;
   param: any;
 }
+export interface OrderSubListParam extends OrderListParam {
+  orderId: number;
+}
 export interface OrderDetailParam {
   orderId: number;
 }

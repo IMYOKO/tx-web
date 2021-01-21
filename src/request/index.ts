@@ -16,6 +16,7 @@ import {
   FeedbackParam,
   SwitchRoleParam,
   ComplementInfoParam,
+  OrderSubListParam,
 } from './type';
 
 const apiRequest = new ApiRequest();
@@ -172,6 +173,9 @@ const publicQrCode = (): AxiosPromise => {
 const myOrderList = (data: OrderListParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/user/my-order-list`, data);
 };
+const myOrderSubList = (data: OrderSubListParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/my-order-sub-list`, data);
+};
 /********************** NPC end ************************/
 
 /********************** 玩家 start ************************/
@@ -204,4 +208,5 @@ export default {
   switchRole,
   publicQrCode,
   myOrderListByTaker,
+  myOrderSubList,
 };

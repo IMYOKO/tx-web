@@ -5,10 +5,11 @@ import './index.less';
 
 export interface DispatcherOrderListProps {
   list: DispatcherOrderItemType[];
+  handleClick: (id: number) => void;
 }
 
 const DispatcherOrderList: React.FC<DispatcherOrderListProps> = props => {
-  const { list } = props;
+  const { list, handleClick } = props;
   if (isEmpty(list)) {
     return <div className="is-empty-data">暂无数据</div>;
   }
@@ -17,7 +18,7 @@ const DispatcherOrderList: React.FC<DispatcherOrderListProps> = props => {
       <ul className="dispatcher-order-list-wrapper">
         {list.map((item, index) => (
           <li key={`${item.id}-${index}`}>
-            <div className="dispatcher-order-list-item">
+            <div className="dispatcher-order-list-item" onClick={() => handleClick(item.id)}>
               <div className="list-item top-item">
                 <div className="left title">{item.title}</div>
                 <div className="right status">{item.statusText}</div>

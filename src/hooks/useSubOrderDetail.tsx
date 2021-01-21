@@ -1,19 +1,19 @@
-import { TakerOrderDetailType } from '@/models/taker';
+import { SubOrderDetailType } from '@/models/order';
 import { useDispatch, useLocation } from 'dva';
 import { useState, useEffect } from 'react';
 
-const useSubOrderDetail = (id: number | string = ''): Partial<TakerOrderDetailType> => {
+const useSubOrderDetail = (id: number | string = ''): Partial<SubOrderDetailType> => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const [itemData, setItemData] = useState<Partial<TakerOrderDetailType>>({});
+  const [itemData, setItemData] = useState<Partial<SubOrderDetailType>>({});
 
   const fetchData = async (id: number | string) => {
     try {
       const item = await dispatch({
-        type: 'TAKER/item',
+        type: 'ORDER/subItem',
         payload: { id: Number(id) },
       });
-      setItemData(item as Partial<TakerOrderDetailType>);
+      setItemData(item as Partial<SubOrderDetailType>);
     } catch (error) {
       console.log(error);
     }
@@ -21,8 +21,8 @@ const useSubOrderDetail = (id: number | string = ''): Partial<TakerOrderDetailTy
 
   const clearData = () => {
     dispatch({
-      type: 'TAKER/save',
-      payload: { item: {} },
+      type: 'ORDER/save',
+      payload: { subItem: {} },
     });
   };
 
