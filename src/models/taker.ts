@@ -32,6 +32,7 @@ export interface ModelType {
     list: Effect;
     submit: Effect;
     catchOrder: Effect;
+    cancelSubOrder: Effect;
   };
 }
 
@@ -87,6 +88,14 @@ const Model: ModelType = {
       } catch (err) {
         console.log(err);
         Toast.info('操作失败');
+        return Promise.reject(err);
+      }
+    },
+    *cancelSubOrder({ payload }, { call }) {
+      try {
+        const res = yield call(API.cancelSubOrder, payload);
+        return Promise.resolve(res);
+      } catch (err) {
         return Promise.reject(err);
       }
     },

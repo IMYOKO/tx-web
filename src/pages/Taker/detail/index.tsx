@@ -1,8 +1,12 @@
 import OrderDetail, { OrderDetailProps } from '@/components/order-detail';
 import useQuery from '@/hooks/useQuery';
-import { useHistory } from 'dva';
-import React from 'react';
+import { useDispatch, useHistory, useSelector } from 'dva';
+import React, { useState } from 'react';
 import useTakerOrderDetail from '@/hooks/useTakerOrderDetail';
+import ClosedModal, { ClosedModalProps } from './Closed';
+import { ActivityIndicator, Toast } from 'antd-mobile';
+import { RootState } from '@/types/common';
+import './index.less';
 
 export const ButtonWrapper: React.FC = ({ children }) => {
   return (
@@ -14,16 +18,29 @@ export const ButtonWrapper: React.FC = ({ children }) => {
 
 const TakerTaskDetail: React.FC = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [visible, setVisible] = useState<boolean>(false);
   const { orderId = '', subOrderId = '' } = useQuery();
 
   const data = useTakerOrderDetail({ orderId, subOrderId });
-  console.log({ data });
+  const {
+    loading: { effects },
+  } = useSelector((state: RootState) => state);
+  const loading = effects['TAKER/cancelSubOrder'] || false;
 
   const goSubmit = () => {
     if (!orderId || !subOrderId) {
       return;
     }
     history.push(`submit-task?subOrderId=${subOrderId}&orderId=${orderId}`);
+  };
+
+  const hideModal = () => {
+    setVisible(false);
+  };
+
+  const showModal = () => {
+    setVisible(true);
   };
 
   const goSubDetail = () => {
@@ -37,6 +54,34 @@ const TakerTaskDetail: React.FC = () => {
     ...data,
   };
 
+  const cancelSubOrder = async () => {
+    if (!subOrderId) {
+      Toast.info('订单不存在');
+      return;
+    }
+    try {
+      await dispatch({
+        type: 'TAKER/cancelSubOrder',
+        payload: {
+          subOrderId: Number(subOrderId),
+        },
+      });
+      Toast.info('操作成功');
+    } catch (error) {
+      console.log(error);
+      Toast.info('操作失败');
+    }
+  };
+
+  const modalProps: ClosedModalProps = {
+    visible,
+    hide: hideModal,
+    onOk: () => {
+      hideModal();
+      cancelSubOrder();
+    },
+  };
+
   const renderButtonWrapper = () => {
     const { status } = data;
     if (!status) {
@@ -46,7 +91,9 @@ const TakerTaskDetail: React.FC = () => {
       return (
         <ButtonWrapper>
           <div className="button-box">
-            <div className="button-item left-wrapper">取消</div>
+            <div className="button-item left-wrapper" onClick={showModal}>
+              取消
+            </div>
             <div className="button-item right-wrapper" onClick={goSubmit}>
               提交
             </div>
@@ -69,6 +116,10 @@ const TakerTaskDetail: React.FC = () => {
       <OrderDetail {...orderDetailProps} />
 
       {renderButtonWrapper()}
+
+      <ClosedModal {...modalProps} />
+
+      <ActivityIndicator toast size="large" text="正在提交..." animating={loading} />
     </div>
   );
 };

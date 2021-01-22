@@ -45,3 +45,8 @@ input {
   padding-top: 45px;
   min-height: calc(100vh - 45px);
 }
+
+.am-modal-mask,
+.am-modal-wrap {
+  z-index: 2500;
+}

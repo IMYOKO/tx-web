@@ -17,6 +17,8 @@ import {
   SwitchRoleParam,
   ComplementInfoParam,
   OrderSubListParam,
+  CancelOrderParam,
+  CancelSubOrderParam,
 } from './type';
 
 const apiRequest = new ApiRequest();
@@ -167,24 +169,46 @@ const publicQrCode = (): AxiosPromise => {
 };
 
 /********************** NPC start ************************/
+
 /**
  * 我的订单列表
  */
 const myOrderList = (data: OrderListParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/user/my-order-list`, data);
 };
+
+/**
+ * 我的子订单列表
+ */
 const myOrderSubList = (data: OrderSubListParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/user/my-order-sub-list`, data);
 };
+
+/**
+ * 关闭任务
+ */
+const cancelOrder = (data: CancelOrderParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/cancel-order`, data);
+};
+
 /********************** NPC end ************************/
 
 /********************** 玩家 start ************************/
+
 /**
  * 我的订单列表
  */
 const myOrderListByTaker = (data: OrderListParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/user/my-suborder-list`, data);
 };
+
+/**
+ * 取消订单
+ */
+const cancelSubOrder = (data: CancelSubOrderParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/cancel-sub-order`, data);
+};
+
 /********************** 玩家 end ************************/
 
 export default {
@@ -209,4 +233,6 @@ export default {
   publicQrCode,
   myOrderListByTaker,
   myOrderSubList,
+  cancelOrder,
+  cancelSubOrder,
 };

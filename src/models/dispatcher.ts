@@ -46,6 +46,8 @@ export interface ModelType {
     create: Effect;
     tagList: Effect;
     subList: Effect;
+    subOrderAudit: Effect;
+    cancelOrder: Effect;
   };
 }
 
@@ -124,6 +126,22 @@ const Model: ModelType = {
       } catch (err) {
         console.log(err);
         Toast.info('发布失败');
+      }
+    },
+    *subOrderAudit({ payload }, { call }) {
+      try {
+        const res = yield call(API.subOrderAudit, payload);
+        return Promise.resolve(res);
+      } catch (err) {
+        return Promise.reject(err);
+      }
+    },
+    *cancelOrder({ payload }, { call }) {
+      try {
+        const res = yield call(API.cancelOrder, payload);
+        return Promise.resolve(res);
+      } catch (err) {
+        return Promise.reject(err);
       }
     },
   },

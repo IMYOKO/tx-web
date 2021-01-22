@@ -83,3 +83,11 @@ export interface AvatarType {
   base64String: string;
   suffix: string;
 }
+
+export interface CancelOrderParam {
+  orderId: number;
+}
+
+export interface CancelSubOrderParam {
+  subOrderId: number;
+}

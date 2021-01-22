@@ -60,7 +60,7 @@ const NPCSubTaskList: React.FC<NPCSubTaskListPageProps> = props => {
               <div className="avatar">
                 <img src={item.avatarUrl || defaultAvatarUrl} alt="" />
               </div>
-              <div className="user-info">
+              <div className="npc-user-info">
                 <div className="nickname">{item.nickName}</div>
                 <div className="times">{format(item.createTime * 1000, 'yyyy-MM-dd HH:mm')}</div>
               </div>
