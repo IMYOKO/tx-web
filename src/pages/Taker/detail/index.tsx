@@ -101,15 +101,13 @@ const TakerTaskDetail: React.FC = () => {
         </ButtonWrapper>
       );
     }
-    if (status === '2') {
-      return (
-        <ButtonWrapper>
-          <div className="button-item" onClick={goSubDetail}>
-            我的任务详情
-          </div>
-        </ButtonWrapper>
-      );
-    }
+    return (
+      <ButtonWrapper>
+        <div className="button-item" onClick={goSubDetail}>
+          我的任务详情
+        </div>
+      </ButtonWrapper>
+    );
   };
   return (
     <div className="taker-task-detail-page">

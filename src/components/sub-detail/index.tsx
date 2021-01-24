@@ -14,6 +14,7 @@ export interface SubDetailFCDataTypes {
   status: string;
   statusText: string;
   submitContent: string;
+  auditRemark: string;
   submitTime: number;
   submitUrlList: string[];
 }
@@ -25,27 +26,31 @@ export interface SubDetailFCProps {
 const SubDetailFC: React.FC<SubDetailFCProps> = props => {
   const { data } = props;
   const {
-    createTime,
+    status,
     statusText,
     realAmount,
     submitContent,
     avatarUrl,
     nickName,
     submitTime,
+    auditRemark,
   } = data;
   return (
     <div className="sub-detail-component">
       <div className="check-wrapper">
         <div className="check-content">
           <div className="check-box">
-            <div className="check-img">{/* <div className="img ok"></div> */}</div>
+            <div className="check-img">
+              {status === '3' && <div className="img fail"></div>}
+              {status === '4' && <div className="img ok"></div>}
+            </div>
             <h3>{statusText}</h3>
-            <p>{createTime && format(createTime * 1000, 'yyyy-MM-dd HH:mm')}</p>
+            <p>{submitTime && format(submitTime * 1000, 'yyyy-MM-dd HH:mm')}</p>
           </div>
         </div>
         <div className="check-desc">
           <p>稿费金额：{realAmount}元</p>
-          {/* <p>备注：</p> */}
+          <p>备注：{auditRemark}</p>
         </div>
       </div>
 
