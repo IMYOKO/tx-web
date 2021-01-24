@@ -12,10 +12,10 @@ const SubmitTask: React.FC = () => {
   const dispatch = useDispatch();
   const [fileList, setFileList] = useState<FileDataType[]>([]);
   const [submitContent, setSubmitContent] = useState<string>('');
-  const { id } = useQuery();
+  const { subOrderId } = useQuery();
 
   const submit = async () => {
-    if (!id) {
+    if (!subOrderId) {
       Toast.info('订单不存在');
       return;
     }
@@ -24,7 +24,7 @@ const SubmitTask: React.FC = () => {
       return;
     }
     const payload = {
-      subOrderId: Number(id),
+      subOrderId: Number(subOrderId),
       submitContent,
       submitFileList: fileList,
     };
