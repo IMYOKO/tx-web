@@ -1,4 +1,5 @@
 import { TakerOrderItemType } from '@/models/taker';
+import NoData from '@/components/no-data';
 import { isEmpty } from 'lodash-es';
 import React from 'react';
 import './index.less';
@@ -11,7 +12,7 @@ export interface TakerOrderListProps {
 const TakerOrderList: React.FC<TakerOrderListProps> = props => {
   const { list, handleClick } = props;
   if (isEmpty(list)) {
-    return <div className="is-empty-data">暂无数据</div>;
+    return <NoData />;
   }
   return (
     <div className="task-order-list">

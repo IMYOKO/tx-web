@@ -2,6 +2,7 @@ import { OrderListItemType } from '@/pages/Home/index/model';
 import { useHistory } from 'dva';
 import { isEmpty } from 'lodash-es';
 import React from 'react';
+import NoData from '@/components/no-data';
 import './index.less';
 export interface TaskListProps {
   data: OrderListItemType[];
@@ -50,7 +51,7 @@ const TaskListItem: React.FC<OrderListItemType> = ({
 
 const TaskList: React.FC<TaskListProps> = ({ data }) => {
   if (isEmpty(data)) {
-    return <div className="is-empty-data">暂无数据</div>;
+    return <NoData />;
   }
   return (
     <ul className="task-list">
