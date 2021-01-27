@@ -108,7 +108,7 @@ const MyBill: React.FC<MyBillPrpos> = props => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   const {
     USER: { userInfo },
   } = state;

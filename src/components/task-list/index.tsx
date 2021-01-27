@@ -1,10 +1,11 @@
-import { OrderListItemType } from '@/pages/Home/index/model';
+import { OrderListItemType } from '@/models/order';
 import { useHistory } from 'dva';
 import { isEmpty } from 'lodash-es';
 import React from 'react';
 import NoData from '@/components/no-data';
+import Paginations, { PaginationsProps } from '@/components/paginations';
 import './index.less';
-export interface TaskListProps {
+export interface TaskListProps extends PaginationsProps {
   data: OrderListItemType[];
 }
 
@@ -49,18 +50,21 @@ const TaskListItem: React.FC<OrderListItemType> = ({
   );
 };
 
-const TaskList: React.FC<TaskListProps> = ({ data }) => {
+const TaskList: React.FC<TaskListProps> = ({ data, ...paginationsProps }) => {
   if (isEmpty(data)) {
     return <NoData />;
   }
   return (
-    <ul className="task-list">
-      {data.map((item: OrderListItemType, index: number) => (
-        <li key={index}>
-          <TaskListItem {...item} key={index} />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="task-list">
+        {data.map((item: OrderListItemType, index: number) => (
+          <li key={index}>
+            <TaskListItem {...item} key={index} />
+          </li>
+        ))}
+      </ul>
+      <Paginations {...paginationsProps} />
+    </>
   );
 };
 

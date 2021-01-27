@@ -1,16 +1,17 @@
+import Paginations, { PaginationsProps } from '@/components/paginations';
 import { TakerOrderItemType } from '@/models/taker';
 import NoData from '@/components/no-data';
 import { isEmpty } from 'lodash-es';
 import React from 'react';
 import './index.less';
 
-export interface TakerOrderListProps {
+export interface TakerOrderListProps extends PaginationsProps {
   list: TakerOrderItemType[];
   handleClick: (subOrderId: number, orderId: number) => void;
 }
 
 const TakerOrderList: React.FC<TakerOrderListProps> = props => {
-  const { list, handleClick } = props;
+  const { list, handleClick, ...paginationsProps } = props;
   if (isEmpty(list)) {
     return <NoData />;
   }
@@ -42,6 +43,7 @@ const TakerOrderList: React.FC<TakerOrderListProps> = props => {
           </li>
         ))}
       </ul>
+      <Paginations {...paginationsProps} />
     </div>
   );
 };

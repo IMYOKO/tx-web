@@ -156,7 +156,7 @@ const User: React.FC<UserPrpos> = props => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   const {
     USER: { userInfo },
     loading,

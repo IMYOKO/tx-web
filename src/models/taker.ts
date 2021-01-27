@@ -56,14 +56,17 @@ const Model: ModelType = {
     },
   },
   effects: {
-    *list({ payload }, { call, put }) {
+    *list({ payload }, { call, put, select }) {
       try {
+        const {
+          TAKER: { list },
+        } = yield select();
         const res = yield call(API.myOrderListByTaker, payload);
-        const { dataList: list, ...pagination } = res;
+        const { dataList, ...pagination } = res;
         yield put({
           type: 'save',
           payload: {
-            list,
+            list: [...list, ...dataList],
             pagination,
           },
         });

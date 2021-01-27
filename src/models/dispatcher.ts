@@ -73,14 +73,17 @@ const Model: ModelType = {
     },
   },
   effects: {
-    *fetch({ payload }, { call, put }) {
+    *fetch({ payload }, { call, put, select }) {
       try {
+        const {
+          DISPATCHER: { list },
+        } = yield select();
         const res = yield call(API.myOrderList, payload);
-        const { dataList: list, ...pagination } = res;
+        const { dataList, ...pagination } = res;
         yield put({
           type: 'save',
           payload: {
-            list,
+            list: [...list, ...dataList],
             pagination,
           },
         });
@@ -101,14 +104,17 @@ const Model: ModelType = {
         console.log(err);
       }
     },
-    *subList({ payload }, { call, put }) {
+    *subList({ payload }, { call, put, select }) {
       try {
+        const {
+          DISPATCHER: { subList },
+        } = yield select();
         const res = yield call(API.myOrderSubList, payload);
-        const { dataList: subList, ...pagination } = res;
+        const { dataList, ...pagination } = res;
         yield put({
           type: 'save',
           payload: {
-            subList,
+            subList: [...subList, ...dataList],
             pagination,
           },
         });

@@ -312,7 +312,7 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   const {
     DISPATCHER: { tagList },
   } = state;

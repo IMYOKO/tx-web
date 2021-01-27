@@ -1,16 +1,17 @@
+import Paginations, { PaginationsProps } from '@/components/paginations';
 import { DispatcherOrderItemType } from '@/models/dispatcher';
 import NoData from '@/components/no-data';
 import { isEmpty } from 'lodash-es';
 import React from 'react';
 import './index.less';
 
-export interface DispatcherOrderListProps {
+export interface DispatcherOrderListProps extends PaginationsProps {
   list: DispatcherOrderItemType[];
   handleClick: (id: number) => void;
 }
 
 const DispatcherOrderList: React.FC<DispatcherOrderListProps> = props => {
-  const { list, handleClick } = props;
+  const { list, handleClick, ...paginationsProps } = props;
   if (isEmpty(list)) {
     return <NoData />;
   }
@@ -39,6 +40,7 @@ const DispatcherOrderList: React.FC<DispatcherOrderListProps> = props => {
           </li>
         ))}
       </ul>
+      <Paginations {...paginationsProps} />
     </div>
   );
 };

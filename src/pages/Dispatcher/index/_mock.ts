@@ -1,4 +1,4 @@
-import { OrderListItemType } from '@/pages/Home/index/model';
+import { OrderListItemType } from '@/models/order';
 
 const orderListData: OrderListItemType[] = [];
 

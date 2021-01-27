@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect, useHistory } from 'dva';
-import { PageActionBaseProps, RootState } from '@/types/common';
+import { PageActionBaseProps, Pagination, RootState } from '@/types/common';
 import { UserInfoType } from '@/models/user';
 import { TakerOrderItemType } from '@/models/taker';
 import TakerOrderList from '@/components/taker-order-list';
@@ -8,10 +8,11 @@ import './index.less';
 
 interface TaskPageProps extends PageActionBaseProps {
   list: TakerOrderItemType[];
+  pagination: Pagination;
 }
 
 const Task: React.FC<TaskPageProps> = props => {
-  const { dispatch, list } = props;
+  const { dispatch, list, pagination } = props;
   const history = useHistory();
 
   const fetchData = () => {
@@ -27,7 +28,15 @@ const Task: React.FC<TaskPageProps> = props => {
   const clearData = () => {
     dispatch({
       type: 'TAKER/save',
-      payload: { list: [] },
+      payload: {
+        list: [],
+        pagination: {
+          pageNo: 0,
+          pageSize: 0,
+          totalCount: 0,
+          totalPage: 0,
+        },
+      },
     });
   };
 
@@ -42,6 +51,17 @@ const Task: React.FC<TaskPageProps> = props => {
     history.push(`task-taker-detail?subOrderId=${subOrderId}&orderId=${orderId}`);
   };
 
+  const pageNoChange = () => {
+    const { pageNo, pageSize } = pagination;
+    dispatch({
+      type: 'TAKER/list',
+      payload: {
+        pageNo: pageNo + 1,
+        pageSize,
+      },
+    });
+  };
+
   return (
     <div className="task-page">
       <div className="nav-wrapper">
@@ -54,16 +74,21 @@ const Task: React.FC<TaskPageProps> = props => {
         </div>
         <div className="search"></div>
       </div>
-      <TakerOrderList list={list} handleClick={goTakerDetail} />
+      <TakerOrderList
+        list={list}
+        handleClick={goTakerDetail}
+        pageNoChange={pageNoChange}
+        pagination={pagination}
+      />
     </div>
   );
 };
 
 const mapStateToProps = (state: RootState) => {
   const {
-    TAKER: { list },
+    TAKER: { list, pagination },
   } = state;
-  return { list };
+  return { list, pagination };
 };
 
 export default connect(mapStateToProps)(Task);

@@ -203,7 +203,7 @@ const Register: React.FC<RegisterPageProps> = props => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   const {
     COMMON: { captchaData },
   } = state;

@@ -2,6 +2,7 @@ import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import API from '@/request';
 import { Toast } from 'antd-mobile';
+import { Pagination } from '@/types/common';
 
 export interface DetailItemType {
   id: number;
@@ -20,6 +21,14 @@ export interface DetailItemType {
   statusText: string;
   taskClaim: string;
   taskClaimUrlList: string[];
+}
+export interface OrderListItemType {
+  id: number;
+  commissionAmount: number;
+  avatarUrl: string;
+  nickName: string;
+  tagList: string[];
+  title: string;
 }
 
 export interface SubOrderDetailType {
@@ -41,6 +50,8 @@ export interface SubOrderDetailType {
 export interface OrderModelState {
   item: Partial<DetailItemType>;
   subItem: Partial<SubOrderDetailType>;
+  list: OrderListItemType[];
+  pagination: Pagination;
 }
 
 export interface ModelType {
@@ -51,6 +62,7 @@ export interface ModelType {
   };
   effects: {
     fetch: Effect;
+    list: Effect;
     subItem: Effect;
   };
 }
@@ -60,6 +72,13 @@ const Model: ModelType = {
   state: {
     item: {},
     subItem: {},
+    list: [],
+    pagination: {
+      pageNo: 0,
+      pageSize: 0,
+      totalCount: 0,
+      totalPage: 0,
+    },
   },
   reducers: {
     save(state, { payload }) {
@@ -82,6 +101,24 @@ const Model: ModelType = {
         return Promise.resolve(item);
       } catch (err) {
         return Promise.reject(err);
+      }
+    },
+    *list({ payload }, { call, put, select }) {
+      try {
+        const {
+          ORDER: { list },
+        } = yield select();
+        const res = yield call(API.orderList, payload);
+        const { dataList, ...pagination } = res;
+        yield put({
+          type: 'save',
+          payload: {
+            list: [...list, ...dataList],
+            pagination,
+          },
+        });
+      } catch (err) {
+        console.log(err);
       }
     },
     *subItem({ payload }, { call, put }) {

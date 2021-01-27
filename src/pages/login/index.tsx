@@ -164,7 +164,7 @@ const Login: React.FC<LoginPageProps> = props => {
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   const {
     COMMON: { captchaData },
   } = state;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect, useHistory } from 'dva';
-import { PageActionBaseProps, RootState } from '@/types/common';
+import { PageActionBaseProps, Pagination, RootState } from '@/types/common';
 import Headers from '@/components/headers';
 import { UserInfoType } from '@/models/user';
 import './index.less';
@@ -11,12 +11,14 @@ import { DispatcherOrderItemType } from '@/models/dispatcher';
 interface DISPATCHERPageProps extends PageActionBaseProps {
   list: DispatcherOrderItemType[];
   userInfo: Partial<UserInfoType>;
+  pagination: Pagination;
 }
 
 const Dispatcher: React.FC<DISPATCHERPageProps> = props => {
   const {
     dispatch,
     list,
+    pagination,
     userInfo: { roleCode },
   } = props;
   const history = useHistory();
@@ -34,7 +36,15 @@ const Dispatcher: React.FC<DISPATCHERPageProps> = props => {
   const clearData = () => {
     dispatch({
       type: 'DISPATCHER/save',
-      payload: { list: [] },
+      payload: {
+        list: [],
+        pagination: {
+          pageNo: 0,
+          pageSize: 0,
+          totalCount: 0,
+          totalPage: 0,
+        },
+      },
     });
   };
 
@@ -51,6 +61,17 @@ const Dispatcher: React.FC<DISPATCHERPageProps> = props => {
 
   const goTakerDetail = (id: number) => {
     history.push(`task-npc-detail?id=${id}`);
+  };
+
+  const pageNoChange = () => {
+    const { pageNo, pageSize } = pagination;
+    dispatch({
+      type: 'DISPATCHER/fetch',
+      payload: {
+        pageNo: pageNo + 1,
+        pageSize,
+      },
+    });
   };
 
   return (
@@ -70,17 +91,22 @@ const Dispatcher: React.FC<DISPATCHERPageProps> = props => {
         </div>
         <div className="search"></div>
       </div>
-      <DispatcherOrderList list={list} handleClick={goTakerDetail} />
+      <DispatcherOrderList
+        list={list}
+        handleClick={goTakerDetail}
+        pageNoChange={pageNoChange}
+        pagination={pagination}
+      />
     </div>
   );
 };
 
 const mapStateToProps = (state: RootState) => {
   const {
-    DISPATCHER: { list },
+    DISPATCHER: { list, pagination },
     USER: { userInfo },
   } = state;
-  return { list, userInfo };
+  return { list, userInfo, pagination };
 };
 
 export default connect(mapStateToProps)(Dispatcher);

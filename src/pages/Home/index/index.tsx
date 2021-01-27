@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react';
 import { connect } from 'dva';
 import TaskList from '@/components/task-list';
-import { OrderListItemType } from '@/pages/Home/index/model';
-import { PageActionBaseProps } from '@/types/common';
+import { PageActionBaseProps, Pagination, RootState } from '@/types/common';
+import { OrderListItemType } from '@/models/order';
 import './index.less';
 
 interface HomeProps extends PageActionBaseProps {
   list: OrderListItemType[];
+  pagination: Pagination;
 }
 
 const Home: React.FC<HomeProps> = props => {
-  const { dispatch, list } = props;
+  const { dispatch, list, pagination } = props;
 
   const fetchData = () => {
     dispatch({
-      type: 'HOME/fetch',
+      type: 'ORDER/list',
       payload: {
         pageNo: 1,
         pageSize: 10,
@@ -24,8 +25,16 @@ const Home: React.FC<HomeProps> = props => {
 
   const clearData = () => {
     dispatch({
-      type: 'HOME/save',
-      payload: { list: [] },
+      type: 'ORDER/save',
+      payload: {
+        list: [],
+        pagination: {
+          pageNo: 0,
+          pageSize: 0,
+          totalCount: 0,
+          totalPage: 0,
+        },
+      },
     });
   };
 
@@ -35,6 +44,17 @@ const Home: React.FC<HomeProps> = props => {
       clearData();
     };
   }, []);
+
+  const pageNoChange = () => {
+    const { pageNo, pageSize } = pagination;
+    dispatch({
+      type: 'ORDER/list',
+      payload: {
+        pageNo: pageNo + 1,
+        pageSize,
+      },
+    });
+  };
 
   return (
     <div className="home-page">
@@ -46,16 +66,16 @@ const Home: React.FC<HomeProps> = props => {
         </div>
         <div className="search" />
       </div>
-      <TaskList data={list} />
+      <TaskList data={list} pageNoChange={pageNoChange} pagination={pagination} />
     </div>
   );
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   const {
-    HOME: { list },
+    ORDER: { list, pagination },
   } = state;
-  return { list };
+  return { list, pagination };
 };
 
 export default connect(mapStateToProps)(Home);
