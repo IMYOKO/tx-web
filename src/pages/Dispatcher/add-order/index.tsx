@@ -259,10 +259,10 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
               </div>
             </div>
           </div>
-          {/* 稿件描述 */}
+          {/* 任务描述 */}
           <div className="add-order-form-list">
             <div className="order-gaojian-wrapper">
-              <div className="title">稿件描述</div>
+              <div className="title">任务描述</div>
               <div className="discrption-wrapper">
                 <textarea
                   name=""
@@ -270,7 +270,7 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
                   rows={6}
                   value={addOrderForm.description}
                   onChange={descriptionChange}
-                  placeholder="请输入稿件描述"
+                  placeholder="请输入任务描述"
                 ></textarea>
               </div>
               <ImagePicker
@@ -281,10 +281,10 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
               />
             </div>
           </div>
-          {/* 稿件要求 */}
+          {/* 任务要求 */}
           <div className="add-order-form-list">
             <div className="order-gaojian-wrapper">
-              <div className="title">稿件要求</div>
+              <div className="title">任务要求</div>
               <div className="discrption-wrapper">
                 <textarea
                   name=""
@@ -292,7 +292,7 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
                   rows={6}
                   value={addOrderForm.taskClaim}
                   onChange={taskClaimChange}
-                  placeholder="请输入稿件要求"
+                  placeholder="请输入任务要求"
                 ></textarea>
               </div>
               <ImagePicker

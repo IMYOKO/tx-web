@@ -66,7 +66,7 @@ const MyBill: React.FC<MyBillPrpos> = props => {
           <li>
             <div className="my-bill-item">
               <div className="my-bill-item-box time">
-                <span>稿件号：530851934347346</span>
+                <span>任务号：530851934347346</span>
                 <span>2020-09-16 12:32:23</span>
               </div>
               <div className="my-bill-item-box money">
@@ -78,7 +78,7 @@ const MyBill: React.FC<MyBillPrpos> = props => {
           <li>
             <div className="my-bill-item">
               <div className="my-bill-item-box time">
-                <span>稿件号：530851934347346</span>
+                <span>任务号：530851934347346</span>
                 <span>2020-09-16 12:32:23</span>
               </div>
               <div className="my-bill-item-box money">
@@ -90,7 +90,7 @@ const MyBill: React.FC<MyBillPrpos> = props => {
           <li>
             <div className="my-bill-item">
               <div className="my-bill-item-box time">
-                <span>稿件号：530851934347346</span>
+                <span>任务号：530851934347346</span>
                 <span>2020-09-16 12:32:23</span>
               </div>
               <div className="my-bill-item-box money">

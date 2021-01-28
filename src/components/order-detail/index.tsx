@@ -51,11 +51,11 @@ const OrderDetail: React.FC<Partial<OrderDetailProps>> = props => {
             <div className="my-yj-item-bottom">{commissionAmount}</div>
           </div>
           <div className="my-yj-item">
-            <div className="my-yj-item-top">还需稿件</div>
+            <div className="my-yj-item-top">剩余名额</div>
             <div className="my-yj-item-bottom">{remainingCount}</div>
           </div>
           <div className="my-yj-item">
-            <div className="my-yj-item-top">总稿件</div>
+            <div className="my-yj-item-top">总名额</div>
             <div className="my-yj-item-bottom">{count}</div>
           </div>
         </div>
