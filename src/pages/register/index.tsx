@@ -1,4 +1,4 @@
-import { PageActionBaseProps } from '@/types/common';
+import { PageActionBaseProps, RootState } from '@/types/common';
 import { connect, useHistory } from 'dva';
 import React, { useState, useEffect, useRef } from 'react';
 import { VERIFICATION_CODE_TYPE } from '@/request/emun';

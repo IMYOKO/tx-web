@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import UserInfo, { UserInfoProps } from './user-info';
 import Wealth from './wealth';
 import NavList, { NavListItem, NavListProps } from '@/components/nav-list';
-import { PageActionBaseProps } from '@/types/common';
+import { PageActionBaseProps, RootState } from '@/types/common';
 import { UserInfoType } from '@/models/user';
 import { connect, useHistory } from 'dva';
 import RoleModal, { RoleModalProps } from './RoleModal';

@@ -1,5 +1,5 @@
 import TagListModal from '@/components/tag-list';
-import { FileDataType, PageActionBaseProps } from '@/types/common';
+import { FileDataType, PageActionBaseProps, RootState } from '@/types/common';
 import { connect } from 'dva';
 import React, { useState, useEffect } from 'react';
 import { isEmpty } from 'lodash-es';

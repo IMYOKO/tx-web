@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect, useHistory } from 'dva';
-import { PageActionBaseProps } from '@/types/common';
+import { PageActionBaseProps, RootState } from '@/types/common';
 import { UserInfoType } from '@/models/user';
 import { PUBLIC_STATUS } from '@/types/enum';
 import './index.less';
