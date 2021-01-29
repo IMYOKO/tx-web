@@ -46,14 +46,14 @@ const Wealth: React.FC<Partial<UserInfoType>> = props => {
       </div>
       <div className="wealth-item">
         {renderContent(
-          { title: '今日收入', num: todayIncome },
-          { title: '今日完稿', num: todayFinishOrderCount },
+          { title: '今日赏金', num: todayIncome },
+          { title: '今日达标', num: todayFinishOrderCount },
         )}
       </div>
       <div className="wealth-item">
         {renderContent(
           { title: '已赚赏金', num: hasCommissionAmount },
-          { title: '累计完稿', num: totalFinishOrderCount },
+          { title: '累计达标', num: totalFinishOrderCount },
         )}
       </div>
     </div>
