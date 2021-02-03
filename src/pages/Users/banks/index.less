@@ -1,0 +1,95 @@
+.banks-page {
+  padding: 15px;
+
+  .banks-wrapper {
+    .banks-list {
+      >li {
+        margin-bottom: 15px;
+
+        .banks-item {
+          border-radius: 15px;
+          overflow: hidden;
+
+          &.bank-item-content {
+            padding: 15px;
+            color: #fff;
+            background: url('~@/assets/images/common/bank-bg@2x.png') center center no-repeat;
+            background-size: 100% 100%;
+            background-color: #557ed7;
+
+            .bank-name-wrapper {
+              display: flex;
+
+              .bank-img {
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+                overflow: hidden;
+                margin-right: 10px;
+                background-color: #fff;
+              }
+
+              .bank-name {
+                h3 {
+                  font-size: 16px;
+                  line-height: 1.2;
+                  font-weight: bold;
+                  font-family: PingFangSC-Semibold, PingFang SC;
+                  margin-bottom: 5px;
+                  letter-spacing: 0.3em;
+                }
+
+                p {
+                  font-size: 12px;
+                  margin-bottom: 5px;
+                  line-height: 1.2;
+                }
+              }
+            }
+
+            .bank-num {
+              padding: 15px 0 15px 50px;
+
+              h1 {
+                font-size: 18px;
+                line-height: 1.5;
+                font-weight: bold;
+                font-family: PingFangSC-Semibold, PingFang SC;
+                margin-bottom: 5px;
+                letter-spacing: 0.05em;
+              }
+            }
+          }
+
+          &.add-item {
+            padding: 0 15px;
+            height: 58px;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .add-title {
+              flex: 1;
+            }
+
+            .icon-add {
+              height: 22px;
+              width: 22px;
+              margin-right: 10px;
+              background: url('~@/assets/images/task/add-order@2x.png') center center no-repeat;
+              background-size: contain;
+            }
+
+            .more {
+              width: 5px;
+              height: 9px;
+              background: url('~@/assets/images/user/icon_my_list_more@2x.png') center center no-repeat;
+              background-size: contain;
+            }
+          }
+        }
+      }
+    }
+  }
+}

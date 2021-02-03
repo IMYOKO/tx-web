@@ -20,6 +20,7 @@ export interface UserInfoType {
 
 export interface UserModelState {
   userInfo: Partial<UserInfoType>;
+  bankList: any[];
 }
 
 export interface ModelType {
@@ -39,6 +40,14 @@ const Model: ModelType = {
   namespace: 'USER',
   state: {
     userInfo: {},
+    bankList: [
+      // {
+      //   id: 0,
+      //   name: '农业银行',
+      //   type: '储蓄卡',
+      //   number: '6237 79380 0000 5934 762',
+      // },
+    ],
   },
   reducers: {
     save(state, { payload }) {
