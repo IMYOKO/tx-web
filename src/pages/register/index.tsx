@@ -106,6 +106,7 @@ const Register: React.FC<RegisterPageProps> = props => {
       history.replace('/');
     } catch (error) {
       Toast.info('注册失败');
+      fetchCaptcha();
     }
   };
 

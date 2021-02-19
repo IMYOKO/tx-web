@@ -89,6 +89,7 @@ const Login: React.FC<LoginPageProps> = props => {
       history.replace('/');
     } catch (error) {
       Toast.info('登录失败');
+      fetchCaptcha();
     }
   };
 
