@@ -100,6 +100,14 @@ const routes: IRoute[] = [
         Routes: ['src/layouts/AuthLayout', 'src/layouts/RoleLayout'],
       },
       {
+        path: '/pay',
+        title: '支付',
+        exact: true,
+        roleStatus: Dispatcher,
+        component: '../pages/Dispatcher/pay',
+        Routes: ['src/layouts/AuthLayout', 'src/layouts/RoleLayout'],
+      },
+      {
         path: '/add-order',
         title: '发布任务',
         exact: true,

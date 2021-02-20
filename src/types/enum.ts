@@ -22,3 +22,9 @@ export enum LOGIN_STATUS {
   no = 0,
   yes = 1,
 }
+
+// 支付方式
+export enum PAY_TYPE {
+  unknown = -1,
+  wechat = 0,
+}

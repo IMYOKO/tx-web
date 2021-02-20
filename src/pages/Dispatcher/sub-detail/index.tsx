@@ -20,6 +20,10 @@ const SubDetail: React.FC = () => {
     }
   };
 
+  const goPay = () => {
+    history.push(`/pay?id=${id}`);
+  };
+
   const renderButtonWrapper = () => {
     const { status } = data;
     if (!status) {
@@ -30,6 +34,15 @@ const SubDetail: React.FC = () => {
         <ButtonWrapper>
           <div className="button-item" onClick={goCheckTask}>
             审核
+          </div>
+        </ButtonWrapper>
+      );
+    }
+    if (status === '4') {
+      return (
+        <ButtonWrapper>
+          <div className="button-item" onClick={goPay}>
+            支付赏金
           </div>
         </ButtonWrapper>
       );

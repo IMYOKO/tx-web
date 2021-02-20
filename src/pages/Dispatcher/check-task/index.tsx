@@ -40,6 +40,10 @@ const CheckTask: React.FC = () => {
     history.push('/task-dispatcher');
   };
 
+  const goPay = () => {
+    history.push(`/pay?id=${id}`);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setRemark(e.target.value);
   };
@@ -93,6 +97,7 @@ const CheckTask: React.FC = () => {
     },
     onOk: () => {
       hideModal();
+      goPay();
     },
   };
 
