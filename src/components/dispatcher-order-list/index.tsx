@@ -1,5 +1,6 @@
 import Paginations, { PaginationsProps } from '@/components/paginations';
 import { DispatcherOrderItemType } from '@/models/dispatcher';
+import defaultAvatarUrl from '@/assets/images/user/my_profile_face@2x.png';
 import NoData from '@/components/no-data';
 import { isEmpty } from 'lodash-es';
 import React from 'react';
@@ -27,7 +28,7 @@ const DispatcherOrderList: React.FC<DispatcherOrderListProps> = props => {
               </div>
               <div className="list-item bottom-item">
                 <div className="left name">
-                  <img src={item.avatarUrl} width={16} alt="" />
+                  <img src={defaultAvatarUrl || item.avatarUrl} width={16} alt="" />
                   <span>{item.nickName}</span>
                 </div>
                 <div className="right money">

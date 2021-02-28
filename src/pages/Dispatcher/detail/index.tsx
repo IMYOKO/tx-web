@@ -23,6 +23,8 @@ const NPCTaskDetail: React.FC = () => {
     ...orderDetail,
   };
 
+  const { status } = orderDetail;
+
   const hideModal = () => {
     setVisible(false);
   };
@@ -63,24 +65,33 @@ const NPCTaskDetail: React.FC = () => {
     },
   };
 
+  const renderButton = () => {
+    if (status === '1') {
+      return (
+        <div className="npc-bottom-wrapper">
+          <div className="npc-bottom-content">
+            <div className="npc-bottom-box">
+              <div className="npc-bottom-box-item">
+                <span onClick={goSubList}>名额审核</span>
+              </div>
+              <div className="npc-bottom-box-item">
+                <span className="last" onClick={showModal}>
+                  关闭任务
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="npc-task-detail-page">
       <OrderDetail {...orderDetailProps} />
 
-      <div className="npc-bottom-wrapper">
-        <div className="npc-bottom-content">
-          <div className="npc-bottom-box">
-            <div className="npc-bottom-box-item">
-              <span onClick={goSubList}>名额审核</span>
-            </div>
-            <div className="npc-bottom-box-item">
-              <span className="last" onClick={showModal}>
-                关闭任务
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+      {renderButton()}
 
       <ClosedModal {...modalProps} />
       <ActivityIndicator toast size="large" text="正在提交..." animating={loading} />

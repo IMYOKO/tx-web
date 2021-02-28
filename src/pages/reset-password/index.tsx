@@ -95,6 +95,8 @@ const ResetPassWord: React.FC = () => {
             />
           </div>
         </div>
+      </div>
+      <div className="from-wrapper">
         <div className="from-item">
           <div className="from-label">新密码</div>
           <div className="from-content">
@@ -126,7 +128,7 @@ const ResetPassWord: React.FC = () => {
       </div>
       <div className="button-wrapper">
         <div className="button" onClick={submit}>
-          确认修改
+          确认提交
         </div>
       </div>
     </div>

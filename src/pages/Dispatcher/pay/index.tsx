@@ -12,8 +12,8 @@ const Pay: React.FC = () => {
 
   const pay = () => {
     console.log('pay');
-    window.location.href =
-      'https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx2016121516420242444321ca0631331346&package=1405458241';
+    // window.location.href =
+    //   'https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb?prepay_id=wx2016121516420242444321ca0631331346&package=1405458241';
   };
 
   const selectPay = (p: PAY_TYPE) => {
@@ -37,10 +37,10 @@ const Pay: React.FC = () => {
     if (status === '2') {
       return <div className="button disabled">审核中</div>;
     }
-    // if (status === '3') {
-    //   return <div className="button disabled">审核失败</div>;
-    // }
     if (status === '3') {
+      return <div className="button disabled">审核失败</div>;
+    }
+    if (status === '4') {
       return (
         <div className="button" onClick={pay}>
           去付款

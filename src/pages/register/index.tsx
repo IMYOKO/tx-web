@@ -14,12 +14,18 @@ interface RegisterPageProps extends PageActionBaseProps {
   captchaData: Partial<CaptchaDataType>;
 }
 
+let timer: number;
+let count: number = 30;
+let isSendMsg: boolean = false;
+const initCodeText: string = '获取验证码';
+
 const Register: React.FC<RegisterPageProps> = props => {
   const {
     dispatch,
-    captchaData: { captchaIdentity, image },
+    captchaData: { captchaIdentity },
   } = props;
   const [agree, setAgree] = useState<boolean>(false);
+  const [codeText, setCodeText] = useState<string>(initCodeText);
   const history = useHistory();
 
   const phoneRef = useRef<any>(null);
@@ -27,30 +33,63 @@ const Register: React.FC<RegisterPageProps> = props => {
   const passwordRef = useRef<any>(null);
   const confirmPasswordRef = useRef<any>(null);
 
-  const fetchCaptcha = () => {
-    dispatch({
-      type: 'COMMON/fetchCaptcha',
-      payload: {
-        verificationCodeType: VERIFICATION_CODE_TYPE.register,
-      },
-    });
+  const clearTimer = () => {
+    count = 0;
+    isSendMsg = false;
+    clearInterval(timer);
+    setCodeText(initCodeText);
   };
 
-  const clearCaptcha = () => {
-    dispatch({
-      type: 'COMMON/save',
-      payload: {
-        captchaData: {},
-      },
-    });
+  const countdown = () => {
+    timer = window.setInterval(() => {
+      count--;
+      setCodeText(`${count} S`);
+      if (count === 0) {
+        clearTimer();
+      }
+    }, 1000);
   };
 
   useEffect(() => {
-    fetchCaptcha();
     return () => {
-      clearCaptcha();
+      clearTimer();
     };
   }, []);
+
+  const getSMSCode = async () => {
+    const phone = phoneRef.current.value;
+
+    if (isSendMsg) {
+      return;
+    }
+
+    if (isEmpty(phone)) {
+      Toast.info('手机号码不能为空');
+      return;
+    }
+
+    if (!isPhone(phone)) {
+      Toast.info('请输入正确的手机号码');
+      return;
+    }
+
+    const payload = {
+      mobile: phone,
+      verificationCodeType: VERIFICATION_CODE_TYPE.register,
+    };
+    isSendMsg = true;
+    countdown();
+    try {
+      await dispatch({
+        type: 'COMMON/getSMSCode',
+        payload,
+      });
+    } catch (error) {
+      if (error && error.message) {
+        Toast.info(error.message);
+      }
+    }
+  };
 
   const register = async () => {
     const phone = phoneRef.current.value;
@@ -105,8 +144,12 @@ const Register: React.FC<RegisterPageProps> = props => {
       Toast.info('注册成功');
       history.replace('/');
     } catch (error) {
-      Toast.info('注册失败');
-      fetchCaptcha();
+      const msg = error.message;
+      if (msg) {
+        Toast.info(msg);
+      } else {
+        Toast.info('注册失败');
+      }
     }
   };
 
@@ -147,7 +190,9 @@ const Register: React.FC<RegisterPageProps> = props => {
               placeholder="请输入验证码"
             />
             <div className="code-img">
-              {image && <img src={image} onClick={fetchCaptcha} alt="" />}
+              <span className="sms-code" onClick={getSMSCode}>
+                {codeText}
+              </span>
             </div>
           </div>
         </div>

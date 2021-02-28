@@ -5,6 +5,7 @@ import routes from './config/routes';
 const config: IConfig = {
   history: 'hash',
   treeShaking: true,
+  publicPath: '/web/',
   routes,
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html

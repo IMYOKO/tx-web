@@ -124,6 +124,12 @@ const routes: IRoute[] = [
         hideBackIcon: true,
         Routes: ['src/layouts/AuthLayout'],
       },
+      {
+        path: '/reset-password',
+        title: '忘记密码',
+        exact: true,
+        component: '../pages/reset-password',
+      },
       /********************** 注册 ************************/
       {
         path: '/register',
@@ -218,13 +224,6 @@ const routes: IRoute[] = [
         component: '../pages/Users/add-bank',
         Routes: ['src/layouts/AuthLayout'],
       },
-      // {
-      //   path: '/reset-trade-password',
-      //   title: '重置交易密码',
-      //   exact: true,
-      //   component: '../pages/Users/reset-trade-password',
-      //   Routes: ['src/layouts/AuthLayout'],
-      // },
       {
         path: '/404',
         title: '404',

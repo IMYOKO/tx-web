@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash-es';
 import React from 'react';
 import NoData from '@/components/no-data';
 import Paginations, { PaginationsProps } from '@/components/paginations';
+import defaultAvatarUrl from '@/assets/images/user/my_profile_face@2x.png';
 import './index.less';
 export interface TaskListProps extends PaginationsProps {
   data: OrderListItemType[];
@@ -36,7 +37,7 @@ const TaskListItem: React.FC<OrderListItemType> = ({
         ))}
       </ul>
       <div className="avatar-wrapper">
-        <img src={avatarUrl} width={16} height={16} alt="" />
+        <img src={defaultAvatarUrl || avatarUrl} width={16} height={16} alt="" />
         <span>{nickName}</span>
       </div>
       <div className="money-wrapper">

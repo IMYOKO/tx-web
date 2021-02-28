@@ -48,6 +48,7 @@ export interface ModelType {
     subList: Effect;
     subOrderAudit: Effect;
     cancelOrder: Effect;
+    h5Pay: Effect;
   };
 }
 
@@ -145,6 +146,14 @@ const Model: ModelType = {
     *cancelOrder({ payload }, { call }) {
       try {
         const res = yield call(API.cancelOrder, payload);
+        return Promise.resolve(res);
+      } catch (err) {
+        return Promise.reject(err);
+      }
+    },
+    *h5Pay(_, { call }) {
+      try {
+        const res = yield call(API.h5Pay);
         return Promise.resolve(res);
       } catch (err) {
         return Promise.reject(err);

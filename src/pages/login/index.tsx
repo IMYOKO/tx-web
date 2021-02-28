@@ -88,13 +88,22 @@ const Login: React.FC<LoginPageProps> = props => {
       Toast.info('登录成功');
       history.replace('/');
     } catch (error) {
-      Toast.info('登录失败');
+      const msg = error.message;
+      if (msg) {
+        Toast.info(msg);
+      } else {
+        Toast.info('登录失败');
+      }
       fetchCaptcha();
     }
   };
 
   const goRegister = () => {
     history.push('/register');
+  };
+
+  const goResetPassword = () => {
+    history.push('/reset-password');
   };
 
   return (
@@ -147,7 +156,7 @@ const Login: React.FC<LoginPageProps> = props => {
         </div>
         <div className="from-item no-boder-bottom">
           <div className="text-wrapper">
-            <span>忘记密码</span>
+            <span onClick={goResetPassword}>忘记密码</span>
           </div>
         </div>
         <div className="from-item">

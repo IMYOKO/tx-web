@@ -9,6 +9,7 @@ export interface UserInfoType {
   nickName: string;
   avatarUrl: string;
   balance: number;
+  mobile: number;
   hasCommissionAmount: number;
   todayFinishOrderCount: number;
   totalFinishOrderCount: number;
@@ -33,6 +34,7 @@ export interface ModelType {
     fetch: Effect;
     switchRole: Effect;
     complementInfo: Effect;
+    resetPassword: Effect;
   };
 }
 
@@ -112,6 +114,14 @@ const Model: ModelType = {
       } catch (err) {
         console.log(err);
         Toast.info('修改失败');
+      }
+    },
+    *resetPassword({ payload }, { call, put }) {
+      try {
+        yield call(API.resetPassword, payload);
+        return Promise.resolve();
+      } catch (err) {
+        return Promise.reject(err);
       }
     },
   },

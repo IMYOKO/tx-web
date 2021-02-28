@@ -91,3 +91,12 @@ export interface CancelOrderParam {
 export interface CancelSubOrderParam {
   subOrderId: number;
 }
+
+export interface ResetPasswordParam {
+  subOrderId: number;
+}
+
+export interface SendSMSCaptchaParam {
+  mobile: string;
+  verificationCodeType: string;
+}

@@ -24,6 +24,7 @@ export interface ModelType {
     register: Effect;
     feedback: Effect;
     publicQrCode: Effect;
+    getSMSCode: Effect;
   };
   reducers: {
     save: Reducer<CommonModelState>;
@@ -134,6 +135,19 @@ const Common: ModelType = {
     *publicQrCode(_, { call, put }) {
       try {
         const publicQrCode = yield call(API.publicQrCode);
+        yield put({
+          type: 'save',
+          payload: {
+            publicQrCode,
+          },
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    *getSMSCode({ payload }, { call, put }) {
+      try {
+        const publicQrCode = yield call(API.getSMSCode, payload);
         yield put({
           type: 'save',
           payload: {

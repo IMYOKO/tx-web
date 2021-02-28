@@ -19,6 +19,8 @@ import {
   OrderSubListParam,
   CancelOrderParam,
   CancelSubOrderParam,
+  ResetPasswordParam,
+  SendSMSCaptchaParam,
 } from './type';
 
 const apiRequest = new ApiRequest();
@@ -120,6 +122,20 @@ const captcha = (data: CaptchaParam): AxiosPromise => {
 };
 
 /**
+ * 获取验证码
+ */
+const getSMSCode = (data: SendSMSCaptchaParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/send_sms`, data);
+};
+
+/**
+ * 重置密码
+ */
+const resetPassword = (data: ResetPasswordParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/captcha`, data);
+};
+
+/**
  * 抢单
  */
 const subOrderCatch = (data: SubOrderCatchParam): AxiosPromise => {
@@ -191,6 +207,13 @@ const cancelOrder = (data: CancelOrderParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/user/cancel-order`, data);
 };
 
+/**
+ * h5统一下单
+ */
+const h5Pay = (): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/pay/h5/pre-order`, {});
+};
+
 /********************** NPC end ************************/
 
 /********************** 玩家 start ************************/
@@ -235,4 +258,7 @@ export default {
   myOrderSubList,
   cancelOrder,
   cancelSubOrder,
+  h5Pay,
+  resetPassword,
+  getSMSCode,
 };

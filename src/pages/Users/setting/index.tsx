@@ -15,7 +15,7 @@ interface SettingPrpos extends PageActionBaseProps {
 
 const Setting: React.FC<SettingPrpos> = props => {
   const { userInfo, dispatch } = props;
-  const { nickName = '', avatarUrl = '' } = userInfo;
+  const { nickName = '', avatarUrl = '', mobile } = userInfo;
   const [visible, setVisible] = useState<boolean>(false);
   const history = useHistory();
 
@@ -41,7 +41,7 @@ const Setting: React.FC<SettingPrpos> = props => {
       },
       {
         title: '手机号码',
-        tips: '',
+        tips: mobile,
         hideMoreIcon: true,
       },
     ],

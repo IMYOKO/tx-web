@@ -5,8 +5,7 @@ const DOMAIN_CONFIG = {
   },
   // 开发
   dev: {
-    common: 'http://81.71.31.103:8080',
-    // common: 'http://shengcai68.com/api',
+    common: 'http://shengcai68.com/api',
   },
   // 测试
   test: {
