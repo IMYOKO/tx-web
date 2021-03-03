@@ -5,16 +5,22 @@ import { isPassword } from '@/utils';
 import { useDispatch, useHistory } from 'dva';
 import './index.less';
 import { LOGIN_STATUS } from '@/types/enum';
+import Sms from '@/components/sms';
 
 const ResetPassWord: React.FC = () => {
-  const [oldPassword, setOldPassword] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [code, setCode] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const oldPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOldPassword(e.target.value);
+  const phoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(e.target.value);
+  };
+
+  const codeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCode(e.target.value);
   };
 
   const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,8 +32,8 @@ const ResetPassWord: React.FC = () => {
   };
 
   const submit = async () => {
-    if (isEmpty(oldPassword)) {
-      Toast.info('旧登录密码不能为空');
+    if (isEmpty(phone)) {
+      Toast.info('手机号码不能为空');
       return;
     }
     if (isEmpty(password)) {
@@ -47,7 +53,7 @@ const ResetPassWord: React.FC = () => {
       return;
     }
     const payload = {
-      oldPassword,
+      phone,
       password,
       confirmPassword,
     };
@@ -82,17 +88,34 @@ const ResetPassWord: React.FC = () => {
     <div className="reset-password">
       <div className="from-wrapper">
         <div className="from-item">
-          <div className="from-label">旧密码</div>
+          <div className="from-label">手机号码</div>
           <div className="from-content">
             <input
-              type="password"
-              name="password"
-              maxLength={18}
-              value={oldPassword}
+              type="text"
+              name="phone"
+              maxLength={11}
+              value={phone}
               autoComplete="off"
-              placeholder="请输入旧登录密码"
-              onChange={oldPasswordChange}
+              placeholder="请输入手机号码"
+              onChange={phoneChange}
             />
+          </div>
+        </div>
+        <div className="from-item">
+          <div className="from-label">验证码</div>
+          <div className="from-content">
+            <input
+              type="text"
+              name="code"
+              maxLength={8}
+              value={code}
+              autoComplete="off"
+              placeholder="请输入验证码"
+              onChange={codeChange}
+            />
+            <div className="send-code">
+              <Sms phone={phone} />
+            </div>
           </div>
         </div>
       </div>
@@ -116,7 +139,7 @@ const ResetPassWord: React.FC = () => {
           <div className="from-content">
             <input
               type="password"
-              name="password"
+              name="confirmPassword"
               maxLength={18}
               value={confirmPassword}
               autoComplete="off"

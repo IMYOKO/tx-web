@@ -9,15 +9,11 @@ import { isPhone, isPassword } from '@/utils/index';
 import CheckboxEnabledImg from '@/assets/images/common/checkbox_btn_enabled@2x.png';
 import CheckboxSelectedImg from '@/assets/images/common/checkbox_btn_selected@2x.png';
 import './index.less';
+import Sms from '@/components/sms';
 
 interface RegisterPageProps extends PageActionBaseProps {
   captchaData: Partial<CaptchaDataType>;
 }
-
-let timer: number;
-let count: number = 30;
-let isSendMsg: boolean = false;
-const initCodeText: string = '获取验证码';
 
 const Register: React.FC<RegisterPageProps> = props => {
   const {
@@ -25,74 +21,18 @@ const Register: React.FC<RegisterPageProps> = props => {
     captchaData: { captchaIdentity },
   } = props;
   const [agree, setAgree] = useState<boolean>(false);
-  const [codeText, setCodeText] = useState<string>(initCodeText);
+  const [phone, setPhone] = useState<string>('');
   const history = useHistory();
 
-  const phoneRef = useRef<any>(null);
   const codeRef = useRef<any>(null);
   const passwordRef = useRef<any>(null);
   const confirmPasswordRef = useRef<any>(null);
 
-  const clearTimer = () => {
-    count = 0;
-    isSendMsg = false;
-    clearInterval(timer);
-    setCodeText(initCodeText);
-  };
-
-  const countdown = () => {
-    timer = window.setInterval(() => {
-      count--;
-      setCodeText(`${count} S`);
-      if (count === 0) {
-        clearTimer();
-      }
-    }, 1000);
-  };
-
-  useEffect(() => {
-    return () => {
-      clearTimer();
-    };
-  }, []);
-
-  const getSMSCode = async () => {
-    const phone = phoneRef.current.value;
-
-    if (isSendMsg) {
-      return;
-    }
-
-    if (isEmpty(phone)) {
-      Toast.info('手机号码不能为空');
-      return;
-    }
-
-    if (!isPhone(phone)) {
-      Toast.info('请输入正确的手机号码');
-      return;
-    }
-
-    const payload = {
-      mobile: phone,
-      verificationCodeType: VERIFICATION_CODE_TYPE.register,
-    };
-    isSendMsg = true;
-    countdown();
-    try {
-      await dispatch({
-        type: 'COMMON/getSMSCode',
-        payload,
-      });
-    } catch (error) {
-      if (error && error.message) {
-        Toast.info(error.message);
-      }
-    }
+  const phoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(e.target.value);
   };
 
   const register = async () => {
-    const phone = phoneRef.current.value;
     const code = codeRef.current.value;
     const password = passwordRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
@@ -171,7 +111,8 @@ const Register: React.FC<RegisterPageProps> = props => {
               type="text"
               name="phone"
               maxLength={11}
-              ref={phoneRef}
+              value={phone}
+              onChange={phoneChange}
               autoComplete="off"
               placeholder="请输入手机号码"
             />
@@ -184,15 +125,13 @@ const Register: React.FC<RegisterPageProps> = props => {
               type="text"
               name="code"
               className="code-text"
-              maxLength={10}
+              maxLength={8}
               ref={codeRef}
               autoComplete="off"
               placeholder="请输入验证码"
             />
             <div className="code-img">
-              <span className="sms-code" onClick={getSMSCode}>
-                {codeText}
-              </span>
+              <Sms phone={phone} className="sms-code" />
             </div>
           </div>
         </div>
