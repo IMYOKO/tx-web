@@ -74,8 +74,9 @@ const Setting: React.FC<SettingPrpos> = props => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.clear();
     Toast.info('退出登录成功', 0.6, () => {
+      hideLogoutModal();
       dispatch({
         type: 'USER/save',
         payload: {
@@ -89,7 +90,6 @@ const Setting: React.FC<SettingPrpos> = props => {
           loginStatus: LOGIN_STATUS.unknown,
         },
       });
-      hideLogoutModal();
       history.replace('/login');
     });
   };

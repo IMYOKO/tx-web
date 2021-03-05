@@ -35,6 +35,7 @@ export interface ModelType {
     switchRole: Effect;
     complementInfo: Effect;
     resetPassword: Effect;
+    addBank: Effect;
   };
 }
 
@@ -107,7 +108,7 @@ const Model: ModelType = {
         return Promise.reject(err);
       }
     },
-    *complementInfo({ payload, successCallback }, { call, put }) {
+    *complementInfo({ payload, successCallback }, { call }) {
       try {
         yield call(API.complementInfo, payload);
         successCallback && successCallback();
@@ -116,9 +117,18 @@ const Model: ModelType = {
         Toast.info('修改失败');
       }
     },
-    *resetPassword({ payload }, { call, put }) {
+    *resetPassword({ payload }, { call }) {
       try {
         yield call(API.resetPassword, payload);
+        return Promise.resolve();
+      } catch (err) {
+        return Promise.reject(err);
+      }
+    },
+    *addBank({ payload }, { call }) {
+      try {
+        yield call(API.addBank, payload);
+        console.log('ss');
         return Promise.resolve();
       } catch (err) {
         return Promise.reject(err);

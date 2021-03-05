@@ -131,7 +131,11 @@ const Register: React.FC<RegisterPageProps> = props => {
               placeholder="请输入验证码"
             />
             <div className="code-img">
-              <Sms phone={phone} className="sms-code" />
+              <Sms
+                phone={phone}
+                className="sms-code"
+                verificationCodeType={VERIFICATION_CODE_TYPE.register}
+              />
             </div>
           </div>
         </div>

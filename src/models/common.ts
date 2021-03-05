@@ -147,15 +147,11 @@ const Common: ModelType = {
     },
     *getSMSCode({ payload }, { call, put }) {
       try {
-        const publicQrCode = yield call(API.getSMSCode, payload);
-        yield put({
-          type: 'save',
-          payload: {
-            publicQrCode,
-          },
-        });
+        yield call(API.getSMSCode, payload);
+        return Promise.resolve({});
       } catch (e) {
         console.log(e);
+        return Promise.reject(e);
       }
     },
   },

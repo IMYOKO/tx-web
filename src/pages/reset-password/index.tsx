@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { isEmpty } from 'lodash-es';
 import { Toast } from 'antd-mobile';
-import { isPassword } from '@/utils';
+import { isPassword, isPhone } from '@/utils';
 import { useDispatch, useHistory } from 'dva';
 import './index.less';
 import { LOGIN_STATUS } from '@/types/enum';
 import Sms from '@/components/sms';
+import { VERIFICATION_CODE_TYPE } from '@/request/emun';
 
 const ResetPassWord: React.FC = () => {
   const [phone, setPhone] = useState<string>('');
@@ -36,6 +37,10 @@ const ResetPassWord: React.FC = () => {
       Toast.info('手机号码不能为空');
       return;
     }
+    if (!isPhone(phone)) {
+      Toast.info('请输入正确的手机号码');
+      return;
+    }
     if (isEmpty(password)) {
       Toast.info('新登录密码不能为空');
       return;
@@ -53,6 +58,7 @@ const ResetPassWord: React.FC = () => {
       return;
     }
     const payload = {
+      code,
       phone,
       password,
       confirmPassword,
@@ -60,10 +66,11 @@ const ResetPassWord: React.FC = () => {
     console.log({ payload });
     try {
       await dispatch({
-        type: 'user/resetPassword',
+        type: 'USER/resetPassword',
         payload,
       });
       Toast.info('修改成功，请重新登录', 0.6, () => {
+        localStorage.clear();
         dispatch({
           type: 'USER/save',
           payload: {
@@ -80,7 +87,9 @@ const ResetPassWord: React.FC = () => {
         history.replace('/login');
       });
     } catch (error) {
-      Toast.info('修改失败');
+      if (error && error.message) {
+        Toast.info(error.message);
+      }
     }
   };
 
@@ -114,7 +123,7 @@ const ResetPassWord: React.FC = () => {
               onChange={codeChange}
             />
             <div className="send-code">
-              <Sms phone={phone} />
+              <Sms phone={phone} verificationCodeType={VERIFICATION_CODE_TYPE.resetPassword} />
             </div>
           </div>
         </div>

@@ -190,13 +190,6 @@ const routes: IRoute[] = [
         Routes: ['src/layouts/AuthLayout'],
       },
       {
-        path: '/reset-password',
-        title: '重置登录密码',
-        exact: true,
-        component: '../pages/Users/reset-password',
-        Routes: ['src/layouts/AuthLayout'],
-      },
-      {
         path: '/rename',
         title: '修改昵称',
         exact: true,

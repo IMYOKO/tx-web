@@ -21,6 +21,7 @@ import {
   CancelSubOrderParam,
   ResetPasswordParam,
   SendSMSCaptchaParam,
+  AddBankParam,
 } from './type';
 
 const apiRequest = new ApiRequest();
@@ -115,14 +116,14 @@ const login = (data: LoginParam): AxiosPromise => {
 };
 
 /**
- * 获取验证码
+ * 获取图片验证码
  */
 const captcha = (data: CaptchaParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/captcha`, data);
 };
 
 /**
- * 获取验证码
+ * 获取手机验证码
  */
 const getSMSCode = (data: SendSMSCaptchaParam): AxiosPromise => {
   return apiRequest.post(`${baseURL}/send_sms`, data);
@@ -132,7 +133,14 @@ const getSMSCode = (data: SendSMSCaptchaParam): AxiosPromise => {
  * 重置密码
  */
 const resetPassword = (data: ResetPasswordParam): AxiosPromise => {
-  return apiRequest.post(`${baseURL}/captcha`, data);
+  return apiRequest.post(`${baseURL}/user/forget`, data);
+};
+
+/**
+ * 新增银行卡
+ */
+const addBank = (data: AddBankParam): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/add_bank`, data);
 };
 
 /**
@@ -261,4 +269,5 @@ export default {
   h5Pay,
   resetPassword,
   getSMSCode,
+  addBank,
 };

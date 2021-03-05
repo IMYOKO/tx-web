@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react';
 interface SmsProps {
   className?: string;
   phone: string;
+  verificationCodeType: VERIFICATION_CODE_TYPE;
 }
 
 let timer: number;
@@ -15,7 +16,7 @@ let count: number = 30;
 let isSendMsg: boolean = false;
 const initCodeText: string = '获取验证码';
 
-const Sms = ({ className = '', phone }: SmsProps) => {
+const Sms = ({ className = '', phone, verificationCodeType }: SmsProps) => {
   const [codeText, setCodeText] = useState<string>(initCodeText);
 
   const dispatch = useDispatch();
@@ -59,16 +60,16 @@ const Sms = ({ className = '', phone }: SmsProps) => {
 
     const payload = {
       mobile: phone,
-      verificationCodeType: VERIFICATION_CODE_TYPE.register,
+      verificationCodeType,
     };
     isSendMsg = true;
     countdown();
-    return;
     try {
       await dispatch({
         type: 'COMMON/getSMSCode',
         payload,
       });
+      Toast.info('验证码已发送到对应手机号，请注意查收');
     } catch (error) {
       if (error && error.message) {
         Toast.info(error.message);

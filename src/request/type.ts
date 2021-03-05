@@ -100,3 +100,11 @@ export interface SendSMSCaptchaParam {
   mobile: string;
   verificationCodeType: string;
 }
+
+export interface AddBankParam {
+  bankNo: string;
+  idNo: string;
+  mobile: string;
+  realName: string;
+  verificationCodeType: string;
+}
