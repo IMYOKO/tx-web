@@ -115,7 +115,6 @@ const Login: React.FC<LoginPageProps> = props => {
             <input
               type="text"
               name="phone"
-              defaultValue={18822883212}
               maxLength={11}
               ref={phoneRef}
               autoComplete="off"
@@ -147,7 +146,6 @@ const Login: React.FC<LoginPageProps> = props => {
               type="password"
               name="password"
               maxLength={18}
-              defaultValue={123456}
               ref={passwordRef}
               autoComplete="off"
               placeholder="请输入密码"
