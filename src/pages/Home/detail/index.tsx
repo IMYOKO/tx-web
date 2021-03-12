@@ -1,5 +1,5 @@
 import { PageActionBaseProps, RootState } from '@/types/common';
-import { connect } from 'dva';
+import { connect, useHistory } from 'dva';
 import React, { useEffect, useState } from 'react';
 import { UserInfoType } from '@/models/user';
 import { DetailItemType } from '@/models/order';
@@ -24,31 +24,9 @@ const Detail: React.FC<DetailProps> = props => {
   } = props;
   const { id } = useQuery();
   const [visible, setVisible] = useState<boolean>(false);
+  const history = useHistory();
 
   useOrderDetail(id);
-  // const fetchData = (id: string) => {
-  //   dispatch({
-  //     type: 'ORDER/fetch',
-  //     payload: { orderId: Number(id) },
-  //   });
-  // };
-
-  // const clearData = () => {
-  //   dispatch({
-  //     type: 'ORDER/save',
-  //     payload: { item: {} },
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   if (id) {
-  //     fetchData(id);
-  //     return () => {
-  //       clearData();
-  //     };
-  //   }
-  //   return () => {};
-  // }, [id]);
 
   const catchOrder = async () => {
     if (!id) {
@@ -68,8 +46,13 @@ const Detail: React.FC<DetailProps> = props => {
         type: 'TAKER/catchOrder',
         payload: { orderId: Number(id) },
       });
+      Toast.info('操作成功', 0.3, () => {
+        history.replace('/task-taker');
+      });
       console.log(res);
-    } catch (error) {}
+    } catch (error) {
+      Toast.info(error.message || '操作失败');
+    }
   };
 
   const hideModal = () => {

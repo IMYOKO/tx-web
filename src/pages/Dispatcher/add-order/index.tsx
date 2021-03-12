@@ -1,11 +1,12 @@
 import TagListModal from '@/components/tag-list';
 import { FileDataType, PageActionBaseProps, RootState } from '@/types/common';
-import { connect } from 'dva';
+import { connect, useHistory } from 'dva';
 import React, { useState, useEffect } from 'react';
 import { isEmpty } from 'lodash-es';
 import Headers from '@/components/headers';
 import ImagePicker from '@/components/image-picker';
 import './index.less';
+import { Toast } from 'antd-mobile';
 
 interface AddOrderPageProps extends PageActionBaseProps {
   tagList: string[];
@@ -42,6 +43,7 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
   const [totalCommissionAmount, setTotalCommissionAmount] = useState<number>(0);
   const [descriptionFileList, setDescriptionFileList] = useState<FileDataType[]>([]);
   const [taskClaimFileList, setTaskClaimFileList] = useState<FileDataType[]>([]);
+  const history = useHistory();
 
   // 计算总赏金
   useEffect(() => {
@@ -63,7 +65,7 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
   };
 
   // 提交表单
-  const submit = () => {
+  const submit = async () => {
     const count = Number(amountData.count);
     const commissionAmount = Number(amountData.commissionAmount);
     const payload = {
@@ -75,11 +77,18 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
       taskClaimFileList,
     };
     console.log({ payload });
-    // return;
-    dispatch({
-      type: 'DISPATCHER/create',
-      payload,
-    });
+
+    try {
+      await dispatch({
+        type: 'DISPATCHER/create',
+        payload,
+      });
+      Toast.info('发布成功', 0.3, () => {
+        history.replace('/task-dispatcher');
+      });
+    } catch (error) {
+      Toast.info(error.message || '发布失败');
+    }
   };
 
   const fetchTagList = () => {

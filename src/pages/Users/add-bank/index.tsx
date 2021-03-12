@@ -1,7 +1,9 @@
 import Sms from '@/components/sms';
 import { VERIFICATION_CODE_TYPE } from '@/request/emun';
+import { isBankCard, isIDCard, isPhone } from '@/utils';
 import { Toast } from 'antd-mobile';
 import { useDispatch, useHistory } from 'dva';
+import { isEmpty } from 'lodash-es';
 import React, { useState } from 'react';
 import './index.less';
 
@@ -35,7 +37,49 @@ const AddBank: React.FC = () => {
     setIdNo(e.target.value);
   };
 
+  const inputNumberLimit = (e: React.ChangeEvent<HTMLInputElement>, maxLength: number) => {
+    if (e.target.value.length > maxLength) {
+      e.target.value = e.target.value.slice(0, maxLength);
+    }
+  };
+
   const submit = async () => {
+    if (isEmpty(realName)) {
+      Toast.info('姓名不能为空');
+      return;
+    }
+    if (isEmpty(bankNo)) {
+      Toast.info('银行卡号不能为空');
+      return;
+    }
+    if (!isBankCard(bankNo)) {
+      Toast.info('请输入正确银行卡号');
+      return;
+    }
+    if (isEmpty(idNo)) {
+      Toast.info('身份证号不能为空');
+      return;
+    }
+    if (!isIDCard(idNo)) {
+      Toast.info('请输入正确身份证号');
+      return;
+    }
+    if (isEmpty(phone)) {
+      Toast.info('预留手机号不能为空');
+      return;
+    }
+    if (isEmpty(phone)) {
+      Toast.info('预留手机号不能为空');
+      return;
+    }
+    if (!isPhone(phone)) {
+      Toast.info('请输入正确的手机号码');
+      return;
+    }
+    if (isEmpty(code)) {
+      Toast.info('验证码不能为空');
+      return;
+    }
     const payload = {
       bankNo,
       idNo,
@@ -84,6 +128,8 @@ const AddBank: React.FC = () => {
               value={bankNo}
               onChange={bankNoChange}
               autoComplete="off"
+              maxLength={19}
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) => inputNumberLimit(e, 19)}
               placeholder="请输入银行卡号"
             />
           </div>
@@ -95,8 +141,10 @@ const AddBank: React.FC = () => {
               type="number"
               name="rnNumber"
               value={idNo}
+              maxLength={18}
               onChange={idNoChange}
               autoComplete="off"
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) => inputNumberLimit(e, 18)}
               placeholder="请输入身份证号"
             />
           </div>
@@ -108,8 +156,9 @@ const AddBank: React.FC = () => {
               type="number"
               name="phone"
               autoComplete="off"
-              maxLength={11}
               value={phone}
+              maxLength={11}
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) => inputNumberLimit(e, 11)}
               onChange={phoneChange}
               placeholder="银行预留手机号"
             />

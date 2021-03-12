@@ -20,15 +20,13 @@ const TaskListItem: React.FC<OrderListItemType> = ({
 }) => {
   const history = useHistory();
   return (
-    <div className="task-list-item">
-      <div
-        className="task-title"
-        onClick={() => {
-          history.push(`/detail?id=${id}`);
-        }}
-      >
-        {title}
-      </div>
+    <div
+      className="task-list-item"
+      onClick={() => {
+        history.push(`/detail?id=${id}`);
+      }}
+    >
+      <div className="task-title">{title}</div>
       <ul className="task-tabs-list">
         {tagList.map((tab: string, index: number) => (
           <li key={index}>

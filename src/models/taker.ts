@@ -1,7 +1,6 @@
 import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import API from '@/request';
-import { Toast } from 'antd-mobile';
 import { Pagination } from '@/types/common';
 
 export interface TakerOrderItemType {
@@ -86,11 +85,9 @@ const Model: ModelType = {
     *catchOrder({ payload }, { call, put }) {
       try {
         const res = yield call(API.subOrderCatch, payload);
-        Toast.info('操作成功');
         return Promise.resolve(res);
       } catch (err) {
         console.log(err);
-        Toast.info('操作失败');
         return Promise.reject(err);
       }
     },

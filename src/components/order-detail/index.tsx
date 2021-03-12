@@ -1,6 +1,7 @@
 import React from 'react';
 import defaultAvatarUrl from '@/assets/images/user/my_profile_face@2x.png';
 import './index.less';
+import ImagePicker from '../image-picker';
 
 export interface OrderDetailProps {
   id: number;
@@ -32,9 +33,25 @@ const OrderDetail: React.FC<Partial<OrderDetailProps>> = props => {
     remainingCount = 0,
     count = 0,
     tagList = [],
+    descriptionUrlList = [],
     description,
     taskClaim,
+    taskClaimUrlList = [],
   } = props;
+
+  const getFileList = (list: string[]) => {
+    return list.map((url: string) => {
+      return {
+        base64String: url,
+        suffix: url.split('.').pop() || '',
+      };
+    });
+  };
+
+  const descriptionUrlFileList = getFileList(descriptionUrlList);
+
+  const taskClaimUrlFileList = getFileList(taskClaimUrlList);
+
   return (
     <div className="order-detail">
       <div className="order-detail-info">
@@ -78,10 +95,12 @@ const OrderDetail: React.FC<Partial<OrderDetailProps>> = props => {
       <div className="detail-task-wrapper">
         <div className="detail-task-title">任务描述</div>
         <div className="detail-task-decription">{description}</div>
+        <ImagePicker readonly={true} fileList={descriptionUrlFileList} />
       </div>
       <div className="detail-task-wrapper">
         <div className="detail-task-title">任务要求</div>
         <div className="detail-task-decription">{taskClaim}</div>
+        <ImagePicker readonly={true} fileList={taskClaimUrlFileList} />
       </div>
     </div>
   );

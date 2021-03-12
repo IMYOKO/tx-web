@@ -4,13 +4,14 @@ import { fileByBase64 } from '@/utils';
 import './index.less';
 
 export interface ImagePickerProps {
-  addFiles: (file: FileDataType) => void;
+  addFiles?: (file: FileDataType) => void;
   fileList: FileDataType[];
-  removeFile: (index: number) => void;
+  readonly?: boolean;
+  removeFile?: (index: number) => void;
 }
 
 const ImagePicker: React.FC<ImagePickerProps> = props => {
-  const { fileList, addFiles, removeFile } = props;
+  const { fileList, addFiles, removeFile = () => {}, readonly = false } = props;
   const fileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
@@ -25,30 +26,34 @@ const ImagePicker: React.FC<ImagePickerProps> = props => {
             <div className="image-picker-item">
               <div className="image-picker-box">
                 <div className="image-box">
-                  <div className="icon-remove" onClick={() => removeFile(index)}></div>
+                  {!readonly && (
+                    <div className="icon-remove" onClick={() => removeFile(index)}></div>
+                  )}
                   {base64String && <img src={base64String} alt="" />}
                 </div>
               </div>
             </div>
           </li>
         ))}
-        <li>
-          <div className="image-picker-item">
-            <div className="image-picker-box">
-              <div className="image-box">
-                <div className="add-file-box">
-                  <input
-                    type="file"
-                    key={new Date().getTime()}
-                    className="add-file"
-                    onChange={fileChange}
-                    accept="image/*"
-                  />
+        {!readonly && (
+          <li>
+            <div className="image-picker-item">
+              <div className="image-picker-box">
+                <div className="image-box">
+                  <div className="add-file-box">
+                    <input
+                      type="file"
+                      key={new Date().getTime()}
+                      className="add-file"
+                      onChange={fileChange}
+                      accept="image/*"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </li>
+          </li>
+        )}
       </ul>
     </div>
   );

@@ -2,7 +2,6 @@ import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import API from '@/request';
 import { Pagination } from '@/types/common';
-import { Toast } from 'antd-mobile';
 
 export interface DispatcherOrderItemType {
   id: number;
@@ -123,16 +122,13 @@ const Model: ModelType = {
         console.log(err);
       }
     },
-    *create({ payload, successCallback }, { call }) {
+    *create({ payload }, { call }) {
       try {
-        console.log({ payload });
-        yield call(API.orderCreate, payload);
-        Toast.info('发布成功', 0.6, () => {
-          successCallback && successCallback();
-        });
+        const res = yield call(API.orderCreate, payload);
+
+        return Promise.resolve(res);
       } catch (err) {
-        console.log(err);
-        Toast.info('发布失败');
+        return Promise.reject(err);
       }
     },
     *subOrderAudit({ payload }, { call }) {
