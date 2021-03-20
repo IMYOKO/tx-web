@@ -31,7 +31,7 @@ const SubDetail: React.FC = () => {
       return (
         <ButtonWrapper>
           <div className="button-item" onClick={goSubmit}>
-            重新提交s
+            重新提交
           </div>
         </ButtonWrapper>
       );

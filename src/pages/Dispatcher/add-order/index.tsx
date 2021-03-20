@@ -5,8 +5,8 @@ import React, { useState, useEffect } from 'react';
 import { isEmpty } from 'lodash-es';
 import Headers from '@/components/headers';
 import ImagePicker from '@/components/image-picker';
-import './index.less';
 import { Toast } from 'antd-mobile';
+import './index.less';
 
 interface AddOrderPageProps extends PageActionBaseProps {
   tagList: string[];
@@ -67,7 +67,34 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
   // 提交表单
   const submit = async () => {
     const count = Number(amountData.count);
-    const commissionAmount = Number(amountData.commissionAmount);
+    const commissionAmount = Number(amountData.commissionAmount) * 100;
+    const { title, description, taskClaim } = addOrderForm;
+
+    if (isEmpty(title)) {
+      Toast.info('标题不能为空');
+      return;
+    }
+    if (count <= 0) {
+      Toast.info('任务个数必须大于0');
+      return;
+    }
+    if (commissionAmount <= 0) {
+      Toast.info('赏金必须大于0');
+      return;
+    }
+    if (commissionAmount <= 1) {
+      Toast.info('赏金最少为0.01元');
+      return;
+    }
+    if (isEmpty(description)) {
+      Toast.info('任务描述不能为空');
+      return;
+    }
+    if (isEmpty(taskClaim)) {
+      Toast.info('任务要求不能为空');
+      return;
+    }
+
     const payload = {
       ...addOrderForm,
       count,
