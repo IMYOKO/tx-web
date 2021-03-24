@@ -108,3 +108,5 @@ export interface AddBankParam {
   realName: string;
   verificationCodeType: string;
 }
+
+export interface MyBankListParam extends OrderListParam {}

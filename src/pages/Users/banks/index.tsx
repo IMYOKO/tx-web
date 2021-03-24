@@ -1,7 +1,7 @@
 import { PageActionBaseProps, RootState } from '@/types/common';
-import { connect, useHistory } from 'dva';
+import { connect, useDispatch, useHistory } from 'dva';
 import { isEmpty } from 'lodash-es';
-import React from 'react';
+import React, { useEffect } from 'react';
 import './index.less';
 
 interface BanksPagePrpos extends PageActionBaseProps {
@@ -10,6 +10,17 @@ interface BanksPagePrpos extends PageActionBaseProps {
 
 const Banks: React.FC<BanksPagePrpos> = ({ bankList }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: 'USER/getBankList',
+      payload: {
+        pageNo: 1,
+        pageSize: 10,
+      },
+    });
+  }, []);
 
   const goAddBank = () => {
     history.push('/add-bank');

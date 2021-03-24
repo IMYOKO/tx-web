@@ -2,6 +2,8 @@ import React from 'react';
 import defaultAvatarUrl from '@/assets/images/user/my_profile_face@2x.png';
 import './index.less';
 import ImagePicker from '../image-picker';
+import { format } from 'date-fns';
+import ImgPop from '@/components/img-pop';
 
 export interface OrderDetailProps {
   id: number;
@@ -58,7 +60,7 @@ const OrderDetail: React.FC<Partial<OrderDetailProps>> = props => {
         <div className="title-wrapper">
           <div className="title-box">
             <h2>{title}</h2>
-            <p>创建时间：{createTime}</p>
+            <p>创建时间：{createTime && format(createTime * 1000, 'yyyy-MM-dd HH:mm')}</p>
           </div>
           <div className="task-status">{statusText}</div>
         </div>
@@ -102,6 +104,7 @@ const OrderDetail: React.FC<Partial<OrderDetailProps>> = props => {
         <div className="detail-task-decription">{taskClaim}</div>
         <ImagePicker readonly={true} fileList={taskClaimUrlFileList} />
       </div>
+      <ImgPop />
     </div>
   );
 };

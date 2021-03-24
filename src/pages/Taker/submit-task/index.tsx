@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'dva';
 import Headers from '@/components/headers';
 import ImagePicker from '@/components/image-picker';
@@ -7,6 +7,7 @@ import { FileDataType } from '@/types/common';
 import { isEmpty } from 'lodash-es';
 import './index.less';
 import { Toast } from 'antd-mobile';
+import ImgPop from '@/components/img-pop';
 
 const SubmitTask: React.FC = () => {
   const dispatch = useDispatch();
@@ -82,6 +83,7 @@ const SubmitTask: React.FC = () => {
           </div>
         </div>
       </div>
+      <ImgPop />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { FileDataType } from '@/types/common';
 import { fileByBase64 } from '@/utils';
 import './index.less';
+import { useDispatch } from 'dva';
 
 export interface ImagePickerProps {
   addFiles?: (file: FileDataType) => void;
@@ -18,6 +19,16 @@ const ImagePicker: React.FC<ImagePickerProps> = props => {
       fileByBase64(files[0], addFiles);
     }
   };
+  const dispatch = useDispatch();
+  const showImgPop = (img: string) => {
+    dispatch({
+      type: 'COMMON/save',
+      payload: {
+        imgPopData: img,
+        imgPopVisible: true,
+      },
+    });
+  };
   return (
     <div className="image-picker-wrapper">
       <ul className="image-picker-ul">
@@ -29,7 +40,15 @@ const ImagePicker: React.FC<ImagePickerProps> = props => {
                   {!readonly && (
                     <div className="icon-remove" onClick={() => removeFile(index)}></div>
                   )}
-                  {base64String && <img src={base64String} alt="" />}
+                  {base64String && (
+                    <img
+                      src={base64String}
+                      onClick={() => {
+                        showImgPop(base64String);
+                      }}
+                      alt=""
+                    />
+                  )}
                 </div>
               </div>
             </div>

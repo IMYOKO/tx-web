@@ -13,6 +13,8 @@ export interface CommonModelState {
   loginStatus: LOGIN_STATUS;
   publicQrCode: string;
   captchaData: Partial<CaptchaDataType>;
+  imgPopVisible: boolean;
+  imgPopData: string;
 }
 
 export interface ModelType {
@@ -43,6 +45,8 @@ const Common: ModelType = {
     captchaData: {},
     publicQrCode: '',
     loginStatus: LOGIN_STATUS.unknown,
+    imgPopVisible: false,
+    imgPopData: '',
   },
   reducers: {
     save(state, { payload }) {

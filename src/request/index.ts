@@ -22,6 +22,7 @@ import {
   ResetPasswordParam,
   SendSMSCaptchaParam,
   AddBankParam,
+  MyBankListParam,
 } from './type';
 
 const apiRequest = new ApiRequest();
@@ -98,7 +99,14 @@ const feedback = (data: FeedbackParam): AxiosPromise => {
  * 我的账单列表
  */
 const myBillList = (): AxiosPromise => {
-  return apiRequest.post(`${baseURL}/user/my_bill_list`);
+  return apiRequest.post(`${baseURL}/user/my-bill-list`);
+};
+
+/**
+ * 我的银行卡列表
+ */
+const myBankList = (data: Partial<MyBankListParam>): AxiosPromise => {
+  return apiRequest.post(`${baseURL}/user/my-bank-list`, data);
 };
 
 /**
@@ -270,4 +278,5 @@ export default {
   resetPassword,
   getSMSCode,
   addBank,
+  myBankList,
 };

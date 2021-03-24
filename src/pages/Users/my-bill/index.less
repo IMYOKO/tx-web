@@ -39,7 +39,54 @@
 
   .my-bill-wrapper {
     .my-bill-seach {
-      margin: 0 15px 10px;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      background-color: #fff;
+
+      .data-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .sreach-button {
+          width: 70px;
+          height: 30px;
+          color: #FF5A2C;
+          line-height: 30px;
+          border-radius: 15px;
+          text-align: center;
+          cursor: pointer;
+          margin-left: 20px;
+          border: 1px solid #FF5A2C;
+        }
+
+        .data-content {
+          display: flex;
+          flex: 1;
+          justify-content: space-between;
+          align-items: center;
+
+          .date-select {
+            width: 50%;
+
+            .date-item {
+              h5 {
+                color: #666;
+                line-height: 1.2;
+                font-size: 12px;
+                font-weight: normal;
+                margin-bottom: 2px;
+              }
+
+              h3 {
+                color: #333;
+                font-size: 15px;
+                line-height: 1.5;
+              }
+            }
+          }
+        }
+      }
     }
 
     .my-bill-list-wrapper {

@@ -19,9 +19,18 @@ export interface UserInfoType {
   roleCode: ROLE_STATUS;
 }
 
+export interface BillItem {
+  amount: number;
+  billNo: string;
+  billType: string;
+  billTypeText: string;
+  createTime: number;
+}
+
 export interface UserModelState {
   userInfo: Partial<UserInfoType>;
   bankList: any[];
+  billList: BillItem[];
 }
 
 export interface ModelType {
@@ -36,6 +45,8 @@ export interface ModelType {
     complementInfo: Effect;
     resetPassword: Effect;
     addBank: Effect;
+    getBankList: Effect;
+    getBillList: Effect;
   };
 }
 
@@ -51,6 +62,7 @@ const Model: ModelType = {
       //   number: '6237 79380 0000 5934 762',
       // },
     ],
+    billList: [],
   },
   reducers: {
     save(state, { payload }) {
@@ -128,10 +140,35 @@ const Model: ModelType = {
     *addBank({ payload }, { call }) {
       try {
         yield call(API.addBank, payload);
-        console.log('ss');
         return Promise.resolve();
       } catch (err) {
         return Promise.reject(err);
+      }
+    },
+    *getBankList({ payload }, { call, put }) {
+      try {
+        const { dataList: bankList } = yield call(API.myBankList, payload);
+        yield put({
+          type: 'save',
+          payload: {
+            bankList,
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    *getBillList({ payload }, { call, put }) {
+      try {
+        const { dataList: billList } = yield call(API.myBillList, payload);
+        yield put({
+          type: 'save',
+          payload: {
+            billList,
+          },
+        });
+      } catch (err) {
+        console.log(err);
       }
     },
   },

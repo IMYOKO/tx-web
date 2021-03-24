@@ -7,6 +7,7 @@ import Headers from '@/components/headers';
 import ImagePicker from '@/components/image-picker';
 import { Toast } from 'antd-mobile';
 import './index.less';
+import ImgPop from '@/components/img-pop';
 
 interface AddOrderPageProps extends PageActionBaseProps {
   tagList: string[];
@@ -341,6 +342,8 @@ const AddOrder: React.FC<AddOrderPageProps> = props => {
           </div>
         </div>
       </div>
+
+      <ImgPop />
 
       {/* TagListModal */}
       <TagListModal {...tagListModalProps} />
