@@ -1,4 +1,4 @@
-import { isPhone, isPassword, isTradePassword } from '../index';
+import { isPhone, isPassword, isTradePassword, isIDCard, isBankCard } from '../index';
 
 describe('utils function test', () => {
   it('isPhone test', () => {
@@ -28,5 +28,14 @@ describe('utils function test', () => {
     expect(isTradePassword('12345')).toBeFalsy();
     expect(isTradePassword('12345_')).toBeFalsy();
     expect(isTradePassword('12$&5!')).toBeFalsy();
+  });
+  it('isIDCard test', () => {
+    expect(isIDCard('362123198701233456')).toBeTruthy();
+    expect('362123198701233456'.length).toBe(18);
+    expect(isIDCard('36212319870123346')).toBeFalsy();
+  });
+  it('isBankCard test', () => {
+    expect(isBankCard('6217765422223566382')).toBeTruthy();
+    expect('6217765422223566382'.length).toBe(19);
   });
 });
