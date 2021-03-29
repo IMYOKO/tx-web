@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useHistory, useDispatch } from 'dva';
 import { PageActionBaseProps, RootState } from '@/types/common';
-import { BillItem, UserInfoType } from '@/models/user';
+import { BillItem, BillListParams, UserInfoType } from '@/models/user';
 import { PUBLIC_STATUS } from '@/types/enum';
 import FollowModal, { FollowModalProps } from './FollowModal';
-import { DatePicker } from 'antd-mobile';
+import { DatePicker, Toast } from 'antd-mobile';
 import { format } from 'date-fns';
 import './index.less';
 
@@ -15,6 +15,11 @@ interface MyBillPrpos extends PageActionBaseProps {
 
 const MyBill: React.FC<MyBillPrpos> = props => {
   const [visible, setVisible] = useState<boolean>(false);
+  const today = new Date();
+  const initEndDate = Math.floor(today.getTime() / 1000);
+  const initStartDate = initEndDate - 24 * 60 * 60;
+  const [endDate, setEndDate] = useState<number>(initEndDate);
+  const [startDate, setStartDate] = useState<number>(initStartDate);
   const { userInfo, billList } = props;
   const { balance = 0, publicStatus } = userInfo;
   const history = useHistory();
@@ -29,15 +34,21 @@ const MyBill: React.FC<MyBillPrpos> = props => {
     setVisible(false);
   };
 
-  useEffect(() => {
+  const getBillList = (param: BillListParams) => {
     dispatch({
       type: 'USER/getBillList',
       payload: {
-        pageNo: 1,
-        pageSize: 10,
-        endDate: 0,
-        startDate: 0,
+        ...param,
       },
+    });
+  };
+
+  useEffect(() => {
+    getBillList({
+      pageNo: 1,
+      pageSize: 10,
+      endDate,
+      startDate,
     });
   }, []);
 
@@ -63,7 +74,22 @@ const MyBill: React.FC<MyBillPrpos> = props => {
   };
 
   const search = () => {
-    console.log('search');
+    if (startDate >= endDate) {
+      Toast.info('开始时间不能大于结束时间');
+      return;
+    }
+  };
+
+  const dateChange = (date: Date) => {
+    return Math.floor(new Date(date).getTime() / 1000);
+  };
+
+  const starDateChange = (date: Date) => {
+    setStartDate(dateChange(date));
+  };
+
+  const endDateChange = (date: Date) => {
+    setEndDate(dateChange(date));
   };
 
   return (
@@ -90,14 +116,14 @@ const MyBill: React.FC<MyBillPrpos> = props => {
                   mode="date"
                   title="开始日期"
                   extra=""
-                  onChange={date => {
-                    console.log(date);
-                    console.log(format(date, 'yyyy-MM-dd'));
-                  }}
+                  key="startDate"
+                  maxDate={today}
+                  value={new Date(startDate * 1000)}
+                  onChange={starDateChange}
                 >
                   <div className="date-item">
                     <h5>开始日期</h5>
-                    <h3>dsd</h3>
+                    <h3>{format(startDate * 1000, 'yyyy-MM-dd')}</h3>
                   </div>
                 </DatePicker>
               </div>
@@ -106,13 +132,14 @@ const MyBill: React.FC<MyBillPrpos> = props => {
                   mode="date"
                   title="结束日期"
                   extra=""
-                  onChange={date => {
-                    console.log(date);
-                  }}
+                  key="endDate"
+                  maxDate={today}
+                  value={new Date(endDate * 1000)}
+                  onChange={endDateChange}
                 >
                   <div className="date-item">
                     <h5>结束日期</h5>
-                    <h3>dsd</h3>
+                    <h3>{format(endDate * 1000, 'yyyy-MM-dd')}</h3>
                   </div>
                 </DatePicker>
               </div>

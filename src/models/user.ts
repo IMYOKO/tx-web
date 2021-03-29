@@ -27,10 +27,18 @@ export interface BillItem {
   createTime: number;
 }
 
+export interface BillListParams {
+  pageNo: number;
+  pageSize: number;
+  startDate: number;
+  endDate: number;
+}
+
 export interface UserModelState {
   userInfo: Partial<UserInfoType>;
   bankList: any[];
   billList: BillItem[];
+  billListParams: BillListParams;
 }
 
 export interface ModelType {
@@ -63,6 +71,12 @@ const Model: ModelType = {
       // },
     ],
     billList: [],
+    billListParams: {
+      pageNo: 1,
+      pageSize: 10,
+      endDate: 0,
+      startDate: 0,
+    },
   },
   reducers: {
     save(state, { payload }) {
