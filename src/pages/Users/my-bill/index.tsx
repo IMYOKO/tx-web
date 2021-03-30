@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useHistory, useDispatch } from 'dva';
-import { PageActionBaseProps, RootState } from '@/types/common';
-import { BillItem, BillListParams, UserInfoType } from '@/models/user';
+import { PageActionBaseProps, RootState, Pagination } from '@/types/common';
+import { UserInfoType } from '@/models/user';
 import { PUBLIC_STATUS } from '@/types/enum';
 import FollowModal, { FollowModalProps } from './FollowModal';
 import { DatePicker, Toast } from 'antd-mobile';
 import { format } from 'date-fns';
 import './index.less';
+import BillList from './List';
 
 interface MyBillPrpos extends PageActionBaseProps {
   userInfo: Partial<UserInfoType>;
   billList: any[];
+  pagination: Pagination;
+}
+
+export interface BillListParams {
+  pageNo: number;
+  pageSize: number;
+  endDate: number;
+  startDate: number;
 }
 
 const MyBill: React.FC<MyBillPrpos> = props => {
@@ -20,7 +29,7 @@ const MyBill: React.FC<MyBillPrpos> = props => {
   const initStartDate = initEndDate - 24 * 60 * 60;
   const [endDate, setEndDate] = useState<number>(initEndDate);
   const [startDate, setStartDate] = useState<number>(initStartDate);
-  const { userInfo, billList } = props;
+  const { userInfo, billList, pagination } = props;
   const { balance = 0, publicStatus } = userInfo;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -43,6 +52,31 @@ const MyBill: React.FC<MyBillPrpos> = props => {
     });
   };
 
+  const pageNoChange = () => {
+    const { pageNo, pageSize } = pagination;
+    getBillList({
+      pageNo: pageNo + 1,
+      pageSize,
+      endDate,
+      startDate,
+    });
+  };
+
+  const clearData = () => {
+    dispatch({
+      type: 'USER/save',
+      payload: {
+        billList: [],
+        pagination: {
+          pageNo: 0,
+          pageSize: 0,
+          totalCount: 0,
+          totalPage: 0,
+        },
+      },
+    });
+  };
+
   useEffect(() => {
     getBillList({
       pageNo: 1,
@@ -50,6 +84,9 @@ const MyBill: React.FC<MyBillPrpos> = props => {
       endDate,
       startDate,
     });
+    return () => {
+      clearData();
+    };
   }, []);
 
   const goWithdraw = () => {
@@ -78,6 +115,12 @@ const MyBill: React.FC<MyBillPrpos> = props => {
       Toast.info('开始时间不能大于结束时间');
       return;
     }
+    getBillList({
+      pageNo: 1,
+      pageSize: 10,
+      endDate,
+      startDate,
+    });
   };
 
   const dateChange = (date: Date) => {
@@ -149,7 +192,8 @@ const MyBill: React.FC<MyBillPrpos> = props => {
             </div>
           </div>
         </div>
-        <ul className="my-bill-list-wrapper">
+        <BillList data={billList} pageNoChange={pageNoChange} pagination={pagination} />
+        {/* <ul className="my-bill-list-wrapper">
           {billList.map(({ billNo, createTime, amount, billTypeText }: BillItem) => (
             <li key={billNo}>
               <div className="my-bill-item">
@@ -164,6 +208,7 @@ const MyBill: React.FC<MyBillPrpos> = props => {
               </div>
             </li>
           ))}
+          <Paginations pageNoChange={pageNoChange} pagination={pagination} />
           <li>
             <div className="my-bill-item">
               <div className="my-bill-item-box time">
@@ -176,7 +221,7 @@ const MyBill: React.FC<MyBillPrpos> = props => {
               </div>
             </div>
           </li>
-        </ul>
+        </ul> */}
       </div>
       {/* 账单列表 end */}
 
@@ -187,9 +232,9 @@ const MyBill: React.FC<MyBillPrpos> = props => {
 
 const mapStateToProps = (state: RootState) => {
   const {
-    USER: { userInfo, billList },
+    USER: { userInfo, billList, pagination },
   } = state;
-  return { userInfo, billList };
+  return { userInfo, billList, pagination };
 };
 
 export default connect(mapStateToProps)(MyBill);

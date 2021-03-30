@@ -2,6 +2,7 @@ import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import API from '@/request';
 import { Toast } from 'antd-mobile';
+import { Pagination } from '@/types/common';
 import { LOGIN_STATUS, PUBLIC_STATUS, ROLE_STATUS, VERIFY_STATUS } from '@/types/enum';
 
 export interface UserInfoType {
@@ -27,18 +28,11 @@ export interface BillItem {
   createTime: number;
 }
 
-export interface BillListParams {
-  pageNo: number;
-  pageSize: number;
-  startDate: number;
-  endDate: number;
-}
-
 export interface UserModelState {
   userInfo: Partial<UserInfoType>;
   bankList: any[];
   billList: BillItem[];
-  billListParams: BillListParams;
+  pagination: Pagination;
 }
 
 export interface ModelType {
@@ -71,11 +65,11 @@ const Model: ModelType = {
       // },
     ],
     billList: [],
-    billListParams: {
-      pageNo: 1,
-      pageSize: 10,
-      endDate: 0,
-      startDate: 0,
+    pagination: {
+      pageNo: 0,
+      pageSize: 0,
+      totalCount: 0,
+      totalPage: 0,
     },
   },
   reducers: {
@@ -174,11 +168,12 @@ const Model: ModelType = {
     },
     *getBillList({ payload }, { call, put }) {
       try {
-        const { dataList: billList } = yield call(API.myBillList, payload);
+        const { dataList: billList, ...pagination } = yield call(API.myBillList, payload);
         yield put({
           type: 'save',
           payload: {
             billList,
+            pagination,
           },
         });
       } catch (err) {
