@@ -9,7 +9,7 @@
     "test": "umi test",
     "test:coverage": "umi test --coverage",
     "lint": "eslint {src,mock,tests}/**/*.{ts,tsx} --fix",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged && umi test"
   },
   "dependencies": {
     "@types/lodash-es": "^4.17.4",

@@ -147,7 +147,7 @@ const User: React.FC<UserPrpos> = props => {
 
   return (
     <div className="user-page">
-      <ActivityIndicator toast size="large" text="正在切换..." animating={loading} />
+      <ActivityIndicator toast size="large" text="正在切换.." animating={loading} />
       <UserInfo {...userInfoProps} />
       <Wealth {...userInfo} />
       <NavList {...navListProps} />
