@@ -106,6 +106,10 @@ const Setting: React.FC<SettingPrpos> = props => {
       <div className="logout" onClick={showLogoutModal}>
         退出登录
       </div>
+      <div className="version">
+        <span>{process.env.UMI_ENV}</span>
+        <span>{JSON.parse(process.env.VERSION || '')}</span>
+      </div>
       <LogoutModal {...logoutModalProps} />
     </div>
   );

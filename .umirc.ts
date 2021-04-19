@@ -1,5 +1,6 @@
 import { IConfig } from 'umi-types';
 import routes from './config/routes';
+const { version } = require('./package.json');
 
 // ref: https://umijs.org/config/
 const config: IConfig = {
@@ -31,6 +32,7 @@ const config: IConfig = {
   ],
   define: {
     'process.env.UMI_ENV': process.env.UMI_ENV,
+    'process.env.VERSION': JSON.stringify(`v${version}`),
   },
   disableCSSModules: true,
 };
